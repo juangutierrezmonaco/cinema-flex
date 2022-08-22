@@ -69,6 +69,8 @@ button {
     }
 
     &__icons {
+        display: flex;
+        align-items: center;
         li {
             font-size: 1.2rem;
             width: fit-content;
