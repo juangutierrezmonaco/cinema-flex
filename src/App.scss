@@ -52,18 +52,44 @@ button {
         gap: 20px;
     }
 
+    &__logo{
+        padding: 10px;
+
+        &:hover {
+            filter: drop-shadow(0 0 1em white);
+        }
+    }
+
     &__menu {
         text-transform: uppercase;
+        font-size: 1.2rem;
         display: flex;
+        gap: 10px;
 
         li {
             padding: 5px;
-            border-radius: 10px;
-            transition: all .5s;
+            position: relative;
+            
+            &::after {
+                content: "";
+                height: 1px;
+                width: 0;
+                background-color: white;
+            
+                position: absolute;
+                left: 0;
+                bottom: 10%;
+            
+                transition: .3s;
+            }
 
             &:hover {
-                color: black;
-                background-color: #FFFFFF;
+                color: white;
+                text-shadow: 0 0 10px  white;
+
+                &::after {
+                    width: 100%;
+                }
             }
         }
     }

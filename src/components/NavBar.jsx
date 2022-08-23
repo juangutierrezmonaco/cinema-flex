@@ -3,7 +3,7 @@ import CartWidget from './CartWidget'
 const NavBar = () => {
   return (
     <div className="navbar">
-      <a href="">
+      <a href="" className='navbar__logo'>
         <i class="fa-solid fa-film"></i>
         <h2>CINEMAFLEX</h2>
       </a>
