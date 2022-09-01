@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "sass": "sass ./src/App.scss ./src/App.min.css -w --no-source-map -s compressed"
+    "sass": "sass ./src/sass/App.scss ./src/App.min.css -w --no-source-map -s compressed"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -17,6 +17,9 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.1",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
     "vite": "^3.0.7"
   }
 }
