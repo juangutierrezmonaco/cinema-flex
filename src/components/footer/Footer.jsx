@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="footer footer-center p-10 bg-cyan-900 text-primary-content">
         <div>
-            <img src="./src//assets/img/popcorn.svg" alt="dada" width="100px"/>
+            <img src="./src/assets/img/popcorn.svg" alt="Pochoclos Icono" width="100px"/>
             <p className="font-bold uppercase ">
                 Cinemaflex
             </p> 
