@@ -10,6 +10,7 @@
     "sass": "sass ./src/sass/App.scss ./src/App.min.css -w --no-source-map -s compressed"
   },
   "dependencies": {
+    "daisyui": "^2.24.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
