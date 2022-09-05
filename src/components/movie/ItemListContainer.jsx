@@ -3,14 +3,14 @@ import ItemList from './ItemList';
 import moviesData from '../../movies.json'
 
 const ItemListContainer = ( {greeting} ) => {
-  const [movies, setMovies] = useState([]);
+    const [movies, setMovies] = useState([]);
 
-  const getMovies = (data, time) => 
-    new Promise( (resolve, reject) => {
-        setTimeout( () => {
-            data ? resolve(data) : reject("Error con la solicitud de las películas.");
-        }, time);
-    });
+    const getMovies = (data, time) => 
+        new Promise( (resolve, reject) => {
+            setTimeout( () => {
+                data ? resolve(data) : reject("Error con la solicitud de las películas.");
+            }, time);
+        });
 
     useEffect(() => {
         getMovies(moviesData, 3000)

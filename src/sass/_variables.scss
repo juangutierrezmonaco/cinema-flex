@@ -1,0 +1,5 @@
+@mixin drop-text-shadow ($drop-blur, $drop-color, $text-blur, $text-color) {
+    filter: drop-shadow(0 0 $drop-blur $drop-color);
+    color: $text-color;
+    text-shadow: 0 0 $text-blur $text-color;
+}

@@ -1,0 +1,55 @@
+.myNavbar {
+    background-color: black;
+    color: white;
+    z-index: 1000;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    height: max-content;
+
+    .nav-logo {
+        @include drop-text-shadow(2rem, white, 2rem, white);
+
+        &:hover {
+            @include drop-text-shadow(.5rem, white, 10px, white);
+        }
+    }
+
+    .nav-active {
+        @include drop-text-shadow(.5rem, white, 10px, white);
+        border-bottom: solid 2px white;
+    }
+
+    .nav-icons {
+        li {
+            width: 30px;
+            height: 30px;
+            
+            &:hover {
+                @include drop-text-shadow(.5rem, white, 10px, white);
+            }
+        }
+    }
+
+    .nav-overlay {
+        background-color: black;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        border-top: solid 2px white;
+        transition: all .3s;
+        height: 100vh;
+
+        ul {
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+.slide-in-left{-webkit-animation:slide-in-left .5s cubic-bezier(.25,.46,.45,.94) both;animation:slide-in-left .5s cubic-bezier(.25,.46,.45,.94) both}
+@-webkit-keyframes slide-in-left{0%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@keyframes slide-in-left{0%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}
+
+.slide-out-left{-webkit-animation:slide-out-left .5s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-left .5s cubic-bezier(.55,.085,.68,.53) both}
+@-webkit-keyframes slide-out-left{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}}@keyframes slide-out-left{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}}

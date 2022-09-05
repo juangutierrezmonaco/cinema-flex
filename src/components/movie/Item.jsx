@@ -3,7 +3,8 @@ import ItemCount from './ItemCount'
 
 const Item = ({title, sinopsis, img, genero, duracion}) => {
     const addToCart = (cantidad) => {
-        alert(`Agregaste ${cantidad} entradas al carrito!`)
+        const word = cantidad == 1 ? "entrada" : "entradas";
+        alert(`Agregaste ${cantidad} ${word} al carrito!`)
     }
 
     return (
