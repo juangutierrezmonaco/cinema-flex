@@ -1,53 +1,39 @@
-.myNavbar {
-    background-color: black;
-    color: white;
-    z-index: 1000;
-    position: sticky;
-    width: 100%;
-    top: 0;
-    height: max-content;
+// Efectos
+.underline-hover {
+    font-family: inherit;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
 
-    .nav-logo {
-        @include drop-text-shadow(2rem, white, 2rem, white);
+    &:focus, &:hover {
+        color: inherit;
 
-        &:hover {
-            @include drop-text-shadow(.5rem, white, 10px, white);
+        &::after {
+            width: 100%;
+            left: 0%;
         }
     }
 
-    .nav-active {
-        @include drop-text-shadow(.5rem, white, 10px, white);
-        border-bottom: solid 2px white;
-    }
-
-    .nav-icons {
-        li {
-            width: 30px;
-            height: 30px;
-            
-            &:hover {
-                @include drop-text-shadow(.5rem, white, 10px, white);
-            }
-        }
-    }
-
-    .nav-overlay {
-        background-color: black;
+    &::after {
+        content: "";
+        pointer-events: none;
         position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        border-top: solid 2px white;
-        transition: all .3s;
-        height: 100vh;
-
-        ul {
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
+        bottom: -2px;
+        left: 50%;
+        width: 0%;
+        height: 2px;
+        background-color: #fff;
+        transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        transition-duration: 400ms;
+        transition-property: width, left;
     }
 }
+
+// Animista
 .slide-in-left{-webkit-animation:slide-in-left .5s cubic-bezier(.25,.46,.45,.94) both;animation:slide-in-left .5s cubic-bezier(.25,.46,.45,.94) both}
 @-webkit-keyframes slide-in-left{0%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}@keyframes slide-in-left{0%{-webkit-transform:translateX(-1000px);transform:translateX(-1000px);opacity:0}100%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}}
 

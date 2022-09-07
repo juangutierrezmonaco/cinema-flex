@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Borrar si no se usa */
 @layer base {
 
-    @variants hover {
+    @layer hover {
         .drop-shadow-mine{
             filter: drop-shadow(0 0 .5rem white);
             color: white;
@@ -12,4 +13,3 @@
         }
     }
 }
-

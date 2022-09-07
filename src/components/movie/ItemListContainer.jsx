@@ -19,7 +19,6 @@ const ItemListContainer = ( {greeting} ) => {
             })
             .catch((err) => console.log(err));
     }, [])
-    
 
     return (
         <div className="itemListContainer pl-8">

@@ -1,7 +1,29 @@
-@import './variables';
-@import './global';
-@import './header';
+@import
+    './abstracts/variables',
+    './abstracts/mixins';
 
+@import
+    './base/reset',
+    './base/typography',
+    './base/animations';
+
+@import 
+    './components/components';
+
+@import
+    './layout/header',
+    './layout/footer';
+
+@import
+    './pages/cartelera',
+    './pages/combos',
+    './pages/estrenos',
+    './pages/precios';
+
+@import
+    './themes/theme';
+
+    
 /* Main */
 .itemListContainer {
     padding: 10px;
