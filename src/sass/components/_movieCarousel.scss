@@ -2,20 +2,22 @@
     padding: 30px;
     background-color: black;
     color: white;
+    border: solid 2px white;
+    border-width: 1px 0;
 }
 
 .movieCarouselHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 20px 20px 0;
+    margin-bottom: 10px;
+    position: relative;
 }
-
 
 .movieCarousel {
     margin: 0 auto;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     border-radius: 20px;
@@ -35,7 +37,7 @@
     img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: fill;
     }
 }
 
@@ -69,15 +71,19 @@
 .movieCarousel-indicators {
     position: absolute;
     
-    bottom: 1.5em;
+    top: 0px;
+    right: 20px;
     z-index: 2;
 }
+
 .movieCarousel-indicator-item {
-    width: 25px;
-    height: 25px;
-    border: none;
-    background: white ;
-    color: black;
+    height: 40px;
+    width: 40px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border: solid 1px white;
+    background: black ;
+    color: white;
     opacity: 0.5;
     margin: 0.2em;
     border-radius: 3px;

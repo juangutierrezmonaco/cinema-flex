@@ -3,17 +3,16 @@ import MovieCarouselHeader from "./MovieCarouselHeader";
 
 const MovieCarouselContainer = () => {
     const slides = [
-        "https://picsum.photos/id/1032/1400/400",
-        "https://picsum.photos/id/1033/1400/400",
-        "https://picsum.photos/id/1037/1400/400",
-        "https://picsum.photos/id/1035/1400/400",
-        "https://picsum.photos/id/1036/1400/400",
+        "https://image.tmdb.org/t/p/original//ugS5FVfCI3RV0ZwZtBV3HAV75OX.jpg",
+        "https://image.tmdb.org/t/p/original//xVbppM1xgbskOKgOuV8fbWBWHtt.jpg",
+        "https://image.tmdb.org/t/p/original//bqJXL8DRUIN6WsF86VB87pZZCOr.jpg",
+        "https://image.tmdb.org/t/p/original//8TUb2U9GN3PonbXAQ1FBcJ4XeXu.jpg",
+        "https://image.tmdb.org/t/p/original//92PJmMopfy64VYjd0HvIQaHGZX0.jpg",
     ]
 
     return (
         <div className="movieCarousel-container">
-            <MovieCarouselHeader/>
-            <MovieCarousel slides={slides} controls indicators autoPlay={false}/>
+            <MovieCarousel slides={slides} controls header autoPlay={false} titulo={'Películas'}/>
         </div>
     )
 }

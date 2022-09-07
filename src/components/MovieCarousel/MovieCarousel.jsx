@@ -2,8 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import MovieCarouselItem from "./MovieCarouselItem"
 import MovieCarouselControls from "./MovieCarouselControls";
 import MovieCarouselIndicators from "./MovieCarouselIndicators";
+import MovieCarouselHeader from "./MovieCarouselHeader";
 
-const MovieCarousel = ({ slides, interval = 3000, controls = false, indicators = false, autoPlay = true, width = '100%', height = 400}) => {
+const MovieCarousel = ({ slides, interval = 3000, controls = false, header = false, autoPlay = true, width = '100%', height = 400, titulo = ''}) => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -47,20 +48,22 @@ const MovieCarousel = ({ slides, interval = 3000, controls = false, indicators =
     }, []);
     
     return (
-        <div className="movieCarousel" style={{ 'maxWidth' : width, height : height }}>
-            <div 
-                className="movieCarousel-inner"
-                style={{ transform: `translateX(${-currentSlide * 100}%)` }}
-            >
-                {slides.map((slide, index) => (
-                    <MovieCarouselItem slide={slide} key={index} stopSlide={stopSlideTimer} startSlide={startSlideTimer}/>
-                ))}
+        <>
+            <MovieCarouselHeader slides={slides} currentSlide={currentSlide} switchIndex={switchIndex} titulo={titulo}/>
+
+            <div className="movieCarousel" style={{ 'maxWidth' : width, height : height }}>
+                <div 
+                    className="movieCarousel-inner"
+                    style={{ transform: `translateX(${-currentSlide * 100}%)` }}
+                >
+                    {slides.map((slide, index) => (
+                        <MovieCarouselItem slide={slide} key={index} stopSlide={stopSlideTimer} startSlide={startSlideTimer}/>
+                    ))}
+                </div>
+
+                {controls && <MovieCarouselControls prev={handlePrev} next={handleNext}/>}
             </div>
-
-            {indicators && <MovieCarouselIndicators slides={slides} currentIndex={currentSlide} switchIndex={switchIndex}/>}
-
-            {controls && <MovieCarouselControls prev={handlePrev} next={handleNext}/>}
-        </div>
+        </>
     )
 }
 
