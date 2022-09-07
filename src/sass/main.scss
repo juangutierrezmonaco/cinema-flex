@@ -8,7 +8,8 @@
     './base/animations';
 
 @import 
-    './components/components';
+    './components/loader',
+    './components/navbar';
 
 @import
     './layout/header',
@@ -22,7 +23,6 @@
 
 @import
     './themes/theme';
-
     
 /* Main */
 .itemListContainer {

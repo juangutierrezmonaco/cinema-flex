@@ -1,10 +1,9 @@
-/* From uiverse.io by @gagan-gv */
 .loader {
     border: 0 solid transparent;
     border-radius: 50%;
     width: 100px;
     height: 100px;
-    background-color: red;
+
 
     &::before, &::after {
         content: '';
@@ -13,7 +12,7 @@
         width: inherit;
         height: inherit;
         position: absolute;
-        animation: loader 2s linear infinite;
+        animation: loaderAnimation 2s linear infinite;
         opacity: 0;
     }
 
@@ -22,7 +21,7 @@
     }
 }
    
-@keyframes loader {
+@keyframes loaderAnimation {
     0% {
         transform: scale(1);
         opacity: 0;
