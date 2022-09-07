@@ -8,6 +8,7 @@ import Cartelera from './components/section/Cartelera';
 import Estrenos from './components/section/Estrenos';
 import Combos from './components/section/Combos';
 import Precios from './components/section/Precios';
+import MovieCarouselContainer from './components/MovieCarousel/MovieCarouselContainer';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <>
         <BrowserRouter>
             <NavBar/>
+            <MovieCarouselContainer/>
 
             <Routes>                
                 <Route path='/' element={<main><ItemListContainer greeting="Películas en cartelera"/></main>}></Route>
