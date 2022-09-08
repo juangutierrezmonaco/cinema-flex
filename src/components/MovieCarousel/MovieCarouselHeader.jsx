@@ -2,8 +2,8 @@ import MovieCarouselIndicators from "./MovieCarouselIndicators";
 
 const MovieCarouselHeader = ({ slides, currentSlide, switchIndex, titulo }) => {
   return (
-    <div className="movieCarouselHeader">
-        <h2 className="movieCarouselHeader uppercase text-3xl">{titulo}</h2>
+    <div className="flex flex-col md:gap-3 flex-wrap mb-2 md:flex-row md:justify-between md:items-center">
+        <h2 className="uppercase text-xl md:text-2xl lg:text-3xl">{titulo}</h2>
         <MovieCarouselIndicators slides={slides} currentIndex={currentSlide} switchIndex={switchIndex}/>
     </div>
   )
