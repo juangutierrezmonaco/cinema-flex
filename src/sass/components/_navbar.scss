@@ -21,10 +21,7 @@
     }
 
     .nav-icons {
-        li {
-            width: 30px;
-            height: 30px;
-            
+        li {     
             &:hover {
                 @include drop-text-shadow(.5rem, white, 10px, white);
             }
@@ -39,13 +36,9 @@
         width: 100%;
         border-top: solid 2px white;
         transition: all .3s;
-        height: 100vh;
-        
-
-        ul {
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 100%);
     }
 }
