@@ -20,7 +20,7 @@ function App() {
             <MovieCarouselContainer/>
 
             <Routes>                
-                <Route path='/' element={<main className='container mt-9 '><MovieCardListContainer greeting="Películas en cartelera"/></main>}></Route>
+                <Route path='/' element={<main className='mt-9'><MovieCardListContainer greeting="Películas en cartelera"/></main>}></Route>
                 {/* <Route path='/movies' element={<Movies/>}></Route>
                 <Route path='/movie/:movieId' element={<Movie/>}></Route> */}
                 {/* <Route path='/category/:categoryId' element={<MoviesListContainer/>}></Route> */}

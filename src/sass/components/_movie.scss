@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 $bg-primary: #220901;
 $bg-secondary: #621708; 
@@ -6,10 +5,16 @@ $bg-terciary: #F6AA1C;
 $text-primary: white;
 $text-secondary: #BC3908;
 
+.movieCardContainer {
+    h1 {
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+}
+
 .movieCard {
     background-color: $bg-secondary;
-        width: 100%;
-        height: 350px;
+    width: 100%;
     overflow: hidden;
     font-family: 'Montserrat', sans-serif;
 
@@ -29,17 +34,11 @@ $text-secondary: #BC3908;
     &_info {
 
         background: $bg-primary;
-        border-radius:0 10px 10px 0;
-        padding-left: 40px;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        position: relative;
+        border-radius: 0 10px 10px 0;
 
         &__title {
             color: $text-primary;            
             font-weight:400;
-            letter-spacing: 5px;
         }
 
         &__details {
@@ -56,24 +55,17 @@ $text-secondary: #BC3908;
 
         &__review {
             p {
-                color:$text-primary;                
-                letter-spacing:1px;
-                line-height:20px;
+                color:$text-primary;
             }
         }
 
         &__premiere {
-            position: absolute;
-            bottom: 20px;
-            right: 40px;
             background-color: #F6AA1C;
             color: $text-secondary;
         }
     }
 
     &_extraInfo {
-        padding: 20px;
-        padding-top: 30px;
         color: $text-primary;
     }
 }

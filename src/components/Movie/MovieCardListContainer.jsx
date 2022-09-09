@@ -30,8 +30,8 @@ const MovieCardListContainer = ( {greeting} ) => {
      
 
     return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-4xl"> {greeting} </h1>
+        <div className="movieCardContainer flex flex-col items-center lg:pt-4">
+            <h1 className="text text-5xl uppercase "> {greeting} </h1>
             <MovieCardList movies={movies}/>
         </div>
     )

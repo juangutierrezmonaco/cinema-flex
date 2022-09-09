@@ -11,7 +11,7 @@ const MovieCarouselContainer = () => {
     ]
 
     return (
-        <div className="movieCarousel-container">
+        <div className="movieCarousel-container lg:px-40">
             <MovieCarousel slides={slides} controls header titulo={'Películas'}/>
         </div>
     )
