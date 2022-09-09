@@ -1,6 +1,6 @@
 [
     { 
-      "id": 1,
+      "id": "1",
       "title": "La chica salvaje",
       "sinopsis": "Basada en la exitosa novela de Delia Owens. Una mujer que se ha criado en los pantanos del sur profundo se convierte en sospechosa del asesinato de un hombre con el que tuvo una relación.",
       "img": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/IMJP3QAIXBAUVEEUHOO6KYVACM.jpg",
@@ -8,7 +8,7 @@
       "duracion": "125 min"
     },
     { 
-      "id": 2,
+      "id": "2",
       "title": "Vertigo",
       "sinopsis": "Después de que Dan muriera escalando en las Montañas Rocosas, su novia Becky y su amiga Hunter deciden ascender una enorme torre de comunicaciones de más de 600 metros de altura y arrojar las cenizas de Dan. A una distancia considerable del suelo y sin cobertura, su ascenso se complica al caerse una parte de la estructura de la torre. No pueden...",
       "img": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ERKMC4Y3UND2ZBLXQ5WVU6Y6OI.jpg",
@@ -16,7 +16,7 @@
       "duracion": "107 min"
     },
     { 
-      "id": 3,
+      "id": "3",
       "title": "¡Nop!",
       "sinopsis": "“¿Qué es un mal milagro?” El ganador al premio Oscar®, Jordan Peele redefinió el género del horror moderno con Huye y después con Nosotros. Ahora, reinventa las películas de verano con una nueva pesadilla expansiva pop de horror, la épica película ¡Nop! El proyecto reúne a Peele con el ganador al Oscar® Daniel Kaluuya (Huye, Judas y EL mesías...",
       "img": "https://es.web.img2.acsta.net/pictures/22/03/01/17/36/2407038.jpg",
