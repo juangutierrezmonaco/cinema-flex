@@ -4,7 +4,7 @@ import MovieCarouselControls from "./MovieCarouselControls";
 import MovieCarouselIndicators from "./MovieCarouselIndicators";
 import MovieCarouselHeader from "./MovieCarouselHeader";
 
-const MovieCarousel = ({ slides, interval = 3000, controls = false, header = false, autoPlay = true, width = '100%', height = '400px',titulo = ''}) => {
+const MovieCarousel = ({ slides, interval = 3000, controls = false, header = false, autoPlay = true, width = '100%', height = '400px', titulo = ''}) => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -48,10 +48,10 @@ const MovieCarousel = ({ slides, interval = 3000, controls = false, header = fal
     }, []);
     
     return (
-        <div className="">
+        <div>
             {header && <MovieCarouselHeader slides={slides} currentSlide={currentSlide} switchIndex={switchIndex} titulo={titulo}/>}
 
-            <div className="movieCarousel " style={{ 'maxWidth' : width, 'maxHeight' : height}}>
+            <div className="movieCarousel md:flex md:justify-center" style={{ 'maxWidth' : width, 'maxHeight' : height}}>
                 <div 
                     className="movieCarousel-inner h-44 sm:h-64 md:h-auto"
                     style={{ transform: `translateX(${-currentSlide * 100}%)` }}

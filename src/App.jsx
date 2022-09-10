@@ -1,5 +1,5 @@
 import './App.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import NavBar from './components/header/NavBar';
 
@@ -7,7 +7,7 @@ import MovieCarouselContainer from './components/MovieCarousel/MovieCarouselCont
 import MovieCardListContainer from './components/MovieCard/MovieCardListContainer';
 import MovieDetailContainer from './components/MovieDetail/MovieDetailContainer';
 
-function App() {
+function App() {   
 
     return (
         <>

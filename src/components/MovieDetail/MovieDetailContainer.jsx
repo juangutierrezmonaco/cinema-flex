@@ -4,6 +4,8 @@ import Loader from '../Loader/Loader'
 import MovieDetail from './MovieDetail'
 
 const MovieDetailContainer = () => {
+    const [loading, setLoading] = useState(false);
+
     const { movieId } = useParams();
     const [movie, setMovie] = useState();
 
@@ -19,16 +21,18 @@ const MovieDetailContainer = () => {
     }
 
     useEffect(() => {
+        setLoading(true);
         getMovie(2000)
             .then(res => {
                 setMovie(res);
+                setLoading(false)
             })
             .catch((err) => console.log(err));
-    }, []);
+    }, [movieId]);
 
     return (
        <div>
-            {movie ? <MovieDetail {...movie}/> : <Loader/>}
+            {!loading ? <MovieDetail {...movie}/> : <Loader/>}
        </div>
     )
 }
