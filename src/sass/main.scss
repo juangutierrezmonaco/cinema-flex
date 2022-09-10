@@ -10,11 +10,13 @@
 @import 
     './components/loader',
     './components/navbar',
-    './components/movie',
-    './components/movieCarousel';
+    './components/movieCarousel',
+    './components/movieDetail',
+    './components/movieCard';
 
 @import
     './layout/header',
+    './layout/global',
     './layout/footer';
 
 @import
