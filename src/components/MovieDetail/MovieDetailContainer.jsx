@@ -22,7 +22,6 @@ const MovieDetailContainer = () => {
         getMovie(2000)
             .then(res => {
                 setMovie(res);
-                console.log(res);
             })
             .catch((err) => console.log(err));
     }, []);

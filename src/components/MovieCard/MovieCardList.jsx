@@ -1,7 +1,7 @@
+import { Link } from 'react-router-dom';
 import MovieCard from './MovieCard';
-import Loader from '../Loader/Loader';
 
-const MovieCardList = ({ movies }) => {
+const MovieCardList = ({ movies, listTitle }) => {
     /* Esto es para saber las fechas limite de estreno */
     let start = new Date();
     while ( start.getDay() !== 4 ) start.setDate(start.getDate() - 1);
@@ -12,14 +12,15 @@ const MovieCardList = ({ movies }) => {
 
     return (
         <ul>
-            {movies.length ? (
+            <h2 className='text-center text-3xl p-5 underline'>{listTitle}</h2>
+            {movies.length > 0 ? (
                 movies.map( m => 
                     <li key={m.id} className="mb-10">
                         <MovieCard {...m} start={start} end={end}/>
                     </li>
                 )
             ) : (
-                <Loader/>
+                <span>No se encontraron películas</span>
             )}
         </ul>  
     )

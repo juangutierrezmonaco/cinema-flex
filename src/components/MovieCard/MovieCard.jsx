@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ title, overview, poster_path, genero, id, release_date, start, end }) => {
-    /* Imagen */
-    const imgUrl = `https://image.tmdb.org/t/p/original/${poster_path}`;
 
     /* Es estreno ? */
     const [esEstreno, setEstreno] = useState(false);
@@ -21,13 +19,15 @@ const MovieCard = ({ title, overview, poster_path, genero, id, release_date, sta
     const [details, setDetails] = useState('');
     
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es_MX`)
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
         .then(res => res.json())
         .then(data => setDetails(data));
-        console.log(details)
     }, [])
     
     const { runtime, genres} = details;
+    
+    /* Imagen */
+    const imgUrl = `https://image.tmdb.org/t/p/original/${poster_path}`;
 
     return (
         <div className="movieCard flex flex-wrap">
@@ -64,7 +64,7 @@ const MovieCard = ({ title, overview, poster_path, genero, id, release_date, sta
                     </ul> 
                 }     
                 
-                <Link to={`./movie/${id}`}>
+                <Link to={`/movie/${id}`}>
                     <ul className="flex items-start justify-center gap-3 text-white p-2 uppercase text-[.65rem] absolute w-full h-full bg-[#9D0208] xxs:hidden mt-2">
                         <li>Ver ficha completa</li>
                         <li ><i className="fa-solid fa-plus"></i></li>
@@ -93,13 +93,16 @@ const MovieCard = ({ title, overview, poster_path, genero, id, release_date, sta
                     </ul>
                 </li>
 
-                {/* <li className="hidden xxs:block xxs:w-2/5 md:w-full">
-                    <ul className="btn xxs:flex xxs:flex-nowrap xxs:p-5">
-                        <li><Link to={`./movie/${id}`}>Ver ficha completa</Link></li>
-                        <li><i className="fa-solid fa-plus"></i></li>
-                    </ul>
-                </li> */}
-                <li><Link to={`./movie/${id}`} className="btn">Ver ficha completa</Link></li>
+                <Link to={`/movie/${id}`}>
+                    <li className="hidden xxs:block xxs:w-2/5 md:w-full">
+                        <ul className="btn xxs:flex xxs:flex-nowrap xxs:p-5">
+                            <li>Ver ficha completa</li>
+                            <li><i className="fa-solid fa-plus"></i></li>
+                        </ul>
+                    </li>
+                </Link>
+
+                
             </ul>
             
         </div>

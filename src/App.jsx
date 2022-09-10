@@ -9,24 +9,24 @@ import MovieDetailContainer from './components/MovieDetail/MovieDetailContainer'
 
 function App() {
 
-  return (
-    <>
-        <BrowserRouter>
-            <NavBar/>
-            <MovieCarouselContainer/>
+    return (
+        <>
+            <BrowserRouter>
+                <NavBar/>
+                <MovieCarouselContainer/>
 
-            <Routes>                
-                <Route path='/' element={<main>hola</main>}></Route>
+                <Routes>                
+                    <Route path='/' element={<main className='mt-9 lg:px-24'><MovieCardListContainer greeting="Películas"/></main>}></Route>
 
-                <Route path='/genres/:genreId' element={<main className='mt-9 lg:px-24'><MovieCardListContainer greeting="Películas en cartelera"/></main>}></Route>
+                    <Route path='/category/:categoryId' element={<main className='mt-9 lg:px-24'><MovieCardListContainer greeting="Películas"/></main>}></Route>
 
-                <Route path='/movie/:movieId' element={<main className='lg:px-24'><MovieDetailContainer/></main>}></Route>
-            </Routes>
-            
-            <Footer/>
-        </BrowserRouter>
-    </>
-  );
+                    <Route path='/movie/:movieId' element={<main className='mt-9 lg:px-24'><MovieDetailContainer/></main>}></Route>
+                </Routes>
+                
+                <Footer/>
+            </BrowserRouter>
+        </>
+    );
 }
 
 export default App;

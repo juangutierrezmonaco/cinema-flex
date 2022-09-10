@@ -8,7 +8,7 @@ const NavBar = () => {
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
             .then(res => res.json())
-            .then(data => setGenres(data))
+            .then(data => setGenres(data.genres))
             .catch(error => console.log(error));
     }, [])
     
@@ -47,7 +47,22 @@ const NavBar = () => {
                 <ul className="uppercase hidden lg:flex gap-5 whitespace-nowrap" >
                     <li><NavLink to={'/category/cartelera'} className={navLinkClass}>Películas en cartel</NavLink></li>
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass}>Próximos estrenos</NavLink></li>
-                    <li className='underline-hover hover:drop-shadow-mine'>Géneros</li>
+
+                    <li>
+                        <div className="dropdown dropdown-end">
+                            <label tabIndex={0}  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
+                                <ul tabIndex={0} className="menu dropdown-content p-2 bg-white text-black ">
+                                    {genres.length > 0 ? (
+                                        genres.map( g => 
+                                            <li key={g.id}><NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink></li> 
+                                        )
+                                    ) : (
+                                        <li>Cargando...</li>
+                                    )}
+                                </ul>
+                        </div>
+
+                    </li>
                 </ul>
             </nav>
 

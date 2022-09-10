@@ -15,7 +15,6 @@ const MovieDetail = ({ id, title, backdrop_path, poster_path, overview, details,
                 setVideoUrl(data.results.find(video => video.type == 'Trailer') || data.results[0]);
             })
             .catch(error => console.log(error));
-        console.log(videoUrl)
     }, [])
     
 
