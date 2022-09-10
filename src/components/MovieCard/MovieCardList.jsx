@@ -11,7 +11,7 @@ const MovieCardList = ({ movies, listTitle }) => {
     end.setDate(start.getDate() + 7);    
 
     return (
-        <ul>
+        <ul className='flex flex-col items-center'>
             <h2 className='text-center text-3xl p-5 underline'>{listTitle}</h2>
             {movies.length > 0 ? (
                 movies.map( m => 

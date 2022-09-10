@@ -20,7 +20,7 @@ function App() {
 
                     <Route path='/category/:categoryId' element={<main className='lg:px-24'><MovieCardListContainer greeting="Películas"/></main>}></Route>
 
-                    <Route path='/movie/:movieId' element={<main className='mt-9 lg:px-24'><MovieDetailContainer/></main>}></Route>
+                    <Route path='/movie/:movieId' element={<main className='mt-9 lg:px-12'><MovieDetailContainer/></main>}></Route>
                 </Routes>
                 
                 <Footer/>

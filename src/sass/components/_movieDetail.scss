@@ -1,0 +1,181 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
+
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+.movieDetail-card {
+    font: 14px/22px "Lato", Arial, sans-serif;
+    color: #A9A8A3;
+    padding: 40px 0;
+    position: relative;
+
+    &__container {
+        margin: 0 auto;
+        width: 100%;
+        height: fit-content;
+        background: #F0F0ED;
+        border-radius: 5px;
+        height: 1000px;
+
+        
+
+        &__poster {
+            position: absolute;
+            top: 160px;
+            left: 40px;
+            z-index: 2;
+            width: 15%;
+            
+            img {
+                width: 100%;
+            }
+        }
+
+        &__top {
+            height: 342px;  
+            margin:0;
+            position: relative;
+            overflow: hidden;
+            z-index:1;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            
+
+            &::before {
+                content:'';
+                width:100%; height:100%;
+                position:absolute;
+                
+                top:0; 
+                left:0;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+
+                z-index:-1;
+                
+                transform: skewY(-2.2deg);
+                transform-origin:0 0;
+                backface-visibility: hidden; 
+            }
+
+            .details {
+                position: relative;  
+                margin: 190px 0 0 280px;
+                background-color: rgba($color: #000000, $alpha: .7);
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                
+                
+                .title1 {
+                    color: white;
+                    font-size: 44px;
+                    margin-bottom: 13px;
+                    position: relative;
+                }
+              
+                .title2 {    
+                    color: white;
+                    font-size: 23px;    
+                    font-weight: 300;
+                    margin-bottom: 15px;
+                }
+
+                .rate {
+                    display: flex;
+                    position: absolute;
+                    top: 3px;
+                    right: -60px;
+                    background: #C4AF3D;
+                    border-radius: 5px;
+                    color: #544C21;
+                    font-size: 14px;
+                    padding: 0px 4px;
+                
+                }
+            }
+        }
+
+        &__bottom {
+            bottom: 0px;
+            height: 200px;
+            font-size: 16px;
+            line-height: 26px;
+            color: black;
+
+            .genres {
+                padding-left: 50px;
+                padding-top: 120px;
+                width: 220px;
+                float: left;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+
+                span {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 3px 8px;
+                    font-size: 14px;
+                    margin-right: 4px;
+                    line-height: 35px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: #ddd;
+                    }
+                }
+            }
+              
+            .details {
+                padding-left: 41px;
+                padding-top: 30px;
+                margin-left: 20px;
+                width: 480px;
+                float: left;
+
+                &__overview {
+                    width: 100%;
+                }
+            }
+              
+            .avatars {
+                margin-top: 23px;
+                
+                img {
+                    cursor: pointer;
+                }
+                
+                img:hover {
+                    opacity: 0.6;
+                }
+                
+                a:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+    }
+}
+
+.movieCount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: black;
+    width: fit-content;
+
+    > div {
+        display: flex;
+        font-size: 2rem;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        width: 100%;
+        justify-content: space-between;
+    }
+}

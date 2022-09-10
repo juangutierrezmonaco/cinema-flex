@@ -23,9 +23,14 @@ const NavBar = () => {
     };
 
     /* Mostrar qué sección está seleccionada */
-    const navLinkClass = (navData) => (navData.isActive ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine');  
-
+    const navLinkClass = (navData) => (navData.isActive ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine'); 
     const bntStyles = 'btn btn-circle min-h-0 h-8 w-8 text-sm sm:text-xl sm:h-10 sm:w-10 xl:text-2xl xl:h-12 xl:w-12';
+
+    /* Cerrar modal géneros */
+    const closeModal = (e) => { 
+        // De momento lo hago a lo Vanilla JS por falta de tiempo para cerrar el modal. 
+        e.target.parentElement.parentElement.parentElement.querySelector("label").click();
+    }
     
     return (
         <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl">
@@ -49,19 +54,26 @@ const NavBar = () => {
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass}>Próximos estrenos</NavLink></li>
 
                     <li>
-                        <div className="dropdown dropdown-end">
-                            <label tabIndex={0}  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
-                                <ul tabIndex={0} className="menu dropdown-content p-2 bg-white text-black ">
-                                    {genres.length > 0 ? (
-                                        genres.map( g => 
-                                            <li key={g.id}><NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink></li> 
-                                        )
-                                    ) : (
-                                        <li>Cargando...</li>
-                                    )}
-                                </ul>
-                        </div>
+                        <label htmlFor="my-modal-3"  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
 
+                        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+                        <div className="modal">
+                            <div className="modal-box relative bg-white text-black ">
+                                <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                <h3 className="text-lg font-bold">Géneros</h3>
+                                <ul className="menu dropdown-content p-2 bg-white text-black ">
+                                        {genres.length > 0 ? (
+                                            genres.map( g => 
+                                                <li key={g.id} onClick={closeModal}>
+                                                    <NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink>
+                                                </li> 
+                                            )
+                                        ) : (
+                                            <li>Cargando...</li>
+                                        )}
+                                </ul>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -72,7 +84,28 @@ const NavBar = () => {
                     <li><NavLink to={'/'} className={navLinkClass} onClick={closeNav}>Inicio</NavLink></li>
                     <li><NavLink to={'/category/cartelera'} className={navLinkClass} onClick={closeNav}>Películas en cartel</NavLink></li>
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass} onClick={closeNav}>Próximos estrenos</NavLink></li>
-                    <li className='underline-hover hover:drop-shadow-mine' onClick={closeNav}>Géneros</li>
+                    <li>
+                        <label htmlFor="my-modal-3"  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
+
+                        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+                        <div className="modal">
+                            <div className="modal-box relative bg-white text-black ">
+                                <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                <h3 className="text-lg font-bold">Géneros</h3>
+                                <ul className="menu dropdown-content p-2 bg-white text-black ">
+                                        {genres.length > 0 ? (
+                                            genres.map( g => 
+                                                <li key={g.id} onClick={() => { closeModal(); closeNav();}}>
+                                                    <NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink>
+                                                </li> 
+                                            )
+                                        ) : (
+                                            <li>Cargando...</li>
+                                        )}
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </nav>
 

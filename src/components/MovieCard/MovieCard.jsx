@@ -22,11 +22,16 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
         fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&append_to_response=credits,release_dates`)
         .then(res => res.json())
         .then(data => {
+            
             const director = data.credits.crew.find(c => c.job == 'Director').name;
             const actores = data.credits.cast.map(c => c.name);
-            setDetails({...data, 'director': director, 'cast': actores});
             
+            // Traigo de USA la clasificación porque de Argentina no hay mucho, si no hay de USA trae la primera que se encuentra
+            const releaseDatesUS = data.release_dates.results.find(rD => rD.iso_3166_1 == 'US');
+            const releaseDates = data.release_dates.results[0];
+            const certification = (releaseDatesUS || releaseDates).release_dates[0].certification;
             
+            setDetails({...data, 'director': director, 'cast': actores, 'rate': certification });
         });
     }, [])
     
@@ -95,7 +100,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
                     
                     <ul className="xxs:flex xxs:gap-5 xxs:items-start">
                         <li><i className="fa-solid fa-user-group"></i></li>
-                        <li className="uppercase">pg-13</li>
+                        <li className="uppercase">{details.rate || 'Sin info'}</li>
                     </ul>
                 </li>
 
