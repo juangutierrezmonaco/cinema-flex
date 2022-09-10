@@ -4,7 +4,7 @@ import MovieCarousel from "./MovieCarousel"
 const MovieCarouselContainer = () => {
     const [slides, setSlides] = useState([]);
     useEffect(() => {
-        fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&page=1&region=AR')
+        fetch('https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-AR&page=1')
         .then(res => res.json())
         .then(data => {
             setSlides(data.results);

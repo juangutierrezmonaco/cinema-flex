@@ -41,7 +41,7 @@ const MovieCardListContainer = ( {greeting} ) => {
                 break;
             default:
                 setListTitles([`${genres && genres.find(g => g.id == categoryId).name}`]);
-                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&page=1&region=AR&with_genres=${categoryId}`);
+                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&page=1with_genres=${categoryId}`);
                 break;
         }
 
@@ -71,7 +71,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     /* Explicación: Como podemos tener varias peticiones, hice que haya varias listas de películas y está todo preparado para agregar más peticiones y que se sigan agregando más películas separas por listas. */
     return (
         <div className="movieCardContainer flex flex-col items-center lg:pt-4">
-            <h1 className="text text-5xl uppercase mb-12"> {greeting} </h1>
+            <h1 className="text text-5xl uppercase"> {greeting} </h1>
             {   movieLists ? (
                     movieLists.map( (movieList, index) => (
                         <MovieCardList movies={movieList} listTitle={listTitles[index]} key={categoryId + index}/>)

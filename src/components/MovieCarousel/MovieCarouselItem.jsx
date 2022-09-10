@@ -8,7 +8,6 @@ const MovieCarouselItem = ({ slide, stopSlide, startSlide }) => {/*
         fetch(`https://api.themoviedb.org/3/movie/${slide.id}/images?api_key=892e5b21eccd8afb7c43b48a426ac1e1`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setImgURL(data.backdrops.length > 0 ? data.backdrops[0].file_path : data.posters[0].file_path);
             })
             .catch(err => console.log(err));
