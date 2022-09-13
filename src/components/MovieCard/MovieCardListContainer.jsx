@@ -66,7 +66,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     }
 
     useEffect(() => {
-        functions.scrollTo('main');
+        categoryId != 'inicio' ? functions.scrollTo('main') : functions.scrollTo('body');
         setMovieLists();
         getMovies(2000)
             .then(res => {
