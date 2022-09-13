@@ -15,7 +15,10 @@ const NavBar = () => {
     
     /* Abertura del nav en vista mobile*/
     const [openNav, setOpenNav] = useState(false);
-    const closeNav = () => {setOpenNav(false)}; // Para cuando haga click en alguna opción se cierre el Navbar
+    const closeNav = () => {    // Para cuando haga click en alguna opción se cierre el Navbar
+        document.body.style.overflow = 'auto';
+        setOpenNav(false);
+    }; 
 
     const toggleButton = () => {    // Cambia el estado del openNav y deshabilita el scroll
         document.body.style.overflow = !openNav ? 'hidden' : 'auto';
@@ -48,6 +51,7 @@ const NavBar = () => {
                 </Link>
             </div>
 
+            {/* Nav versión desktop  */}
             <nav>
                 <ul className="uppercase hidden lg:flex gap-5 whitespace-nowrap" >
                     <li><NavLink to={'/category/cartelera'} className={navLinkClass}>Películas en cartel</NavLink></li>
@@ -78,25 +82,26 @@ const NavBar = () => {
                 </ul>
             </nav>
 
-            {/* Nota: El invisible es para que no se vea la animación en la carga de la página */}
-            <nav className={openNav ? 'nav-overlay lg:hidden slide-in-left' : `nav-overlay lg:hidden slide-out-left invisible`}>
+            {/* Nav versión Mobile. Nota: El invisible es para que no se vea la animación en la carga de la página */}
+            <nav className={openNav ? 'nav-overlay flex justify-center items-center lg:hidden slide-in-left' : `nav-overlay flex justify-center items-center lg:hidden slide-out-left invisible`}>
                 <ul className="uppercase flex flex-col items-center lg:flex-row gap-5 whitespace-nowrap" >
                     <li><NavLink to={'/'} className={navLinkClass} onClick={closeNav}>Inicio</NavLink></li>
                     <li><NavLink to={'/category/cartelera'} className={navLinkClass} onClick={closeNav}>Películas en cartel</NavLink></li>
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass} onClick={closeNav}>Próximos estrenos</NavLink></li>
-                    <li>
-                        <label htmlFor="my-modal-3"  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
+                    
+                    <li >
+                        <label htmlFor="my-modal-3-mobile">Géneros</label>
 
-                        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+                        <input type="checkbox" id="my-modal-3-mobile" className="modal-toggle" />
                         <div className="modal">
                             <div className="modal-box relative bg-white text-black ">
-                                <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                <label htmlFor="my-modal-3-mobile" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                                 <h3 className="text-lg font-bold">Géneros</h3>
                                 <ul className="menu dropdown-content p-2 bg-white text-black ">
                                         {genres.length > 0 ? (
                                             genres.map( g => 
-                                                <li key={g.id} onClick={() => { closeModal(); closeNav();}}>
-                                                    <NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink>
+                                                <li key={g.id}>
+                                                    <NavLink to={`./category/${g.id}`} className={`text-black`} onClick={() => { closeModal(); closeNav();}}>{g.name}</NavLink>
                                                 </li> 
                                             )
                                         ) : (

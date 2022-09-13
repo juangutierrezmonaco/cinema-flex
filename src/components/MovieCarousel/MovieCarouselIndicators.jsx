@@ -2,7 +2,7 @@ const MovieCarouselIndicators = ({ slides, currentIndex, switchIndex }) => {
     const indicatorsClass = `movieCarousel-indicator-item h-8 w-8 md:h-10 md:w-10`;
 
     return (
-        <div className="">
+        <div>
             {slides.map((_, index) => (
                 <button 
                     key={index}

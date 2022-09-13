@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import MovieCard from './MovieCard';
 
 const MovieCardList = ({ movies, listTitle }) => {

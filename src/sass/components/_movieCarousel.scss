@@ -5,9 +5,8 @@
     border-top: solid 1px white;
 }
 
-.movieCarousel-indicator-item {
-    border: solid 1px white;
-    background: black ;
+.movieCarousel-indicator-item {     
+    background-color: rgba($color: white, $alpha: .4) ;
     color: white;
     opacity: 0.5;
     margin: 0.2em;

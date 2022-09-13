@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import MovieCardList from './MovieCardList';
+import functions from '../global/functions';
 
 const MovieCardListContainer = ( {greeting} ) => {
     
@@ -65,6 +66,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     }
 
     useEffect(() => {
+        functions.scrollTo('main');
         setMovieLists();
         getMovies(2000)
             .then(res => {

@@ -1,7 +1,7 @@
 .myNavbar {
     background-color: black;
     color: white;
-    z-index: 1000;
+    z-index: 100;
     position: sticky;
     width: 100%;
     top: 0;
@@ -36,10 +36,9 @@
         width: 100%;
         border-top: solid 2px white;
         transition: all .3s;
-        display: flex;
+       /*  display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: center; */
         height: calc(100vh - 100%);
     }
 }
-// NOTA: Se sigue viendo en vista full, despues ver qué pasa para arreglarlo.
