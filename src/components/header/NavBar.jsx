@@ -27,7 +27,7 @@ const NavBar = () => {
 
     /* Mostrar qué sección está seleccionada */
     const navLinkClass = (navData) => (navData.isActive ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine'); 
-    const bntStyles = 'btn btn-circle min-h-0 h-8 w-8 text-sm sm:text-xl sm:h-10 sm:w-10 xl:text-2xl xl:h-12 xl:w-12';
+    const btnStyles = 'btn btn-circle min-h-0 h-8 w-8 text-sm sm:text-xl sm:h-10 sm:w-10 xl:text-2xl xl:h-12 xl:w-12 nav-icon';
 
     /* Cerrar modal géneros */
     const closeModal = (e) => { 
@@ -39,7 +39,7 @@ const NavBar = () => {
         <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl">
             <div className='flex items-center gap-3'> 
 
-                <label className={`swap swap-rotate lg:hidden ${bntStyles}`} onChange={toggleButton}>
+                <label className={`swap swap-rotate lg:hidden ${btnStyles}`} onChange={toggleButton}>
                     <input type="checkbox" checked={openNav} readOnly/>
                     <i className='swap-off fill-current fa-solid fa-bars'></i>
                     <i className='swap-on fill-current fa-solid fa-xmark'></i>
@@ -61,8 +61,8 @@ const NavBar = () => {
                         <label htmlFor="my-modal-3"  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
 
                         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-                        <div className="modal">
-                            <div className="modal-box relative bg-white text-black ">
+                        <label htmlFor="my-modal-3" className="modal cursor-pointer">
+                            <div className="modal-box relative bg-white text-black cursor-pointer">
                                 <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                                 <h3 className="text-lg font-bold">Géneros</h3>
                                 <ul className="menu dropdown-content p-2 bg-white text-black ">
@@ -77,7 +77,7 @@ const NavBar = () => {
                                         )}
                                 </ul>
                             </div>
-                        </div>
+                        </label>
                     </li>
                 </ul>
             </nav>
@@ -114,10 +114,10 @@ const NavBar = () => {
                 </ul>
             </nav>
 
-            <ul className="flex items-center gap-2 nav-icons">
-                <li className={bntStyles} onClick={closeNav}><button><i className="fa-regular fa-user"></i></button></li>
-                <li className={bntStyles} onClick={closeNav}><button><i className="fa-solid fa-magnifying-glass"></i></button></li>
-                <li className={bntStyles} onClick={closeNav}><CartWidget/></li>
+            <ul className="flex items-center gap-2">
+                <li className={btnStyles} onClick={closeNav}><button><i className="fa-regular fa-user"></i></button></li>
+                <li className={btnStyles} onClick={closeNav}><button><i className="fa-solid fa-magnifying-glass"></i></button></li>
+                <li onClick={closeNav}><CartWidget btnStyles={btnStyles}/></li>
             </ul>
         </header>
     )

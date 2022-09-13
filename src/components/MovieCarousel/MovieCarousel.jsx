@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import MovieCarouselItem from "./MovieCarouselItem"
 import MovieCarouselControls from "./MovieCarouselControls";
-import MovieCarouselIndicators from "./MovieCarouselIndicators";
 import MovieCarouselHeader from "./MovieCarouselHeader";
 
 const MovieCarousel = ({ slides, interval = 3000, controls = false, header = false, autoPlay = true, width = '100%', height = '400px', titulo = ''}) => {

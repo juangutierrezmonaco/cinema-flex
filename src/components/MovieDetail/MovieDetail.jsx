@@ -24,19 +24,22 @@ const MovieDetail = ({id, title, tagline, poster_path, backdrop_path, overview, 
 
     return (
         <div className="movieDetail-card">
-            <style>{background}</style>
             <div className="movieDetail-card__container">       
 
                 <div className="movieDetail-card__container__poster ">
                     <img src={posterPath} alt={`Poster de la película - ${title}`}/>
                 </div>        
 
-                <div className="movieDetail-card__container__top">
-                    <div className="details rounded-lg ">
-                        <div className="title1">{title}</div>
-                        <div className="title2 italic">{tagline}</div>  
-                        <span className="rate">{rate}</span>           
-                    </div> 
+                <div>
+                    <div className="movieDetail-card__container__top">
+                        <div className="movieDetail-card__container__top__fondo"></div>
+                        <style>{background}</style>
+                        <div className="details rounded-lg ">
+                            <div className="title1">{title}</div>
+                            <div className="title2 italic">{tagline}</div>  
+                            <span className="rate">{rate}</span>           
+                        </div> 
+                    </div>
                 </div>
                 
                 <div className="movieDetail-card__container__bottom">

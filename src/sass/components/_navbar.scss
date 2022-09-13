@@ -20,11 +20,9 @@
         border-bottom: solid 2px white;
     }
 
-    .nav-icons {
-        li {     
-            &:hover {
-                @include drop-text-shadow(.5rem, white, 10px, white);
-            }
+    .nav-icon {   
+        &:hover {
+            @include drop-text-shadow(.5rem, white, 10px, white);
         }
     }
 
