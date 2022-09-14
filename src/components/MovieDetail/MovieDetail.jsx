@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useCart } from "../../context/CartContext";
 import MovieCount from './MovieCount';
 
 const MovieDetail = ({id, title, tagline, poster_path, backdrop_path, overview, genres, release_dates}) => {
@@ -17,9 +18,11 @@ const MovieDetail = ({id, title, tagline, poster_path, backdrop_path, overview, 
     }, []);
 
     // Manejo de carrito
+    const { addMovie } = useCart();
+
     const addToCart = (cantidad) => {
-        const word = cantidad == 1 ? "entrada" : "entradas";
-        alert(`Agregaste ${cantidad} ${word} al carrito!`)
+        const movie = {id, title, poster_path, backdrop_path};
+        addMovie(movie, cantidad);
     }
 
     return (

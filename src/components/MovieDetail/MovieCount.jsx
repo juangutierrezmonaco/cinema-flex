@@ -5,15 +5,25 @@ const MovieDetailCount = ( {stock, initial, onAdd} ) => {
     const [count, setCount] = useState(initial);
 
     const increaseCount = () => {
-        count < stock && setCount(parseInt(count) + 1);
+        if (count < stock ) {
+            setCount(parseInt(count) + 1);
+        } else {
+            alert('No disponemos de esa cantidad de stock.')
+        }
+
     }
 
     const decreaseCount = () => {
         count > 1 && setCount(parseInt(count) - 1);
     }
 
-    const validate = () => {    // Aunque ya está previamente validado que no supere al stock, lo verifico nuevamente por si acaso
-        count <= stock && onAdd(count);
+    const submitTickets = () => {    // Aunque ya está previamente validado que no supere al stock, lo verifico nuevamente por si acaso
+        if ( count <= stock ) { // Agrego al carrito y reseteo el contador
+            onAdd(parseInt(count));
+            setCount(1);
+        } else {
+            alert('No disponemos de esa cantidad de stock.')
+        }
     }
 
     return (
@@ -24,7 +34,7 @@ const MovieDetailCount = ( {stock, initial, onAdd} ) => {
                 <button className="btn btn-light" onClick={increaseCount}><i className="fa fa-plus"></i></button>
            </div>
 
-            <button className="btn btn-warning" onClick={validate}>Agregar a mis entradas!</button>
+            <button className="btn btn-warning" onClick={submitTickets}>Agregar a mis entradas!</button>
         </div>
     )
 }

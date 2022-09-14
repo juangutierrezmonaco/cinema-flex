@@ -27,7 +27,7 @@ const MovieDetailContainer = () => {
         getMovie(2000)
             .then(res => {
                 setMovie(res);
-                setLoading(false)
+                setLoading(false);
             })
             .catch((err) => console.log(err));
     }, [movieId]);
