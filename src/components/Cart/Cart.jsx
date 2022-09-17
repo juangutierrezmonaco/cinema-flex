@@ -28,7 +28,6 @@ const Cart = () => {
                             <Ticket movie={movie} quantity={quantity} screeningId={screeningId} screeningInfo={screeningInfo} removeMovie={removeMovie} />
                         </li>)
                     )
-                    
                 }
             </ul>
             }

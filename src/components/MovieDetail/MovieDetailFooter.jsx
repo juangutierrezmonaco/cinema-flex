@@ -42,6 +42,11 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
     const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
     const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
 
+    useEffect(() => {
+        console.log(screeningId);
+    }, [screeningId])
+    
+
     return (
         <div className='movieDetailFooter'>
             <div className='movieDetailFooter_select'>

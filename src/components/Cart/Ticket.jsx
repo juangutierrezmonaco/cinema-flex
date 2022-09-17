@@ -7,9 +7,11 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
         removeMovie(screeningId);
     }
 
-    const buy = () => {
-        console.log('Compra!')
+    const buyTickets = (cantidad, screeningInfo) => {
+        alert('Simulación de proceso de compra.');
+        removeMovie(movie.id + screeningInfo);
     }
+
 
     return (
         <div className="cartCard">
@@ -23,7 +25,7 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
                 </div>
 
                 <div className='cartCard-right_bottom'>
-                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} onAdd={buy} values={screeningInfo}/>
+                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} values={screeningInfo} onAdd={buyTickets} />
                 </div>
             </div>
                 
