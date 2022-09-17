@@ -2,6 +2,7 @@ import MovieScreeningSelect from './MovieScreeningSelect';
 import funcionesDeCine from '../../funcionesDeCine.json';
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import { useLocation } from 'react-router-dom';
 
 const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [] }) => {
 
@@ -11,12 +12,16 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
         return 10;
     }
 
+    /* Si estoy en el cart no tengo que contar cuántas tengo en el cart para el stock, pero si estoy afuera del cart sí */
+    const imInCart = useLocation().pathname == '/tickets';
+
     /* MovieCount */
     const { howMany } = useCart();
     const [count, setCount] = useState(initial);
 
     const increaseCount = () => {
-        if (parseInt(count) + howMany(movieId, screeningId) < getDisponibles()) {
+        const sizeInCart = imInCart ? 0 : howMany(movieId, screeningId);
+        if (parseInt(count) + sizeInCart < getDisponibles()) {
             setCount(parseInt(count) + 1);
         } else {
             alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
@@ -28,7 +33,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
     }
 
     const submitTickets = () => {
-        if (parseInt(count) + howMany(movieId, screeningId) <= getDisponibles()) {
+        const sizeInCart = imInCart ? 0 : howMany(movieId, screeningId);
+        if (parseInt(count) + sizeInCart <= getDisponibles()) {
             onAdd(parseInt(count), screeningId);
             setCount(1);
         } else {
@@ -40,12 +46,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
     const [screeningId, setScreeningId] = useState('');
     
     const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
-    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
-
-    useEffect(() => {
-        console.log(screeningId);
-    }, [screeningId])
-    
+    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;    
 
     return (
         <div className='movieDetailFooter'>
