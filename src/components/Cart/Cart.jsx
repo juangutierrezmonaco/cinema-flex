@@ -21,12 +21,11 @@ const Cart = () => {
         <div className="flex flex-col items-center px-36">
             <h1 className="text text-5xl uppercase">Entradas</h1>
             {   !isEmpty() &&
-                <ul className="text-2xl m-20 p-24 bg-slate-300">
+                <ul className="text-2xl m-20 bg-slate-300">
                 {   
-                    cart.map( ({ movie, quantity, screeningId }) => (
-                        <li key={movie.id} className='mb-5 flex justify-center items-end'> 
-                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId}/>
-                            <button className="btn btn-sm ml-8" onClick={() => removeMovie(screeningId)}>Borrar</button>
+                    cart.map( ({ movie, quantity, screeningId, screeningInfo }) => (
+                        <li key={screeningId} className='mb-5 flex justify-center items-end'> 
+                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId} screeningInfo={screeningInfo} removeMovie={removeMovie} />
                         </li>)
                     )
                     

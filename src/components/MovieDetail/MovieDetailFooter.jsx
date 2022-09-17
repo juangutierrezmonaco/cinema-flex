@@ -3,7 +3,7 @@ import funcionesDeCine from '../../funcionesDeCine.json';
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 
-const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId }) => {
+const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, defaultSalaIndex, defaultDiaIndex, delfaultHorarioIndex }) => {
 
     /* En teoría esta sería la función que hace la consulta a la base de datos con la película, el día y horario y la sala */
     /* De momento sólo retorna 10, pero a futuro se hará la funcionalidad */
@@ -37,19 +37,25 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId }) => {
     }
 
     /* MovieScreeningId */
-    const [horarioId, setHorarioId] = useState('');
-    const [sala, setSala] = useState('');
-    const screeningId = (sala && horarioId) && sala + horarioId;
+    const defaultHorario = ( defaultDiaIndex && delfaultHorarioIndex ) && `${defaultDiaIndex}${delfaultHorarioIndex}`;
+    const [horario, setHorario] = useState(defaultHorario);
+    const [sala, setSala] = useState(`${defaultSalaIndex}`);
+    const screeningId = (sala && horario) && `${sala}${horario}`;
+
+    useEffect(() => {
+        console.log( horario );
+    }, [screeningId])
+    
+    
 
     return (
         <div className='movieDetailFooter'>
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={funcionesDeCine} setHorario={setHorarioId} setSala={setSala}/>
+                <MovieScreeningSelect screenings={funcionesDeCine} setHorario={setHorario} setSala={setSala} defaultSalaIndex={defaultSalaIndex} defaultDiaIndex={defaultDiaIndex} delfaultHorarioIndex={delfaultHorarioIndex} />
             </div>
 
-            {   screeningId &&
-                <div className='movieDetailFooter_select'>
+            <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
                     <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione entradas</span>
                     <div className="flex flex-col">
                         <div className="flex justify-between items-center">
@@ -61,7 +67,6 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId }) => {
                         <button className="btn btn-warning" onClick={submitTickets}>{submitText}</button>
                     </div>
                 </div>
-            }
         </div>
     )
 }

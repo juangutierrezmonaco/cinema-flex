@@ -1,0 +1,40 @@
+.cartCard {
+    padding: 30px;
+    border: solid 1px black;
+    background-color: white;
+    color: black;
+
+    display: flex;
+    gap: 50px;
+
+    position: relative;
+
+    &-img {
+        width: 20%;
+    }
+
+    &-right {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+
+        &_top {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &_bottom {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    &-deleteBtn {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        background-color: red;
+    }
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const MovieScreeningSelect = ({ screenings, defaultSalaIndex, defaultDiaIndex, delfaultHorarioIndex, setHorario, setSala}) => {
+const MovieScreeningSelect = ({ screenings, defaultSalaIndex, defaultDiaIndex, delfaultHorarioIndex, setHorario, setSala }) => {
 
     /* Arreglos paralelos. Uno guarda las salas y el otro paralelamente guarda un arreglo por cada sala con los dias y horarios de esa sala*/
     const salas = []
@@ -28,16 +28,22 @@ const MovieScreeningSelect = ({ screenings, defaultSalaIndex, defaultDiaIndex, d
     /* Esto es para habilitar al segundo select cuando se activo el primero y que este tenga los horarios de esa sala */
     const [funciones, setFunciones] = useState([]);
     const toggleSecondSelect = (e) => {
-        e.target.value >= 0 && setFunciones(horarios[e.target.value]);
+        e.target.value != -1 && setFunciones(horarios[e.target.value]);
         setSala(e.target.value);
     }
 
     /* Por último, si el primero está activado ya en el primer render tendría que activarse el segundo */
     useEffect(() => {
-        const valuePrimerSelect = document.querySelector("#selectSala").value;
-        valuePrimerSelect != -1 && setFunciones(horarios[valuePrimerSelect]);
-    }, []);
+        const primerSelect = document.querySelector("#selectSala");
+        primerSelect.value = defaultSala;
+        defaultSala != -1 && setFunciones(horarios[defaultSala])
 
+        const segundoSelect = document.querySelector("#selectHorario");
+        segundoSelect.value = parseInt(defaultHorario);
+        console.log(segundoSelect.value);
+    }, []);
+    
+    
     const changeHandler = (e) => {
         setHorario(e.target.value);
     }
@@ -51,8 +57,8 @@ const MovieScreeningSelect = ({ screenings, defaultSalaIndex, defaultDiaIndex, d
                 ))}
             </select>
 
-            {funciones.length > 0 &&
-                <select className="select select-bordered w-full max-w-xs" defaultValue={defaultHorario} onChange={changeHandler}>
+            {
+                <select className={funciones.length > 0 ? 'select select-bordered w-full max-w-xs visible' : 'select select-bordered w-full max-w-xs invisible'} defaultValue={defaultHorario} onChange={changeHandler} id='selectHorario'>
                     <option disabled value={-1} readOnly>Horario</option>
 
                     {funciones.map((func, i) => (
