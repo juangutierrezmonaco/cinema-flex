@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ title, overview, poster_path, id, release_date, start, end }) => {
-
+    console.log(`${title} - ${release_date}`)
     /* Es estreno ? */
     const [esEstreno, setEstreno] = useState(false);
     useEffect(() => {
@@ -84,6 +84,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
                 
             </div>
             
+
             <ul className="movieCard_extraInfo uppercase hidden xxs:p-2 xxs:text-xs xxs:flex xxs:gap-5 xxs:items-center xxs:w-full md:w-3/12 md:flex-col md:justify-between md:p-5 md:pt-8 lg:text-base lg:w-3/12 xl:w-[25%]">
 
                 <li className="hidden xxs:flex xxs:flex-col xxs:gap-1 xxs:w-3/5 md:w-full mlg:gap-3 lg:gap-5">
@@ -106,7 +107,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
 
                 <Link to={`/movie/${id}`}>
                     <li className="hidden xxs:block xxs:w-2/5 md:w-full">
-                        <ul className="btn min-w-fit xxs:flex xxs:flex-nowrap xxs:p-5">
+                        <ul className="btn min-w-fit xxs:flex xxs:flex-nowrap xxs:p-5 gap-2">
                             <li>Ver ficha completa</li>
                             <li><i className="fa-solid fa-plus"></i></li>
                         </ul>

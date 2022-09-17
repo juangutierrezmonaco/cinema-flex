@@ -16,3 +16,16 @@ main {
     padding: 30px 0;
     min-height: 100vh;
 }
+
+.myCustomScrollBar {
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background-color: rgba($color: black, $alpha: .3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba($color: #000000, $alpha: .7);
+        border-radius: 20px;
+    }
+}

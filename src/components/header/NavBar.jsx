@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import CartWidget from './CartWidget'
+import UserWidget from './UserWidget';
 
 const NavBar = () => {
     /* Consigo todos los géneros disponibles para ponerlos en el navbar */
@@ -115,8 +116,8 @@ const NavBar = () => {
             </nav>
 
             <ul className="flex items-center gap-2">
-                <li className={btnStyles} onClick={closeNav}><button><i className="fa-regular fa-user"></i></button></li>
                 <li className={btnStyles} onClick={closeNav}><button><i className="fa-solid fa-magnifying-glass"></i></button></li>
+                <li onClick={closeNav}><UserWidget btnStyles={btnStyles}/></li>
                 <li onClick={closeNav}><CartWidget btnStyles={btnStyles}/></li>
             </ul>
         </header>

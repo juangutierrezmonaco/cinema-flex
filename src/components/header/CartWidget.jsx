@@ -13,6 +13,8 @@ const CartWidget = ({ btnStyles }) => {
     const removeFocus = ( evt ) => {
         evt.target.blur();
     }    
+    
+    const cantidad = total > 0 ? `${total} Entrada${total > 1 ? 's' : ''}` : 'No agregó ninguna entrada aún';
 
     return (
         <div className="dropdown dropdown-end">
@@ -25,7 +27,7 @@ const CartWidget = ({ btnStyles }) => {
 
             <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow text-black">
                 <div className="card-body">
-                    <span className="font-bold text-lg text-center">{`${total} Entradas`}</span>
+                    <span className="font-bold text-lg text-center">{cantidad}</span>
                     <Link to={'./tickets'} className="card-actions">
                         <button className="btn btn-primary btn-block" onClick={removeFocus}>Ver mis entradas</button>
                     </Link>

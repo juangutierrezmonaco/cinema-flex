@@ -8,27 +8,46 @@ const useCart = () => {
 
 const CartProvider = ({ defaultValue = [], children }) => { 
 
-    const [cart, setCart] = useState( defaultValue );
+    const [cart, setCart] = useState( JSON.parse(localStorage.getItem('cart')) || defaultValue );
 
-    const addMovie = ( movie, quantity ) => { 
+    const updateLocalStorage = (newState) => {
+        localStorage.removeItem('cart');
+        localStorage.setItem('cart', JSON.stringify(newState));
+    }
+
+    const addMovie = ( movie, quantity ) => {
         if ( isInCart(movie.id) ){
             // Si está en el arreglo, hago una copia y le modifico la cantidad a esa película, sino agrego la película.
             const newState = [...cart];
             const index = newState.findIndex(({ movie : currentMovie }) => currentMovie.id == movie.id);
             newState[index].quantity += quantity; 
             setCart( newState );
-            
+            updateLocalStorage(newState);
         } else {
-            setCart( prevState => prevState.concat({ movie, quantity }) );
+            setCart( prevState => {
+                const newState = prevState.concat({ movie, quantity });
+                updateLocalStorage(newState);
+                return newState;
+            });
         }
             
     }
 
     const removeMovie = ( movieId ) => {
-        setCart( prevState => prevState.filter( ({ movie }) => movie.id != movieId ));
+        setCart( prevState => {
+            const newState = prevState.filter( ({ movie }) => movie.id != movieId );
+            updateLocalStorage(newState);
+            return newState;
+        });
+    }
+
+    const howMany = ( movieId ) => {
+        const index = cart.findIndex(({ movie }) => movie.id == movieId);
+        return (index != -1 ? cart[index].quantity : 0);
     }
 
     const clearCart = () => {
+        updateLocalStorage( [] );
         setCart( [] );
     }
 
@@ -41,7 +60,6 @@ const CartProvider = ({ defaultValue = [], children }) => {
     }
 
     const isEmpty = () => {
-        console.log(cart.length);
         return cart.length == 0;
     }
 
@@ -49,6 +67,7 @@ const CartProvider = ({ defaultValue = [], children }) => {
         cart, 
         addMovie,
         removeMovie,
+        howMany,
         clearCart,
         isInCart,
         getTotal,

@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { useCart } from "../../context/CartContext";
 
-const MovieDetailCount = ( {stock, initial, onAdd} ) => {
+const MovieCount = ( {stock = Infinity, initial = 1, onAdd, submitText, movieId} ) => {
+    const { howMany } = useCart();
 
     const [count, setCount] = useState(initial);
 
     const increaseCount = () => {
-        if (count < stock ) {
+        if (parseInt(count) + howMany(movieId) < stock ) {
             setCount(parseInt(count) + 1);
         } else {
-            alert('No disponemos de esa cantidad de stock.')
+            alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
         }
 
     }
@@ -18,25 +20,27 @@ const MovieDetailCount = ( {stock, initial, onAdd} ) => {
     }
 
     const submitTickets = () => {    // Aunque ya está previamente validado que no supere al stock, lo verifico nuevamente por si acaso
-        if ( count <= stock ) { // Agrego al carrito y reseteo el contador
+        if ( parseInt(count) + howMany(movieId) <= stock ) { // Agrego al carrito y reseteo el contador
             onAdd(parseInt(count));
-            setCount(1);
+            setCount(parseInt(1));
         } else {
-            alert('No disponemos de esa cantidad de stock.')
+            alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
         }
     }
 
     return (
-        <div className="movieCount">
-           <div>
+        <div className="flex flex-col">
+           <div className="flex justify-between items-center">
                 <button className="btn btn-light" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
-                <span className="carritoCantidad">{count}</span>
+                <span className="carritoCantidad px-7 text-2xl">{count}</span>
                 <button className="btn btn-light" onClick={increaseCount}><i className="fa fa-plus"></i></button>
            </div>
 
-            <button className="btn btn-warning" onClick={submitTickets}>Agregar a mis entradas!</button>
+            {   submitText &&
+                <button className="btn btn-warning" onClick={submitTickets}>{submitText}</button>
+            }
         </div>
     )
 }
 
-export default MovieDetailCount;
+export default MovieCount;
