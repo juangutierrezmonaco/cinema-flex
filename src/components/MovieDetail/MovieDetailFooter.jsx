@@ -3,7 +3,7 @@ import funcionesDeCine from '../../funcionesDeCine.json';
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 
-const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, defaultSalaIndex, defaultDiaIndex, delfaultHorarioIndex }) => {
+const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [] }) => {
 
     /* En teoría esta sería la función que hace la consulta a la base de datos con la película, el día y horario y la sala */
     /* De momento sólo retorna 10, pero a futuro se hará la funcionalidad */
@@ -27,32 +27,26 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, defaultSal
         count > 1 && setCount(parseInt(count) - 1);
     }
 
-
     const submitTickets = () => {
         if (parseInt(count) + howMany(movieId, screeningId) <= getDisponibles()) {
             onAdd(parseInt(count), screeningId);
+            setCount(1);
         } else {
             alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
         }
     }
 
-    /* MovieScreeningId */
-    const defaultHorario = ( defaultDiaIndex && delfaultHorarioIndex ) && `${defaultDiaIndex}${delfaultHorarioIndex}`;
-    const [horario, setHorario] = useState(defaultHorario);
-    const [sala, setSala] = useState(`${defaultSalaIndex}`);
-    const screeningId = (sala && horario) && `${sala}${horario}`;
-
-    useEffect(() => {
-        console.log( horario );
-    }, [screeningId])
+    /* Valores por default para los select */
+    const [screeningId, setScreeningId] = useState('');
     
-    
+    const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
+    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
 
     return (
         <div className='movieDetailFooter'>
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={funcionesDeCine} setHorario={setHorario} setSala={setSala} defaultSalaIndex={defaultSalaIndex} defaultDiaIndex={defaultDiaIndex} delfaultHorarioIndex={delfaultHorarioIndex} />
+                <MovieScreeningSelect screenings={funcionesDeCine} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId}/>
             </div>
 
             <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>

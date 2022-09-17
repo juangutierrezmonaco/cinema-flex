@@ -3,12 +3,12 @@ import MovieDetailFooter from '../MovieDetail/MovieDetailFooter'
 const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) => {
     const posterPath = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
 
-    const sala =  screeningInfo.slice(0, 1);
-    const dia = screeningInfo.slice(1, 2);
-    const horario = screeningInfo.slice(2, 3);
-
     const clearMovie = () => {
         removeMovie(screeningId);
+    }
+
+    const buy = () => {
+        console.log('Compra!')
     }
 
     return (
@@ -23,7 +23,7 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
                 </div>
 
                 <div className='cartCard-right_bottom'>
-                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} defaultSalaIndex={sala} defaultDiaIndex={dia} delfaultHorarioIndex={horario}/>
+                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} onAdd={buy} values={screeningInfo}/>
                 </div>
             </div>
                 
