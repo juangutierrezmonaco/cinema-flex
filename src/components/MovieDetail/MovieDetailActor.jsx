@@ -1,4 +1,4 @@
-const MovieDetailActor = ({ name, character, profile_path }) => {
+const MovieDetailActor = ({ name, profile_path }) => {
     const image = `https://image.tmdb.org/t/p/original/${profile_path}`;
 
     return (
@@ -7,7 +7,6 @@ const MovieDetailActor = ({ name, character, profile_path }) => {
 
             <div className="movieDetailActor-body text-center rounded-t-2xl">
                 <span className="font-semibold ">{name}</span>
-                <span className="text-thin">{character}</span>
             </div>
         </div>
     )

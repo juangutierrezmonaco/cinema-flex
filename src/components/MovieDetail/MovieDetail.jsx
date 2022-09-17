@@ -29,7 +29,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         /* En cuánto al cast filtro los primeros 13 */
         setCast(credits && credits.cast.slice(0, 13));
 
-        setNacionality(production_countries && production_countries[0].name);
+        setNacionality(production_countries && production_countries.length > 0 && production_countries[0].name);
 
     }, []);
 
@@ -47,14 +47,6 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         const movie = {id, title, poster_path, backdrop_path};
         addMovie(movie, cantidad);
     }
-
-    // Créditos
-    const ruta = useParams();
-    useEffect(() => {
-        console.log(ruta);
-        console.log(credits);
-    }, [ruta])
-    
 
     return (
         <div className='my-20 container'>
@@ -74,7 +66,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                             </p>
                         </button>
 
-                        <ul className='movieDetailCard-body_left_details'>
+                        <ul className='movieDetailCard-body_left_details tracking-wider text-base '>
                             <li>
                                 <span className='underline'>Fecha de estreno</span>
                                 <span> {releaseDate}</span>
@@ -100,8 +92,8 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
 
                     <div className='movieDetailCard-body_right'>
                         <div className='movieDetailCard-body_right_titles rounded-lg'>
-                            <h1 className='text-4xl'>{title}</h1>
-                            <h2 className='italic text-xl font-thin'>{tagline}</h2>
+                            <h1 className=''>{title}</h1>
+                            <h2 className='italic font-thin'>{tagline}</h2>
                         </div>
                         
                         <ul className='movieDetailCard-body_right_genres'>
@@ -111,9 +103,9 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                         </ul>
 
 
-                        <p className='tracking-wider text-base flex flex-col gap-2 mt-10'>
-                            <span className='text-2xl'>Sinopsis</span>
-                            <span className='text-lg'>{overview}</span>
+                        <p className='tracking-wider text-base flex flex-col gap-2'>
+                            <span className='text-2xl lg:text-4xl'>Sinopsis</span>
+                            <span className='text-lg lg:text-xl'>{overview}</span>
                         </p>
 
                         <div className='movieDetailCard-body_right_cast'>
