@@ -141,21 +141,12 @@
         }
 
         &_bottom {
-            margin-top: 50px;
+            margin-top: 60px;
             padding-right: 50px;
-            padding-bottom: 50px;
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            gap: 60px;
-
-            &_select {
-                display: flex;
-                max-width: 30%;
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
+        } 
     }
 }
 
@@ -185,6 +176,11 @@
         color: black;
         background-color: whitesmoke;
     }
+}
+
+.movieDetailFooter {
+    display: flex;
+    gap: 30px;
 }
 
 @media screen and (min-width: 768px) {

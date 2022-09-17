@@ -23,10 +23,10 @@ const Cart = () => {
             {   !isEmpty() &&
                 <ul className="text-2xl m-20 p-24 bg-slate-300">
                 {   
-                    cart.map( ({ movie, quantity }) => (
+                    cart.map( ({ movie, quantity, screeningId }) => (
                         <li key={movie.id} className='mb-5 flex justify-center items-end'> 
-                            <Ticket movie={movie} quantity={quantity}/>
-                            <button className="btn btn-sm ml-8" onClick={() => removeMovie(movie.id)}>Borrar</button>
+                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId}/>
+                            <button className="btn btn-sm ml-8" onClick={() => removeMovie(screeningId)}>Borrar</button>
                         </li>)
                     )
                     

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
+import { Link } from "react-router-dom";
+
 import MovieDetailActor from './MovieDetailActor';
-import MovieCount from './MovieCount'
-import MovieFunction from './MovieFunction';
-import { Link, useParams } from "react-router-dom";
+import MovieDetailFooter from "./MovieDetailFooter";
 
 const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, release_date, genres, release_dates,       production_countries, credits }) => {
     
@@ -36,16 +36,12 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     // Fecha de estreno y nacionalidad
     const releaseDate = (new Date( release_date + 'T00:00' )).toLocaleDateString();
 
-    const name = 'Daniel Kaluuya';
-    const character = 'OJ Haywood';
-    const profile_path = '/a07Tqzgp0IrW9YkcOQiuKavP4tm.jpg';
-
     // Manejo de carrito
     const { addMovie } = useCart();
 
-    const addToCart = (cantidad) => {
-        const movie = {id, title, poster_path, backdrop_path};
-        addMovie(movie, cantidad);
+    const addToCart = (cantidad, screeningInfo) => {
+        const movie = {id, title, runtime, poster_path, backdrop_path};
+        addMovie(movie, screeningInfo, cantidad);
     }
 
     return (
@@ -126,16 +122,8 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                         </div>
                     </div>
 
-                    <div className='movieDetailCard-body_bottom'>
-                        <div className='movieDetailCard-body_bottom_select'>
-                            <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                            <MovieFunction title='Elija la función' options={['Horario 1', 'Horario 2', 'Horario 3']}/>
-                        </div>
-
-                        <div className='movieDetailCard-body_bottom_select'>
-                            <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione entradas</span>
-                            <MovieCount stock={10} initial={1} onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id}/>
-                        </div>
+                    <div className="movieDetailCard-body_bottom">
+                        <MovieDetailFooter onAdd={addToCart} submitText='Aregar a mis entradas' movieId={id}/>
                     </div>
                 </div>
             </article>

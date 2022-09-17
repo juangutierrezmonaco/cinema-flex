@@ -24,7 +24,7 @@ const MovieDetailContainer = () => {
     useEffect(() => {
         functions.scrollTo('main');
         setLoading(true);
-        getMovie(2000)
+        getMovie(0)
             .then(res => {
                 setMovie(res);
                 setLoading(false);

@@ -15,17 +15,19 @@ const CartProvider = ({ defaultValue = [], children }) => {
         localStorage.setItem('cart', JSON.stringify(newState));
     }
 
-    const addMovie = ( movie, quantity ) => {
-        if ( isInCart(movie.id) ){
+    const addMovie = ( movie, screeningInfo, quantity ) => {
+        const screeningId = movie.id + screeningInfo;
+
+        if ( isInCart(screeningId) ){
             // Si está en el arreglo, hago una copia y le modifico la cantidad a esa película, sino agrego la película.
             const newState = [...cart];
-            const index = newState.findIndex(({ movie : currentMovie }) => currentMovie.id == movie.id);
+            const index = newState.findIndex( ticket => ticket.screeningId == screeningId);
             newState[index].quantity += quantity; 
             setCart( newState );
             updateLocalStorage(newState);
         } else {
             setCart( prevState => {
-                const newState = prevState.concat({ movie, quantity });
+                const newState = prevState.concat({ movie, screeningInfo, quantity, screeningId });
                 updateLocalStorage(newState);
                 return newState;
             });
@@ -33,16 +35,19 @@ const CartProvider = ({ defaultValue = [], children }) => {
             
     }
 
-    const removeMovie = ( movieId ) => {
+    const removeMovie = ( screeningId ) => {
         setCart( prevState => {
-            const newState = prevState.filter( ({ movie }) => movie.id != movieId );
+            const newState = prevState.filter( ticket => ticket.screeningId != screeningId );
             updateLocalStorage(newState);
             return newState;
         });
     }
 
-    const howMany = ( movieId ) => {
-        const index = cart.findIndex(({ movie }) => movie.id == movieId);
+
+    const howMany = ( movieId, screeningInfo ) => {
+        const screeningId = movieId + screeningInfo;
+
+        const index = cart.findIndex(ticket => ticket.screeningId == screeningId);
         return (index != -1 ? cart[index].quantity : 0);
     }
 
@@ -51,8 +56,8 @@ const CartProvider = ({ defaultValue = [], children }) => {
         setCart( [] );
     }
 
-    const isInCart = (movieId) => {
-        return cart.some( ({ movie : m } )=> m.id == movieId );
+    const isInCart = (id) => {
+        return cart.some(ticket => ticket.screeningId == id);
     }
 
     const getTotal = () => {

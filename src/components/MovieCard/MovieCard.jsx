@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const MovieCard = ({ title, overview, poster_path, id, release_date, start, end }) => {
-    console.log(`${title} - ${release_date}`)
     /* Es estreno ? */
     const [esEstreno, setEstreno] = useState(false);
     useEffect(() => {
