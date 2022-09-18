@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import movieNotFound from '/assets/img/movie-not-found.svg'
 
 const MovieCard = ({ title, overview, poster_path, id, release_date, start, end }) => {
     /* Es estreno ? */
@@ -37,12 +38,12 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
     const { runtime, genres, director, cast} = details;
     
     /* Imagen */
-    const imgUrl = `https://image.tmdb.org/t/p/original/${poster_path}`;
+    const imgUrl = poster_path ? `https://image.tmdb.org/t/p/original/${poster_path}` : movieNotFound;
 
     return (
         <div className="movieCard flex flex-wrap">
             <div className="movieCard_img w-2/5 xs:w-4/12 md:w-3/12 lg:w-3/12 xl:w-[20%]">
-                <img src={imgUrl} alt={`Afiche de la película '${title}'`}/>
+                <img src={imgUrl} alt={`Afiche de la película '${title}'`} className={!poster_path ? 'movieCard_img_notFound' : ''}/>
             </div>
 
             <div className="movieCard_info relative flex flex-col gap-1 w-3/5 pt-2 xxs:p-2 xs:w-8/12 md:w-6/12 mlg:pl-4 mlg:pt-3 lg:p-5 lg:gap-5 lg:w-6/12 xl:w-[55%] xl:p-10">

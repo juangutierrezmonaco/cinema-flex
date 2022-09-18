@@ -1,4 +1,5 @@
 import popCorn from '/assets/img/popcorn.svg';
+
 const Footer = () => {
   return (
     <footer className="footer footer-center p-10 bg-cyan-900 text-primary-content">

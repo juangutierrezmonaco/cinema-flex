@@ -47,9 +47,19 @@
 
             &_poster {
                 position: relative;
+                width: 100%;
 
                 img {
                     height: 100%;
+                }
+
+                &_notFound {
+                    background-color: whitesmoke;
+                    object-fit: fill;
+                    aspect-ratio: 2/3;
+                    width: 100%;
+                    height: 100%;
+                    border: solid 1px grey;
                 }
 
                 &_overlay {
@@ -129,12 +139,14 @@
 
                     @extend .myCustomScrollBar;
                     height: 100%;
+                    width: 100%;
 
                     li {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        min-width: 20%;
+                        min-width: 15%;
+                        max-width: 20%;
                     }
                 }
             }
@@ -151,10 +163,9 @@
 }
 
 .movieDetailActor {
-    height: fit-content;
+    height: 100%;
     width: 100%;
     position: relative;
-    overflow: hidden;
 
     &-img {
         width: 100%;
@@ -175,6 +186,7 @@
         bottom: 0;
         color: black;
         background-color: whitesmoke;
+        padding: 5px 0;
     }
 }
 

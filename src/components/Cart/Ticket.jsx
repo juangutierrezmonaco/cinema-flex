@@ -1,7 +1,8 @@
-import MovieDetailFooter from '../MovieDetail/MovieDetailFooter'
+import MovieDetailFooter from '../MovieDetail/MovieDetailFooter';
+import movieNotFound from '/assets/img/movie-not-found.svg';
 
 const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) => {
-    const posterPath = `https://image.tmdb.org/t/p/original/${movie.poster_path}`;
+    const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
 
     const clearMovie = () => {
         removeMovie(screeningId);
@@ -15,7 +16,7 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
 
     return (
         <div className="cartCard">
-            <figure className="cartCard-img"><img src={posterPath} alt={`Poster de la película ${movie.title}`}/></figure>
+            <figure className="cartCard-img"><img src={posterPath} alt={`Poster de la película ${movie.title}`} className={!movie.poster_path ? 'cartCard-img_notFound' : ''}/></figure>
             <div className='cartCard-right'>
 
                 <div className='cartCard-right_top'>

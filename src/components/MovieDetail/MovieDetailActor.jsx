@@ -1,5 +1,8 @@
+import notFound from '/assets/img/person-not-found.svg';
+
 const MovieDetailActor = ({ name, profile_path }) => {
-    const image = `https://image.tmdb.org/t/p/original/${profile_path}`;
+    
+    const image = profile_path ? `https://image.tmdb.org/t/p/original/${profile_path}` : notFound;
 
     return (
         <div className="movieDetailActor rounded-lg shadow-2xl">

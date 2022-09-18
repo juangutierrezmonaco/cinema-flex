@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
-import { Link } from "react-router-dom";
 
-import MovieDetailActor from './MovieDetailActor';
 import MovieDetailFooter from "./MovieDetailFooter";
+import MovieDetailActorList from "./MovieDetailActorList";
+import movieNotFound from '/assets/img/movie-not-found.svg';
 
 const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, release_date, genres, release_dates,       production_countries, credits }) => {
     
     // Imagenes
-    const posterPath = `https://image.tmdb.org/t/p/original/${poster_path}`;
+    const posterPath = poster_path ? `https://image.tmdb.org/t/p/original/${poster_path}` : movieNotFound;
     const backdropPath = `https://image.tmdb.org/t/p/original/${backdrop_path}`;
     const backgroundStyle = {
         backgroundImage: `url(${backdropPath})`
@@ -26,8 +26,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
 
         setDirector(credits && credits.crew.filter( c => c.job == 'Director')[0].name);
 
-        /* En cuánto al cast filtro los primeros 13 */
-        setCast(credits && credits.cast.slice(0, 13));
+        setCast(credits && credits.cast);
 
         setNacionality(production_countries && production_countries.length > 0 && production_countries[0].name);
 
@@ -54,7 +53,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                 <div className='movieDetailCard-body'>
                     <div className='movieDetailCard-body_left'>
                         <button className='movieDetailCard-body_left_poster'>
-                            <img src={posterPath} alt={`Póster de la película ${title}`} />
+                            <img src={posterPath} alt={`Póster de la película ${title}`} className={!poster_path ? 'movieDetailCard-body_left_poster_notFound' : ''}/>
 
                             <p className='movieDetailCard-body_left_poster_overlay text-3xl'>
                                 <span className='uppercase'>Ver trailer</span>
@@ -106,24 +105,13 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
 
                         <div className='movieDetailCard-body_right_cast'>
                             <h3 className='text-3xl font-semibold  tracking-wider'>Reparto principal</h3>
-                            <ul className='movieDetailCard-body_right_cast_actors'>
-                                {cast && cast.map(actor => (
-                                    <li key={actor.id}><MovieDetailActor {...actor}/></li>
-                                ))}
 
-                                
-                                <li >
-                                    <Link to='./credits' className='flex flex-col text-center justify-center text-2xl font-bold'>
-                                        <span>Ver más</span>
-                                        <i className="fa-solid fa-arrow-right"></i>
-                                    </Link>
-                                </li>
-                            </ul>
+                            <MovieDetailActorList cast={cast} length={13} />
                         </div>
                     </div>
 
                     <div className="movieDetailCard-body_bottom">
-                        <MovieDetailFooter onAdd={addToCart} submitText='Aregar a mis entradas' movieId={id}/>
+                        <MovieDetailFooter onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id}/>
                     </div>
                 </div>
             </article>
