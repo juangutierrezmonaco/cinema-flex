@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import CartWidget from './CartWidget'
 import UserWidget from './UserWidget';
 
 const NavBar = () => {
+
     /* Consigo todos los géneros disponibles para ponerlos en el navbar */
     const [genres, setGenres] = useState([]);
     useEffect(() => {
@@ -36,6 +37,10 @@ const NavBar = () => {
         e.target.parentElement.parentElement.parentElement.querySelector("label").click();
     }
     
+    /* Para que quede seleccionado Géneros cuando estoy en un género */
+    const imInGenres = useLocation().pathname.replace(/\D/g, "") ? true : false;
+    const genreNavItemClass = imInGenres ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine';
+
     return (
         <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl">
             <div className='flex items-center gap-3'> 
@@ -59,7 +64,7 @@ const NavBar = () => {
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass}>Próximos estrenos</NavLink></li>
 
                     <li>
-                        <label htmlFor="my-modal-3"  className='underline-hover hover:drop-shadow-mine'>Géneros</label>
+                        <label htmlFor="my-modal-3" className={genreNavItemClass}>Géneros</label>
 
                         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
                         <label htmlFor="my-modal-3" className="modal cursor-pointer">
@@ -91,7 +96,7 @@ const NavBar = () => {
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass} onClick={closeNav}>Próximos estrenos</NavLink></li>
                     
                     <li >
-                        <label htmlFor="my-modal-3-mobile">Géneros</label>
+                        <label htmlFor="my-modal-3-mobile" className={genreNavItemClass}>Géneros</label>
 
                         <input type="checkbox" id="my-modal-3-mobile" className="modal-toggle" />
                         <div className="modal">
