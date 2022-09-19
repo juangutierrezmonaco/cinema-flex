@@ -13,13 +13,22 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
         removeMovie(movie.id + screeningInfo);
     }
 
+    const backdropPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
+    const backgroundStyle = {
+        backgroundImage: `url(${backdropPath})`
+    }
 
     return (
         <div className="cartCard">
+            <div className='cartCard-background'>
+                <div style={backgroundStyle}></div>
+            </div>
+
             <figure className="cartCard-img"><img src={posterPath} alt={`Poster de la película ${movie.title}`} className={!movie.poster_path ? 'cartCard-img_notFound' : ''}/></figure>
+
             <div className='cartCard-right'>
 
-                <div className='cartCard-right_top'>
+                <div className='cartCard-right_top rounded-xl'>
                     <span className='font-semibold text-4xl underline mb-5'>{`Título: ${movie.title}`}</span>
                     <span className='text-2xl'>{`Duración: ${movie.runtime} minutos`}</span>
                     <span className="text-2xl italic">{`ID de la función: ${screeningId}`}</span>

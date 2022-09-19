@@ -1,18 +1,57 @@
 .cartCard {
     padding: 30px;
     border: solid 1px black;
-    background-color: white;
+    background-color: whitesmoke;
     color: black;
-
     display: flex;
     gap: 50px;
 
     position: relative;
     min-width: 100%;
+    z-index: 1;
+
+    &-background {
+        height: 100%;
+        width: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        
+        &::after {
+            position: absolute;
+            content: '';
+            display: block;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba($color: white, $alpha: .5);
+        }
+
+        > div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+    
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        filter: grayscale(100%);
+    }
 
     &-img {
-        width: 20%;
-        
+        width: 25%;
+
         &_notFound {
             object-fit: fill;
             aspect-ratio: 2/3;
@@ -29,14 +68,20 @@
         width: 100%;
 
         &_top {
+            width: fit-content;
+            max-width: 80%;
+            background-color: rgba($color: white, $alpha: .7);
+            padding: 10px;
             display: flex;
             flex-direction: column;
+            z-index: 1;
         }
 
         &_bottom {
             width: 100%;
             display: flex;
             justify-content: flex-end;
+            z-index: 1;
         }
     }
 
@@ -45,5 +90,6 @@
         top: 30px;
         right: 30px;
         background-color: red;
+        z-index: 1;
     }
 }

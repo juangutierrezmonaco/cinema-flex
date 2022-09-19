@@ -5,7 +5,7 @@ import MovieDetailFooter from "./MovieDetailFooter";
 import MovieDetailActorList from "./MovieDetailActorList";
 import movieNotFound from '/assets/img/movie-not-found.svg';
 
-const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, release_date, genres, release_dates,       production_countries, credits }) => {
+const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, genres, release_dates, production_countries, credits }) => {
     
     // Imagenes
     const posterPath = poster_path ? `https://image.tmdb.org/t/p/original/${poster_path}` : movieNotFound;
@@ -15,13 +15,20 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     }
 
     // Si no lo hago con hooks para usar el useEffect surgen errores.
-
+    // NOTA: No uso el release_date que viene de la api porque viene por defecto la fecha de estados unidos, así tengo más control.
     const [rate, setRate] = useState('SIN DATOS');
+    const [releaseDate, setReleaseDate] = useState('SIN DATOS');
     const [director, setDirector] = useState('SIN DATOS');
     const [cast, setCast] = useState([]);
-    const [nacionality, setNacionality] = useState('SIN DATOS')
+    const [nacionality, setNacionality] = useState('SIN DATOS');
 
     useEffect(() => {
+        /* Busco la fecha de estreno en Argentina, si no la consigo agarro la que viene por default */
+        const r_date = new Date(release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'AR') || release_dates.results[0]).release_dates[0].release_date);
+        r_date.setDate(r_date.getDate() + 1);
+        r_date != 'Invalid Date' && setReleaseDate(r_date.toLocaleDateString());
+        
+        /* Uso la certificación de Estados Unidos porque para Argetina no hay mucha información (La API no funciona bien con Argentina) */
         setRate( release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification)
 
         setDirector(credits && credits.crew.filter( c => c.job == 'Director')[0].name);
@@ -31,9 +38,6 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         setNacionality(production_countries && production_countries.length > 0 && production_countries[0].name);
 
     }, []);
-
-    // Fecha de estreno y nacionalidad
-    const releaseDate = (new Date( release_date + 'T00:00' )).toLocaleDateString();
 
     // Manejo de carrito
     const { addMovie } = useCart();

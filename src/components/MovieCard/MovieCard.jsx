@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import movieNotFound from '/assets/img/movie-not-found.svg'
 
 const MovieCard = ({ title, overview, poster_path, id, release_date, start, end }) => {
+    
     /* Es estreno ? */
     const [esEstreno, setEstreno] = useState(false);
     useEffect(() => {

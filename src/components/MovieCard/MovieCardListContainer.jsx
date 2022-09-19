@@ -5,6 +5,7 @@ import MovieCardList from './MovieCardList';
 import functions from '../global/functions';
 
 const MovieCardListContainer = ( {greeting} ) => {
+    const [loading, setLoading] = useState(false);
     
     /* Me traigo los géneros para encontrar a este id qué nombre le pertenece */
     const [genres, setGenreS] = useState('');
@@ -18,7 +19,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     }, [])
 
 
-    const [movieLists, setMovieLists] = useState();
+    const [movieLists, setMovieLists] = useState([]);
     const [listTitles, setListTitles] = useState([]);
     
     const categoryId = useParams().categoryId || 'inicio';
@@ -47,8 +48,6 @@ const MovieCardListContainer = ( {greeting} ) => {
 
                 URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&with_genres=${categoryId}`);
                 break;
-
-                break;
         }
 
         /* Nota: Como a veces tengo que realizar múltiples consultas a la API en esta función resuelvo las promesas dinámicamente acorde a la cantidad de consultas que tenga que hacer, por lo cual, también acumulo todas las respuestas en una sola para devolverlas. */
@@ -67,10 +66,11 @@ const MovieCardListContainer = ( {greeting} ) => {
 
     useEffect(() => {
         categoryId != 'inicio' ? functions.scrollTo('main') : functions.scrollTo('body');
-        setMovieLists();
+        setLoading(true);
         getMovies(1000)
             .then(res => {
                 setMovieLists(res);
+                setLoading(false);
             })
             .catch((err) => console.log(err));
     }, [categoryId]);
@@ -79,7 +79,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     return (
         <div className="movieCardContainer flex flex-col items-center lg:pt-4">
             <h1 className="text text-5xl uppercase"> {greeting} </h1>
-            {   movieLists ? (
+            {   !loading ? (
                     movieLists.map( (movieList, index) => (
                         <MovieCardList movies={movieList} listTitle={listTitles[index]} key={categoryId + index}/>)
                     )
