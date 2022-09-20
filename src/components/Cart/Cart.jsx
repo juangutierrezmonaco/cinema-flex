@@ -21,10 +21,10 @@ const Cart = () => {
     
     
     return (
-        <div className="flex flex-col items-center px-36">
+        <div className="flex flex-col items-center px-10 xl:px-36">
             <h1 className="text text-5xl uppercase">Entradas</h1>
             {   !isEmpty() &&
-                <ul className="text-2xl m-20 flex flex-col gap-4">
+                <ul className="text-2xl my-20 flex flex-col gap-4">
                 {   
                     cart.map( ({ movie, quantity, screeningId, screeningInfo }) => (
                         <li key={screeningId} className='flex justify-center items-end'> 
