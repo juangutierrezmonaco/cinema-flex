@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCart } from "../../context/CartContext";
 
 import MovieDetailFooter from "./MovieDetailFooter";
 import MovieDetailActorList from "./MovieDetailActorList";
 import movieNotFound from '/assets/img/movie-not-found.svg';
+import MovieDetailTrailer from "./MovieDetailTrailer";
 
-const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, genres, release_dates, production_countries, credits }) => {
-    
+const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview, runtime, genres, release_dates, production_countries, credits, videos }) => {
+
     // Imagenes
     const posterPath = poster_path ? `https://image.tmdb.org/t/p/original/${poster_path}` : movieNotFound;
     const backdropPath = `https://image.tmdb.org/t/p/original/${backdrop_path}`;
@@ -21,48 +22,92 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     const [director, setDirector] = useState('SIN DATOS');
     const [cast, setCast] = useState([]);
     const [nacionality, setNacionality] = useState('SIN DATOS');
+    const [trailerPath, setTrailerPath] = useState('');
 
     useEffect(() => {
         /* Busco la fecha de estreno en Argentina, si no la consigo agarro la que viene por default */
         const r_date = new Date(release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'AR') || release_dates.results[0]).release_dates[0].release_date);
         r_date.setDate(r_date.getDate() + 1);
         r_date != 'Invalid Date' && setReleaseDate(r_date.toLocaleDateString());
-        
-        /* Uso la certificación de Estados Unidos porque para Argetina no hay mucha información (La API no funciona bien con Argentina) */
-        setRate( release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification)
 
-        setDirector(credits && credits.crew.filter( c => c.job == 'Director')[0].name);
+        /* Uso la certificación de Estados Unidos porque para Argetina no hay mucha información (La API no funciona bien con Argentina) */
+        setRate(release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification)
+
+        setDirector(credits && credits.crew.filter(c => c.job == 'Director')[0].name);
 
         setCast(credits && credits.cast);
 
         setNacionality(production_countries && production_countries.length > 0 && production_countries[0].name);
 
+        const trailerPath = videos && (videos.results.filter(v => v.iso_3166_1 == 'MX')[0] || videos.results[0]).key;
+        setTrailerPath( trailerPath );
     }, []);
 
     // Manejo de carrito
     const { addMovie } = useCart();
 
     const addToCart = (cantidad, screeningInfo) => {
-        const movie = {id, title, runtime, poster_path, backdrop_path};
-        addMovie(movie, screeningInfo, cantidad);
+        flyToCart();
+        setTimeout(() => {
+            const movie = { id, title, runtime, poster_path, backdrop_path };
+            addMovie(movie, screeningInfo, cantidad);
+        }, 2000);
+    }
+
+    // Efecto de que la película vuela al carrito
+    const imgRef = useRef();
+    const movieCardRef = useRef();
+    const { cartWidgetRef } = useCart();
+
+    const flyToCart = (e) => {
+        setTimeout(() => {
+            // Setteo al carrito la clase active para que se corra el carrito
+            cartWidgetRef.current.classList.add('cartWidget_active');
+        }, 1300);
+
+        // Hago una copia del elemento imagen y lo agrego al movieDetail
+        let flyingImg = imgRef.current.cloneNode();
+        flyingImg.classList.add('flyingImg');
+        movieCardRef.current.appendChild(flyingImg);
+
+        // Encuentro las posiciones
+        const flyingImg_pos = flyingImg.getBoundingClientRect();
+        const cartWidget_pos = cartWidgetRef.current.getBoundingClientRect();
+        let data = {
+            left: cartWidget_pos.left - (cartWidget_pos.width / 2 + flyingImg_pos.left + flyingImg_pos.width / 2),
+            bottom: flyingImg_pos.bottom - flyingImg_pos.width + cartWidget_pos.bottom / 2,
+        }
+
+        flyingImg.style.cssText = `
+            --left: ${data.left.toFixed(2)}px;
+            --bottom: ${data.bottom.toFixed(2)}px;
+        `
+
+        setTimeout(() => {
+            movieCardRef.current.removeChild(flyingImg);
+            cartWidgetRef.current.classList.remove('cartWidget_active');
+            cartWidgetRef.current.classList.add('cartWidget_shakeCount');
+        }, 2000);
+
+        setTimeout(() => {
+            cartWidgetRef.current.classList.remove('cartWidget_shakeCount');
+        }, 2500);
     }
 
     return (
         <div className='my-20 container'>
-            <article className="movieDetailCard">
+            <article className="movieDetailCard" ref={movieCardRef} >
                 <div className='movieDetailCard-header'>
                     <div className='movieDetailCard-header_background' style={backgroundStyle}></div>
                 </div>
 
                 <div className='movieDetailCard-body'>
                     <div className='movieDetailCard-body_left'>
-                        <button className='movieDetailCard-body_left_poster'>
-                            <img src={posterPath} alt={`Póster de la película ${title}`} className={!poster_path ? 'movieDetailCard-body_left_poster_notFound' : ''}/>
 
-                            <p className='movieDetailCard-body_left_poster_overlay text-3xl'>
-                                <span className='uppercase'>Ver trailer</span>
-                                <i className="fa-solid fa-circle-play text-6xl"></i>
-                            </p>
+                        <button className='movieDetailCard-body_left_poster'>
+                            <img src={posterPath} alt={`Póster de la película ${title}`} className={!poster_path ? 'movieDetailCard-body_left_poster_notFound' : ''} ref={imgRef} />
+
+                            <MovieDetailTrailer trailerPath={trailerPath}/>
                         </button>
 
                         <ul className='movieDetailCard-body_left_details tracking-wider text-base '>
@@ -94,7 +139,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                             <h1 className=''>{title}</h1>
                             <h2 className='italic font-thin'>{tagline}</h2>
                         </div>
-                        
+
                         <ul className='movieDetailCard-body_right_genres'>
                             {genres && genres.map((g) => (
                                 <li className='badge badge-lg' key={g.id}>{g.name}</li>
@@ -115,11 +160,12 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                     </div>
 
                     <div className="movieDetailCard-body_bottom">
-                        <MovieDetailFooter onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id}/>
+                        <MovieDetailFooter onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id} />
                     </div>
                 </div>
             </article>
         </div>
     )
 }
+
 export default MovieDetail;

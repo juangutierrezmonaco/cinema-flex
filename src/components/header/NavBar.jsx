@@ -10,7 +10,19 @@ const NavBar = () => {
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
             .then(res => res.json())
-            .then(data => setGenres(data.genres))
+            .then(data => {
+                // Ordeno los géneros antes de asignarlo
+                data.genres.sort((g1, g2) => {
+                    if (g1.name > g2.name) {
+                        return 1;
+                    } else if (g1.name < g2.name) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                })
+                setGenres(data.genres);
+            })
             .catch(error => console.log(error));
     }, [])
     
@@ -38,8 +50,8 @@ const NavBar = () => {
     }
     
     /* Para que quede seleccionado Géneros cuando estoy en un género */
-    const imInGenres = useLocation().pathname.replace(/\D/g, "") ? true : false;
-    const genreNavItemClass = imInGenres ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine';
+    const imInGenres = (useLocation().pathname.includes('category') &&  useLocation().pathname.replace(/\D/g, "")) ? true : false;
+    const genreNavItemClass = imInGenres ? 'nav-active hover:drop-shadow-mine cursor-pointer' : 'underline-hover hover:drop-shadow-mine cursor-pointer';
 
     return (
         <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl">

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 const CartContext = React.createContext([]);
 
@@ -68,6 +68,8 @@ const CartProvider = ({ defaultValue = [], children }) => {
         return cart.length == 0;
     }
 
+    const cartWidgetRef = useRef();
+
     const context = {
         cart, 
         addMovie,
@@ -76,7 +78,8 @@ const CartProvider = ({ defaultValue = [], children }) => {
         clearCart,
         isInCart,
         getTotal,
-        isEmpty
+        isEmpty,
+        cartWidgetRef
     };
 
     return (

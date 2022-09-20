@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 const CartWidget = ({ btnStyles }) => {
     const { cart, getTotal } = useCart(); 
     const [total, setTotal] = useState(0);
+    const { cartWidgetRef } = useCart();
 
     useEffect(() => {
         setTotal(getTotal());
@@ -17,7 +18,7 @@ const CartWidget = ({ btnStyles }) => {
     const cantidad = total > 0 ? `${total} Entrada${total > 1 ? 's' : ''}` : 'No agregó ninguna entrada aún';
 
     return (
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end cartWidget" ref={cartWidgetRef} >
             <label tabIndex={0} className={btnStyles}>
                 <button className={'indicator'}>
                     <i className="fa-solid fa-ticket"></i>

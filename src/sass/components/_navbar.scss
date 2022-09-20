@@ -37,3 +37,57 @@
         height: calc(100vh - 100%);
     }
 }
+
+.cartWidget {
+    &_active {
+        overflow: hidden;
+        > label{
+            transform: translateX(4rem);
+        }
+    }
+
+    &_shakeCount{
+        button {
+            @extend .jello-horizontal ;
+        }
+    }
+}
+
+.flyingImg {
+    position: absolute;
+
+    width: 20%;
+    z-index: 100;
+    animation: fly_to_cart 2s ease-in-out;
+}
+
+@keyframes fly_to_cart {
+    0% {
+        left: var(--left); 
+        bottom: 0;
+    }
+    
+    45%, 50% {
+        right: var(--right); 
+        bottom: 60px;
+        transform: scale(.4);
+    }
+
+    80%{
+        right: var(--right); 
+        bottom: var(--bottom);
+        transform: scale(.1);
+    }
+
+    90% {
+        left: calc(var(--left) + 50px); 
+        bottom: var(--bottom);
+        transform: scale(.1);
+    }
+
+    100% {
+        left: calc(var(--left) + 70px); 
+        bottom: var(--bottom);
+        transform: scale(.1);
+    }
+}
