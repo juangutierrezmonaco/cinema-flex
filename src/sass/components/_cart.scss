@@ -80,8 +80,14 @@
         &_bottom {
             width: 100%;
             display: flex;
-            justify-content: flex-end;
+            flex-direction: column;
+            align-items: flex-end;
+            flex-wrap: wrap;
             z-index: 1;
+
+            &_precio {
+                
+            }
         }
     }
 

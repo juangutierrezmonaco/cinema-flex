@@ -5,24 +5,29 @@ import MovieCardList from './MovieCardList';
 import functions from '../global/functions';
 
 const MovieCardListContainer = ( {greeting} ) => {
+    const categoryId = useParams().categoryId || 'inicio';
+
     const [loading, setLoading] = useState(false);
-    
-    /* Me traigo los géneros para encontrar a este id qué nombre le pertenece */
-    const [genres, setGenreS] = useState('');
-    useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
-            .then(res => res.json())
-            .then(data => {
-                setGenreS(data.genres);
-            })
-            .catch(error => console.log(error));
-    }, [])
-
-
     const [movieLists, setMovieLists] = useState([]);
     const [listTitles, setListTitles] = useState([]);
     
-    const categoryId = useParams().categoryId || 'inicio';
+    
+    /* Me traigo los géneros para encontrar a este id qué nombre le pertenece por si estoy en algún género*/
+    const [genre, setGenre] = useState('');
+    useEffect(() => {
+        if (categoryId != 'inicio') {
+            fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
+                .then(res => res.json())
+                .then(data => {
+                    setGenre(data.genres.find(g => g.id == categoryId).name);
+                })
+                .catch(error => console.log(error));
+        }
+    }, [])
+    
+    useEffect(() => {   // Nota: Esto es porque a veces la API tarda y si lo setteo acá sin el efecto nunca se actualiza cuando está la rta.
+        setListTitles([`Cartelera - ${genre}`, `Próximos estrenos - ${genre}`]);
+    }, [genre])
     
     const getMovies = (time) => {
         let URLS = [];
@@ -42,7 +47,6 @@ const MovieCardListContainer = ( {greeting} ) => {
                 URLS.push('https://api.themoviedb.org/3/movie/upcoming?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-E1&region=AR');
                 break;
             default:
-                setListTitles([`Cartelera - ${genres && genres.find(g => g.id == categoryId).name}`, `Próximos estrenos - ${genres && genres.find(g => g.id == categoryId).name}`]);
 
                 URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&with_genres=${categoryId}`);
 

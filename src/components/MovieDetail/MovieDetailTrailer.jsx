@@ -1,7 +1,7 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const MovieDetailTrailer = ({ trailerPath }) => {
-    const videoUrl = `https://www.youtube.com/embed/${trailerPath}`;
+    const videoUrl = `https://www.youtube-nocookie.com/embed/${trailerPath}`;
 
     const videoRef = useRef();
 
@@ -14,6 +14,7 @@ const MovieDetailTrailer = ({ trailerPath }) => {
             videoRef.current.src = videoUrl;
         }
     }
+    
 
     return (
         <div>

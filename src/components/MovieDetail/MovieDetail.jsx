@@ -31,16 +31,23 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         r_date != 'Invalid Date' && setReleaseDate(r_date.toLocaleDateString());
 
         /* Uso la certificación de Estados Unidos porque para Argetina no hay mucha información (La API no funciona bien con Argentina) */
-        setRate(release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification)
+        const rate = release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification;
+        rate && setRate(rate)
 
-        setDirector(credits && credits.crew.filter(c => c.job == 'Director')[0].name);
+        const director = credits && credits.crew.filter(c => c.job == 'Director')[0].name;
+        director && setDirector(director);
 
-        setCast(credits && credits.cast);
+        const cast = credits && credits.cast;
+        cast && setCast(cast);
 
-        setNacionality(production_countries && production_countries.length > 0 && production_countries[0].name);
+        const nacionality = production_countries && production_countries.length > 0 && production_countries[0].name;
+        nacionality && setNacionality(nacionality);
 
-        const trailerPath = videos && (videos.results.filter(v => v.iso_3166_1 == 'MX')[0] || videos.results[0]).key;
-        setTrailerPath( trailerPath );
+        // Para el trailer traigo primero el de Mexico y sino el de España. Si no trajo ninguno, pongo el trailer en inglés.
+        const trailerPath = videos && (videos.results.filter(v => v.iso_3166_1 == 'MX')[0] ||
+                            videos.results.filter(v => v.iso_3166_1 == 'ES')[0] || videos && videos.results.filter(v => v.type == 'Trailer')[0]);
+
+        trailerPath && setTrailerPath(trailerPath.key);
     }, []);
 
     // Manejo de carrito
@@ -107,7 +114,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                         <button className='movieDetailCard-body_left_poster'>
                             <img src={posterPath} alt={`Póster de la película ${title}`} className={!poster_path ? 'movieDetailCard-body_left_poster_notFound' : ''} ref={imgRef} />
 
-                            <MovieDetailTrailer trailerPath={trailerPath}/>
+                            <MovieDetailTrailer trailerPath={trailerPath} />
                         </button>
 
                         <ul className='movieDetailCard-body_left_details tracking-wider text-base '>
@@ -129,7 +136,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                             </li>
                             <li>
                                 <span className='underline'>Duración</span>
-                                <span> {`${runtime} Minutos`}</span>
+                                <span>{runtime ? `${runtime} Minutos` : 'SIN DATOS'}</span>
                             </li>
                         </ul>
                     </div>

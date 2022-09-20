@@ -11,7 +11,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
         let releaseDate = new Date(release_date + 'T00:00');
         releaseDate.setHours(0, 0, 0, 0);
 
-        if (releaseDate.getTime() >= start.getTime() & releaseDate.getTime() < end.getTime()){
+        if (releaseDate.getTime() >= start.getTime() && releaseDate.getTime() < end.getTime()){
             setEstreno(true);
         }
     }, [])
@@ -53,7 +53,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
 
                 <div className="movieCard_info__details text-[.75rem] pl-2 xxs:pl-0 md:text-sm lg:text-xl">
                     <ul className="flex flex-wrap">
-                        <li>{`${details && runtime} min`}</li>
+                        <li className={details && runtime ? '' : "hidden"}>{`${details && runtime } min`}</li>
                         <li className="hidden xxs:block">
                             <ul>
                                 {genres && genres.length > 0 && genres.map(g => 

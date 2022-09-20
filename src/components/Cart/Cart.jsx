@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext"
 import functions from '../global/functions'
 import Ticket from "./Ticket";
@@ -33,7 +34,10 @@ const Cart = () => {
             }
             {   clear ?
                     <button className="btn" onClick={clearCart}>Limpiar entradas</button> :
-                    <span className="mt-10">Aún no ha seleccionado entradas</span>
+                    <div className="flex flex-col gap-5">
+                        <span className="mt-10">Aún no ha seleccionado entradas</span>
+                        <button className="btn"><Link to={'/'}>Volver a la página principal</Link></button>
+                    </div>
             }
         </div>
     )
