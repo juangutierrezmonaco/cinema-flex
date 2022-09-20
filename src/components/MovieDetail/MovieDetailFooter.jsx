@@ -1,6 +1,6 @@
 import MovieScreeningSelect from './MovieScreeningSelect';
 import funcionesDeCine from '../../funcionesDeCine.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
     const imInCart = useLocation().pathname == '/tickets';
 
     /* MovieCount */
-    const { howMany } = useCart();
+    const { howMany, howMuch } = useCart();
     const [count, setCount] = useState(initial);
 
     const increaseCount = () => {
@@ -34,7 +34,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
 
     const [toggleSubmitButtton, setToggleSubmitButtton] = useState(false);
 
-    const submitTickets = (e) => {
+    const submitTickets = () => {
         // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
         !imInCart && setToggleSubmitButtton(true);
 
@@ -56,31 +56,63 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
     const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
     const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
 
+    /* Valores para los precios */
+    const [precio, setPrecio] = useState(0);
+    const [precioTotal, setPrecioTotal] = useState(0);
+
+    useEffect(() => {
+        const screeningInfo = screeningId.slice(0, 3);
+        screeningInfo && setPrecio(howMuch(screeningInfo));
+
+        // Si se cambia la función, el contador se reinicia
+        setCount(initial);
+
+    }, [screeningId]);
+
+    useEffect(() => {
+        setPrecioTotal(precio * count);
+    }, [precio, count])
+
     return (
         <div className='movieDetailFooter'>
+
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={funcionesDeCine} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId} />
+                <MovieScreeningSelect screenings={funcionesDeCine} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId}/>
             </div>
 
             <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione entradas</span>
                 {!toggleSubmitButtton ?
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-3">
                         <div className="flex justify-between items-center">
-                            <button className="btn btn-light" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
-                            <span className="carritoCantidad px-7 text-2xl">{count}</span>
-                            <button className="btn btn-light" onClick={increaseCount}><i className="fa fa-plus"></i></button>
+                            <button className="btn text-white bg-black" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
+                            <span className="px-7 text-2xl btn btn-warning btn-circle outline outline-2">{count}</span>
+                            <button className="btn text-white bg-black" onClick={increaseCount}><i className="fa fa-plus"></i></button>
                         </div>
-                        <button className="btn btn-warning" onClick={submitTickets}>{submitText}</button>
+                        <button className="btn btn-warning outline outline-2" onClick={submitTickets}>{submitText}</button>
                     </div>
                     :
-                    <div className='movieDetailFooter_goToCart flex flex-col'>
+                    <div className='movieDetailFooter_goToCart flex flex-col gap-3'>
+                        <button className='btn btn-warning outline outline-2' onClick={leaveMeHere}>Volver</button>
                         <Link to='/tickets' className='btn text-warning bg-black'>Ir a mis entradas</Link>
-                        <button className='btn btn-warning' onClick={leaveMeHere}>Volver</button>
                     </div>
                 }
             </div>
+
+            {imInCart &&
+                <div className='text-center uppercase font-semibold text-warning p-2 rounded-3xl bg-black/60'>
+                    <div className='flex flex-col text-lg mb-3'>
+                        <span className='underline'>Precio unitario</span>
+                        <span> ${precio} </span>
+                    </div>
+
+                    <div className='flex flex-col text-3xl'>
+                        <span className='underline'>Precio total</span>
+                        <span> ${precioTotal} </span>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

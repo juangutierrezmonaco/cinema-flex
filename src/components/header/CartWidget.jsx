@@ -16,9 +16,9 @@ const CartWidget = ({ btnStyles }) => {
     }
 
     const cantidad = total > 0 ? `${total} Entrada${total > 1 ? 's' : ''}` : 'No agregó ninguna entrada aún';
-    // BORRAR DESPUÉS QUE SEA INVISIBLE!
+    
     return (
-        <div className={total == 0 ? 'invisible' : 'visible'}>
+        <div>
             <div className="dropdown dropdown-end cartWidget" ref={cartWidgetRef} >
                 <label tabIndex={0} className={btnStyles}>
                     <button className={'indicator'}>

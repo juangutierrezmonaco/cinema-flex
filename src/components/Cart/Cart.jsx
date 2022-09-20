@@ -16,8 +16,10 @@ const Cart = () => {
 
     useEffect(() => {
         setClear(!isEmpty());
-    }, [cart])
-
+        isEmpty && functions.scrollTo('main');
+    }, [cart]);
+    
+    
     return (
         <div className="flex flex-col items-center px-36">
             <h1 className="text text-5xl uppercase">Entradas</h1>
@@ -33,10 +35,11 @@ const Cart = () => {
             </ul>
             }
             {   clear ?
-                    <button className="btn" onClick={clearCart}>Limpiar entradas</button> :
+                    <button className="btn btn-warning" onClick={clearCart}>Limpiar entradas</button> 
+                    :
                     <div className="flex flex-col gap-5">
                         <span className="mt-10">Aún no ha seleccionado entradas</span>
-                        <button className="btn"><Link to={'/'}>Volver a la página principal</Link></button>
+                        <Link to={'/'} className="btn">Volver a la página principal</Link>
                     </div>
             }
         </div>

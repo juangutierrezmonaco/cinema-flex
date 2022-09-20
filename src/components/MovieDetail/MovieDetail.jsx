@@ -55,6 +55,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
 
     const addToCart = (cantidad, screeningInfo) => {
         flyToCart();
+        
         setTimeout(() => {
             const movie = { id, title, runtime, poster_path, backdrop_path };
             addMovie(movie, screeningInfo, cantidad);
@@ -91,9 +92,9 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         `
 
         setTimeout(() => {
-            movieCardRef.current.removeChild(flyingImg);
-            cartWidgetRef.current.classList.remove('cartWidget_active');
-            cartWidgetRef.current.classList.add('cartWidget_shakeCount');
+            movieCardRef.current && movieCardRef.current.removeChild(flyingImg);
+            cartWidgetRef.current && cartWidgetRef.current.classList.remove('cartWidget_active');
+            cartWidgetRef.current && cartWidgetRef.current.classList.add('cartWidget_shakeCount');
         }, 2000);
 
         setTimeout(() => {

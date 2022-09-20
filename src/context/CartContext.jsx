@@ -6,45 +6,43 @@ const useCart = () => {
     return useContext(CartContext);
 }
 
-const CartProvider = ({ defaultValue = [], children }) => { 
+const CartProvider = ({ defaultValue = [], children }) => {
 
-    const [cart, setCart] = useState( JSON.parse(localStorage.getItem('cart')) || defaultValue );
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);
 
     const updateLocalStorage = (newState) => {
         localStorage.removeItem('cart');
         localStorage.setItem('cart', JSON.stringify(newState));
     }
 
-    const addMovie = ( movie, screeningInfo, quantity ) => {
+    const addMovie = (movie, screeningInfo, quantity) => {
         const screeningId = movie.id + screeningInfo;
 
-        if ( isInCart(screeningId) ){
+        if (isInCart(screeningId)) {
             // Si está en el arreglo, hago una copia y le modifico la cantidad a esa película, sino agrego la película.
             const newState = [...cart];
-            const index = newState.findIndex( ticket => ticket.screeningId == screeningId);
-            newState[index].quantity += quantity; 
-            setCart( newState );
+            const index = newState.findIndex(ticket => ticket.screeningId == screeningId);
+            newState[index].quantity += quantity;
+            setCart(newState);
             updateLocalStorage(newState);
         } else {
-            setCart( prevState => {
+            setCart(prevState => {
                 const newState = prevState.concat({ movie, screeningInfo, quantity, screeningId });
                 updateLocalStorage(newState);
                 return newState;
             });
         }
-            
     }
 
-    const removeMovie = ( screeningId ) => {
-        setCart( prevState => {
-            const newState = prevState.filter( ticket => ticket.screeningId != screeningId );
+    const removeMovie = (screeningId) => {
+        setCart(prevState => {
+            const newState = prevState.filter(ticket => ticket.screeningId != screeningId);
             updateLocalStorage(newState);
             return newState;
         });
     }
 
-
-    const howMany = ( movieId, screeningInfo ) => {
+    const howMany = (movieId, screeningInfo) => {
         const screeningId = movieId + screeningInfo;
 
         const index = cart.findIndex(ticket => ticket.screeningId == screeningId);
@@ -52,8 +50,8 @@ const CartProvider = ({ defaultValue = [], children }) => {
     }
 
     const clearCart = () => {
-        updateLocalStorage( [] );
-        setCart( [] );
+        updateLocalStorage([]);
+        setCart([]);
     }
 
     const isInCart = (id) => {
@@ -61,17 +59,33 @@ const CartProvider = ({ defaultValue = [], children }) => {
     }
 
     const getTotal = () => {
-        return cart.reduce((ac, { quantity }) => ac + quantity , 0);
+        return cart.reduce((ac, { quantity }) => ac + quantity, 0);
     }
 
     const isEmpty = () => {
         return cart.length == 0;
     }
 
+    const howMuch = (screeningInfo) => {
+        // Devuelve el precio acorde a esa función
+        const sala = screeningInfo.slice(0, 1);
+
+        switch (sala) {
+            case '0':
+                return 800;
+            case '1':
+                return 800;
+            case '2':
+                return 1000;
+            default:
+                return undefined;
+        }
+    }
+
     const cartWidgetRef = useRef();
 
     const context = {
-        cart, 
+        cart,
         addMovie,
         removeMovie,
         howMany,
@@ -79,12 +93,13 @@ const CartProvider = ({ defaultValue = [], children }) => {
         isInCart,
         getTotal,
         isEmpty,
+        howMuch,
         cartWidgetRef
     };
 
     return (
-        <CartContext.Provider value={ context }>
-            { children }
+        <CartContext.Provider value={context}>
+            {children}
         </CartContext.Provider>
     );
 }
