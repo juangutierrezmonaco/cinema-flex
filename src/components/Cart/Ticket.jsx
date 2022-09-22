@@ -35,7 +35,7 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
                 </div>
 
                 <div className='cartCard-right_bottom'>
-                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} values={screeningInfo} onAdd={buyTickets} />
+                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} deFaultValues={screeningInfo} onAdd={buyTickets} />
                 </div>
             </div>
                 

@@ -79,10 +79,10 @@ const MovieScreeningSelect = ({ screenings, defaultSala = -1, defaultHorario = -
                     <option key={index} value={`${index}`}> {sala} </option>
                 ))}
             </select>
-
+            
             <select className={funciones.length > 0 ? 'select select-bordered w-full max-w-xs visible' : 'select select-bordered w-full max-w-xs invisible'} value={secondValue} onChange={secondHandler}>
-                <option disabled value={-1} readOnly>Horario</option>
 
+                <option disabled value={-1} readOnly>Horario</option>
                 {funciones.map((func, i) => (
                     <optgroup label={func.dia} key={i}>
                         {func.horarios.map((horario, j) => (
@@ -91,6 +91,7 @@ const MovieScreeningSelect = ({ screenings, defaultSala = -1, defaultHorario = -
                     </optgroup>
 
                 ))}
+
             </select>
 
         </div>

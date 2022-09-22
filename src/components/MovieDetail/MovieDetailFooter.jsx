@@ -4,9 +4,9 @@ import funcionesDeCine from '../../funcionesDeCine.json';
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
-import { collection, getDocs, getFirestore, orderBy, query, limit } from 'firebase/firestore';
+import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 
-const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [] }) => {
+const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultValues = [] }) => {
 
     /* Traigo las funciones de la base de datos */
     const [screenings, setScreenings] = useState([]);
@@ -50,8 +50,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
 
     /* Valores por default para los select para seleccionar la función */
     const [screeningId, setScreeningId] = useState('');
-    const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
-    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
+    const defaultSala = deFaultValues.length > 0 ? deFaultValues.slice(0, 1) : -1;
+    const defaultHorario = deFaultValues.length > 0 ? deFaultValues.slice(1, 3) : -1;
 
     useEffect(() => {
         const screeningInfo = screeningId.slice(0, 3);
