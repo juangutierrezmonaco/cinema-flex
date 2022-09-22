@@ -7,7 +7,7 @@ const MovieCarouselContainer = () => {
         fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-AR`)
         .then(res => res.json())
         .then(data => {
-            setSlides(data.results);
+            setSlides(data.results.slice(0,15));
         })
         .catch(err => console.log(err));
     }, [])

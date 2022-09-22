@@ -44,7 +44,7 @@ const MovieCardListContainer = ( {greeting} ) => {
                 break;
             case 'estrenos':
                 setListTitles(['Próximos estrenos']);
-                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-E1&region=AR`);
+                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR`);
                 break;
             default:
 
