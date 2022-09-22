@@ -55,13 +55,17 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
 
     useEffect(() => {
         // Setteo disponibles para esa función
-        (screenings.length > 0 && screeningId) ? setDisponibles(screenings.find(s => s.id == screeningId).asientosDisponibles) : setDisponibles(0);
 
         // Setteo el precio
         if ( screenings.length > 0 && screeningId ) {
+            // Set disponibles
+            setDisponibles(screenings.find(s => s.id == screeningId) && screenings.find(s => s.id == screeningId).asientosDisponibles)
+
+            // Set de precio
             const sala = screenings.find(s => s.id == screeningId).sala;
             setPrecio(howMuch(sala));
         } else {
+            setDisponibles(0)
             setPrecio(0);
         }
         
