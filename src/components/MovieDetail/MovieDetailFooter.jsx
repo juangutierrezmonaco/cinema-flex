@@ -1,16 +1,66 @@
 import MovieScreeningSelect from './MovieScreeningSelect';
 import funcionesDeCine from '../../funcionesDeCine.json';
+
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
+import { collection, getDocs, getFirestore, orderBy, query, limit } from 'firebase/firestore';
 
 const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [] }) => {
+
+    /* Traigo las funciones de la base de datos */
+    const [screenings, setScreenings] = useState([]);
+    const getScreenings = () => {
+
+        return new Promise( (resolve, reject) => {
+            const db = getFirestore();
+            const q = query(
+                collection(db, "screenings"),
+                orderBy('sala')
+            );
+
+            getDocs(q)
+                .then(res => {
+                    if (res.size == 0) {
+                        console.log('Sin resultados');
+                        resolve([]);
+                    } else {
+                        const resp = res.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        resolve(resp);
+                    }
+                })
+                .catch(error => reject(error));
+        });
+    }
+
+    useEffect(() => {
+        // Setteo las funciones
+        getScreenings()
+            .then(res => {
+                setScreenings(res);
+            })
+            .catch(err => console.log(err));
+    }, [])
 
     /* En teoría esta sería la función que hace la consulta a la base de datos con la película, el día y horario y la sala */
     /* De momento sólo retorna 10, pero a futuro se hará la funcionalidad */
     const getDisponibles = () => {
         return 10;
     }
+
+    /* Valores por default para los select para seleccionar la función */
+    const [screeningId, setScreeningId] = useState('');
+    const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
+    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
+
+    useEffect(() => {
+        const screeningInfo = screeningId.slice(0, 3);
+        screeningInfo && setPrecio(howMuch(screeningInfo));
+
+        // Si se cambia la función, el contador se reinicia
+        setCount(initial);
+
+    }, [screeningId]);
 
     /* Si estoy en el cart no tengo que contar cuántas tengo en el cart para el stock, pero si estoy afuera del cart sí */
     const imInCart = useLocation().pathname == '/tickets';
@@ -51,23 +101,9 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
         setToggleSubmitButtton(!toggleSubmitButtton);
     }
 
-    /* Valores por default para los select */
-    const [screeningId, setScreeningId] = useState('');
-    const defaultSala = values.length > 0 ? values.slice(0, 1) : -1;
-    const defaultHorario = values.length > 0 ? values.slice(1, 3) : -1;
-
     /* Valores para los precios */
     const [precio, setPrecio] = useState(0);
     const [precioTotal, setPrecioTotal] = useState(0);
-
-    useEffect(() => {
-        const screeningInfo = screeningId.slice(0, 3);
-        screeningInfo && setPrecio(howMuch(screeningInfo));
-
-        // Si se cambia la función, el contador se reinicia
-        setCount(initial);
-
-    }, [screeningId]);
 
     useEffect(() => {
         setPrecioTotal(precio * count);
@@ -78,7 +114,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, values = [
 
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={funcionesDeCine} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId}/>
+                <MovieScreeningSelect screenings={screenings} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId} />
             </div>
 
             <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>

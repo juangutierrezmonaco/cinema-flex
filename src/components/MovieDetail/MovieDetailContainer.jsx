@@ -24,7 +24,6 @@ const MovieDetailContainer = () => {
         setLoading(true);
         getMovie()
             .then(res => {
-                console.log(res);
                 setMovie(res);
                 setLoading(false);
             })

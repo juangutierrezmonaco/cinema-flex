@@ -5,7 +5,7 @@ const UserWidget = ({ btnStyles }) => {
     const [userOptions, setUserOptions] = useState(['Registrarse', 'Ingresar']);
     const isLogged = false;
     useEffect(() => {
-        isLogged && setUserOptions(['Mi perfil', 'Mis funciones', 'Salir']);
+        isLogged && setUserOptions(['Mi perfil', 'Mis entradas', 'Salir']);
     }, [])
     
 

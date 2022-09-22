@@ -2,19 +2,48 @@ import { useEffect, useState } from "react";
 
 const MovieScreeningSelect = ({ screenings, defaultSala = -1, defaultHorario = -1, setScreeningId }) => {
 
-    /* Arreglos paralelos. Uno guarda las salas y el otro paralelamente guarda un arreglo por cada sala con los dias y horarios de esa sala*/
-    const salas = []
+    /* Arreglos paralelos SALAS Y HORARIOS. Uno guarda las salas y el otro paralelamente guarda un arreglo por cada sala con los dias y horarios de esa sala. 
+       Nota: Los días y horarios se guardan como un objeto con el formato { dia: string, horarios: [] }
+    */
+    
+    // Recupero cuántas salas distintas hay
+    let salas = [...new Set(screenings.map(s => s.sala))];
     const horarios = [];
 
-    for (const sala of screenings) {
-        salas.push(sala.sala);  /* Guardo la sala */
+    // Por cada sala agrego los días y horarios que tiene la misma (con el formato mencionado arriba)
+    for (const sala of salas) {
 
-        const aux = [];
-        for (const func of sala.funciones) {
-            aux.push(func);
+        // Traigo todos los horarios de cada sala y los ordeno
+        const horariosSala = screenings.filter(s => s.sala == sala).map(s => s.horario.toDate());
+        horariosSala.sort( (h1, h2) => h1 - h2 )
+        
+        // Saco los días distintos que hay
+        const dias = [...new Set(horariosSala.map(h => h.toLocaleDateString()))];
+
+        // Recorro por día y acumulo los horarios del día en aux.
+        const aux = []
+        for (const dia of dias) {
+            const horariosDelDia = horariosSala.filter(h => h.toLocaleDateString() == dia).map(h => h.getHours() + ':' + h.getMinutes());
+            const obj = {dia: dia, horarios: horariosDelDia}
+            aux.push(obj);
         }
-        horarios.push(aux); /* Guardo el arreglo de horarios */
+
+        // Por último guardo en horarios el día y sus horarios con el formato: {dia: string, horarios: [horario1, horario2, ..., horarioN]}
+        horarios.push(aux);
     }
+
+    salas = [...new Set(screenings.map(s => `${s.sala} - ${s.tipo} (${s.lenguaje})`))];
+    
+    const [id, setId] = useState([defaultSala, defaultHorario]);
+    useEffect(() => {
+        // Setteo las funciones del segundo select si hay info del primero
+        id[0] != -1 && setFunciones(horarios[parseInt(id[0])]);
+
+        if (id[0] != -1 && id[1] != -1) {
+            const idStr = id.join('');
+            setScreeningId(idStr);
+        }
+    }, [id])
 
     /* Esto es para habilitar al segundo select cuando se activo el primero y que este tenga los horarios de ESA sala */
     const [funciones, setFunciones] = useState([]);
@@ -40,17 +69,6 @@ const MovieScreeningSelect = ({ screenings, defaultSala = -1, defaultHorario = -
             return newState;
         })
     }
-
-    const [id, setId] = useState([defaultSala, defaultHorario]);
-    useEffect(() => {
-        // Setteo las funciones del segundo select si hay info del primero
-        id[0] != -1 && setFunciones(horarios[parseInt(id[0])]);
-
-        if (id[0] != -1 && id[1] != -1) {
-            const idStr = id.join('');
-            setScreeningId(idStr);
-        }
-    }, [id])
     
 
     return (
