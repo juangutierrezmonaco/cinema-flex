@@ -5,7 +5,7 @@ const MovieCarouselItem = ({ slide, stopSlide, startSlide }) => {/*
     const imgUrl = ; */
     const [imgURL, setImgURL] = useState('');
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${slide.id}/images?api_key=892e5b21eccd8afb7c43b48a426ac1e1`)
+        fetch(`https://api.themoviedb.org/3/movie/${slide.id}/images?api_key=${import.meta.env.VITE_TMDB_API_KEY}`)
             .then(res => res.json())
             .then(data => {
                 setImgURL(data.backdrops.length > 0 ? data.backdrops[0].file_path : data.posters[0].file_path);

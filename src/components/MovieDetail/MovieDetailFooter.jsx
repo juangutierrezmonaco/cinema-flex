@@ -1,17 +1,15 @@
 import MovieScreeningSelect from './MovieScreeningSelect';
-import funcionesDeCine from '../../funcionesDeCine.json';
 
 import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 
-const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultValues = [] }) => {
+const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreeningId }) => {
 
     /* Traigo las funciones de la base de datos */
     const [screenings, setScreenings] = useState([]);
     const getScreenings = () => {
-
         return new Promise( (resolve, reject) => {
             const db = getFirestore();
             const q = query(
@@ -42,27 +40,34 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultVal
             .catch(err => console.log(err));
     }, [])
 
-    /* En teoría esta sería la función que hace la consulta a la base de datos con la película, el día y horario y la sala */
-    /* De momento sólo retorna 10, pero a futuro se hará la funcionalidad */
-    const getDisponibles = () => {
-        return 10;
-    }
 
-    /* Valores por default para los select para seleccionar la función */
-    const [screeningId, setScreeningId] = useState('');
-    const defaultSala = deFaultValues.length > 0 ? deFaultValues.slice(0, 1) : -1;
-    const defaultHorario = deFaultValues.length > 0 ? deFaultValues.slice(1, 3) : -1;
+    // El default value es por si estamos en el carrito para settear los selects, contiene todos los atributos de la función
+    const [defaultValue, setDefaultValue] = useState(undefined);
+    useEffect(() => {
+        screenings.length != 0 && setDefaultValue(screenings.find(s => s.id == selectedScreeningId));
+    }, [screenings])
+
+    /* ID único de la función que seleccionamos */
+    const [screeningId, setScreeningId] = useState(selectedScreeningId);
+
+    /* Hace la consulta de cantidad disponible para esa función */
+    const [disponibles, setDisponibles] = useState(0);
 
     useEffect(() => {
-        const screeningInfo = screeningId.slice(0, 3);
-        screeningInfo && setPrecio(howMuch(screeningInfo));
+        // Setteo disponibles para esa función
+        (screenings.length > 0 && screeningId) ? setDisponibles(screenings.find(s => s.id == screeningId).asientosDisponibles) : setDisponibles(0);
 
-        // Si se cambia la función, el contador se reinicia
-        setCount(initial);
+        // Setteo el precio
+        if ( screenings.length > 0 && screeningId ) {
+            const sala = screenings.find(s => s.id == screeningId).sala;
+            setPrecio(howMuch(sala));
+        } else {
+            setPrecio(0);
+        }
+        
+    }, [screenings, screeningId])
 
-    }, [screeningId]);
-
-    /* Si estoy en el cart no tengo que contar cuántas tengo en el cart para el stock, pero si estoy afuera del cart sí */
+    /* Si estoy en el cart no tengo que contar cuántas funciones tengo en el cart para el stock, pero si estoy afuera del cart sí */
     const imInCart = useLocation().pathname == '/tickets';
 
     /* MovieCount */
@@ -70,8 +75,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultVal
     const [count, setCount] = useState(initial);
 
     const increaseCount = () => {
-        const sizeInCart = imInCart ? 0 : howMany(movieId, screeningId);
-        if (parseInt(count) + sizeInCart < getDisponibles()) {
+        const sizeInCart = imInCart ? 0 : howMany(movieId + screeningId);
+        if (parseInt(count) + sizeInCart < disponibles) {
             setCount(parseInt(count) + 1);
         } else {
             alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
@@ -85,13 +90,13 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultVal
     const [toggleSubmitButtton, setToggleSubmitButtton] = useState(false);
 
     const submitTickets = () => {
-        // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
-        !imInCart && setToggleSubmitButtton(true);
-
-        const sizeInCart = imInCart ? 0 : howMany(movieId, screeningId);
-        if (parseInt(count) + sizeInCart <= getDisponibles()) {
-            onAdd(parseInt(count), screeningId);
+        const sizeInCart = imInCart ? 0 : howMany(movieId + screeningId);
+        if (parseInt(count) + sizeInCart <= disponibles) {
+            onAdd(screeningId, parseInt(count));
             setCount(1);
+            
+            // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
+            !imInCart && setToggleSubmitButtton(true);
         } else {
             alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
         }
@@ -108,24 +113,30 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultVal
     useEffect(() => {
         setPrecioTotal(precio * count);
     }, [precio, count])
-
+    
     return (
         <div className='movieDetailFooter'>
 
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={screenings} defaultSala={defaultSala} defaultHorario={defaultHorario} setScreeningId={setScreeningId} />
+                <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue}/>
             </div>
 
             <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione entradas</span>
                 {!toggleSubmitButtton ?
                     <div className="flex flex-col gap-3">
+
+                        <div className='flex justify-end'>
+                            <span className=' badge badge-lg badge-success font-semibold   '>Disponibles: {disponibles || '...'}</span>
+                        </div>
+
                         <div className="flex justify-between items-center">
                             <button className="btn text-white bg-black" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
                             <span className="px-7 text-2xl btn btn-warning btn-circle outline outline-2">{count}</span>
                             <button className="btn text-white bg-black" onClick={increaseCount}><i className="fa fa-plus"></i></button>
                         </div>
+
                         <button className="btn btn-warning outline outline-2" onClick={submitTickets}>{submitText}</button>
                     </div>
                     :
@@ -140,12 +151,12 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, deFaultVal
                 <div className='text-center uppercase font-semibold text-warning p-2 rounded-3xl bg-black/60'>
                     <div className='flex flex-col text-lg mb-3'>
                         <span className='underline'>Precio unitario</span>
-                        <span> ${precio} </span>
+                        <span> {precio ? `$ ${precio}` : '...'} </span>
                     </div>
 
                     <div className='flex flex-col text-3xl'>
                         <span className='underline'>Precio total</span>
-                        <span> ${precioTotal} </span>
+                        <span> {precioTotal ? `$ ${precioTotal}` : '...'} </span>
                     </div>
                 </div>
             }

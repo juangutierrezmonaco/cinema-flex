@@ -5,7 +5,7 @@ import functions from '../global/functions'
 import Ticket from "./Ticket";
 
 const Cart = () => {
-    const { cart, removeMovie, clearCart, isEmpty } = useCart();
+    const { cart, removeTicket, clearCart, isEmpty } = useCart();
 
     const [ clear, setClear ] = useState(false);
 
@@ -26,9 +26,9 @@ const Cart = () => {
             {   !isEmpty() &&
                 <ul className="text-2xl my-20 flex flex-col gap-4">
                 {   
-                    cart.map( ({ movie, quantity, screeningId, screeningInfo }) => (
-                        <li key={screeningId} className='flex justify-center items-end'> 
-                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId} screeningInfo={screeningInfo} removeMovie={removeMovie} />
+                    cart.map( ({ movie, screeningId, ticketId, quantity}) => (
+                        <li key={ticketId} className='flex justify-center items-end'> 
+                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId} removeTicket={removeTicket} ticketId={ticketId}/>
                         </li>)
                     )
                 }

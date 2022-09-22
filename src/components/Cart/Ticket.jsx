@@ -1,16 +1,17 @@
 import MovieDetailFooter from '../MovieDetail/MovieDetailFooter';
 import movieNotFound from '/assets/img/movie-not-found.svg';
 
-const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) => {
+const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket }) => {
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
 
     const clearMovie = () => {
-        removeMovie(screeningId);
+        removeTicket(movie.id + screeningId);
     }
 
-    const buyTickets = (cantidad, screeningInfo) => {
+    const buyTickets = (screeningId, cantidad) => {
         alert('Simulación de proceso de compra.');
-        removeMovie(movie.id + screeningInfo);
+        // Verificaciones, si todo salio bien la borro
+        removeTicket(movie.id + screeningId);
     }
 
     const backdropPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
@@ -31,11 +32,11 @@ const Ticket = ({ movie, quantity, screeningId, screeningInfo, removeMovie }) =>
                 <div className='cartCard-right_top rounded-xl'>
                     <span className='font-semibold text-4xl underline mb-5'>{`Título: ${movie.title}`}</span>
                     <span className='text-2xl'>{`Duración: ${movie.runtime} minutos`}</span>
-                    <span className="text-2xl italic">{`ID de la función: ${screeningId}`}</span>
+                    <span className="text-2xl italic">{`ID de la función: ${ticketId}`}</span>
                 </div>
 
                 <div className='cartCard-right_bottom'>
-                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' movieId={movie.id} deFaultValues={screeningInfo} onAdd={buyTickets} />
+                    <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' onAdd={buyTickets} movieId={movie.id} selectedScreeningId={screeningId}/>
                 </div>
             </div>
                 
