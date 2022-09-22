@@ -29,7 +29,7 @@ const MovieCardListContainer = ( {greeting} ) => {
         setListTitles([`Cartelera - ${genre}`, `Próximos estrenos - ${genre}`]);
     }, [genre])
     
-    const getMovies = (time) => {
+    const getMovies = () => {
         let URLS = [];
         
         switch (categoryId) {
@@ -56,22 +56,20 @@ const MovieCardListContainer = ( {greeting} ) => {
 
         /* Nota: Como a veces tengo que realizar múltiples consultas a la API en esta función resuelvo las promesas dinámicamente acorde a la cantidad de consultas que tenga que hacer, por lo cual, también acumulo todas las respuestas en una sola para devolverlas. */
         return new Promise( (resolve, reject) => {
-            setTimeout(() => {
-                Promise.all(
-                    URLS.map((url) => fetch(url)
-                        .then(res => res.json())
-                        .then(res => res.results))
-                )
-                .then(data => resolve(data))
-                .catch(err => reject(err));
-            }, time);
+            Promise.all(
+                URLS.map((url) => fetch(url)
+                    .then(res => res.json())
+                    .then(res => res.results))
+            )
+            .then(data => resolve(data))
+            .catch(err => reject(err));
         });
     }
 
     useEffect(() => {
         categoryId != 'inicio' ? functions.scrollTo('main') : functions.scrollTo('body');
         setLoading(true);
-        getMovies(1000)
+        getMovies(0)
             .then(res => {
                 setMovieLists(res);
                 setLoading(false);

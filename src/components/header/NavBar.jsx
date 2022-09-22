@@ -45,7 +45,6 @@ const NavBar = () => {
 
     /* Cerrar modal géneros */
     const closeModal = (e) => { 
-        // De momento lo hago a lo Vanilla JS por falta de tiempo para cerrar el modal. 
         e.target.parentElement.parentElement.parentElement.querySelector("label").click();
     }
     

@@ -10,22 +10,21 @@ const MovieDetailContainer = () => {
     const { movieId } = useParams();
     const [movie, setMovie] = useState();
 
-    const getMovie = (time) => {
+    const getMovie = () => {
         return new Promise( (resolve, reject) => {
-            setTimeout(() => {
-                fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&append_to_response=release_dates,credits,videos&include_video_language=es-MX,es-ES,en`)
-                    .then(res => res.json())
-                    .then(data => resolve(data))
-                    .catch(error => reject(error));
-            }, time);
+            fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&append_to_response=release_dates,credits,videos&include_video_language=es-MX,es-ES,en`)
+                .then(res => res.json())
+                .then(data => resolve(data))
+                .catch(error => reject(error));
         });
     }
 
     useEffect(() => {
         functions.scrollTo('main');
         setLoading(true);
-        getMovie(1000)
+        getMovie()
             .then(res => {
+                console.log(res);
                 setMovie(res);
                 setLoading(false);
             })
