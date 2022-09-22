@@ -16,7 +16,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     const [genre, setGenre] = useState('');
     useEffect(() => {
         if (categoryId != 'inicio') {
-            fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES`)
+            fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
                 .then(res => res.json())
                 .then(data => {
                     setGenre(data.genres.find(g => g.id == categoryId).name);
@@ -35,22 +35,22 @@ const MovieCardListContainer = ( {greeting} ) => {
         switch (categoryId) {
             case 'inicio':
                 setListTitles(['Cartelera', 'Próximos estrenos']);
-                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR`);
-                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR`);
+                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR`);
+                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR`);
                 break;
             case 'cartelera':
                 setListTitles(['Cartelera']);
-                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR`);
+                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR`);
                 break;
             case 'estrenos':
                 setListTitles(['Próximos estrenos']);
-                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-E1&region=AR`);
+                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-E1&region=AR`);
                 break;
             default:
 
-                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR&with_genres=${categoryId}`);
+                URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&with_genres=${categoryId}`);
 
-                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR&with_genres=${categoryId}`);
+                URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&region=AR&with_genres=${categoryId}`);
                 break;
         }
 

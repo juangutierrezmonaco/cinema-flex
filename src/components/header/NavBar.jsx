@@ -8,7 +8,7 @@ const NavBar = () => {
     /* Consigo todos los géneros disponibles para ponerlos en el navbar */
     const [genres, setGenres] = useState([]);
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES`)
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES`)
             .then(res => res.json())
             .then(data => {
                 // Ordeno los géneros antes de asignarlo

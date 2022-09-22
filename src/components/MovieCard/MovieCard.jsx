@@ -20,7 +20,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
     const [details, setDetails] = useState('');
     
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&append_to_response=credits,release_dates`)
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=892e5b21eccd8afb7c43b48a426ac1e1&language=es-ES&append_to_response=credits,release_dates`)
         .then(res => res.json())
         .then(data => {
             
