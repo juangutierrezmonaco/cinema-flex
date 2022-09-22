@@ -62,8 +62,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
             setDisponibles(screenings.find(s => s.id == screeningId) && screenings.find(s => s.id == screeningId).asientosDisponibles)
 
             // Set de precio
-            const sala = screenings.find(s => s.id == screeningId).sala;
-            setPrecio(howMuch(sala));
+            const funcion = screenings.find(s => s.id == screeningId);
+            funcion && setPrecio(howMuch(funcion.sala));
         } else {
             setDisponibles(0)
             setPrecio(0);
