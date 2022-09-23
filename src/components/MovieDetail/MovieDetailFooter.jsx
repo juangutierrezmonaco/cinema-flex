@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
+import Swal from 'sweetalert2'
 
 const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreeningId }) => {
 
     /* Traigo las funciones de la base de datos */
     const [screenings, setScreenings] = useState([]);
     const getScreenings = () => {
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const db = getFirestore();
             const q = query(
                 collection(db, "screenings"),
@@ -54,10 +55,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
     const [disponibles, setDisponibles] = useState(0);
 
     useEffect(() => {
-        // Setteo disponibles para esa función
-
         // Setteo el precio
-        if ( screenings.length > 0 && screeningId ) {
+        if (screenings.length > 0 && screeningId) {
             // Set disponibles
             setDisponibles(screenings.find(s => s.id == screeningId) && screenings.find(s => s.id == screeningId).asientosDisponibles)
 
@@ -68,7 +67,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
             setDisponibles(0)
             setPrecio(0);
         }
-        
+
     }, [screenings, screeningId])
 
     /* Si estoy en el cart no tengo que contar cuántas funciones tengo en el cart para el stock, pero si estoy afuera del cart sí */
@@ -83,7 +82,22 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
         if (parseInt(count) + sizeInCart < disponibles) {
             setCount(parseInt(count) + 1);
         } else {
-            alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'No disponemos de esa cantidad de entradas para la función seleccionada.'
+            })
         }
     }
 
@@ -95,14 +109,33 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
 
     const submitTickets = () => {
         const sizeInCart = imInCart ? 0 : howMany(movieId + screeningId);
+
         if (parseInt(count) + sizeInCart <= disponibles) {
-            onAdd(screeningId, parseInt(count));
+            // De momento le paso los disponibles, pero después en la DB tendría que tener los ocupados
+            const funcion = screenings.find(s => s.id == screeningId);
+            onAdd(screeningId, parseInt(count) );
             setCount(1);
-            
+
             // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
             !imInCart && setToggleSubmitButtton(true);
         } else {
-            alert('No disponemos de esa cantidad de entradas para la función seleccionada.')
+            
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({
+                icon: 'error',
+                title: 'No disponemos de esa cantidad de entradas para la función seleccionada.'
+            })
         }
     }
 
@@ -117,13 +150,13 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
     useEffect(() => {
         setPrecioTotal(precio * count);
     }, [precio, count])
-    
+
     return (
         <div className='movieDetailFooter'>
 
             <div className='movieDetailFooter_select'>
                 <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue}/>
+                <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue} />
             </div>
 
             <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>

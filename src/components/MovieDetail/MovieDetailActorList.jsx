@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import MovieDetailActor from "./MovieDetailActor";
 
-const MovieDetailActorList = ({ cast, length }) => {
+const MovieDetailActorList = ({ cast, length = 13 }) => {
     const castList = cast.slice(0, length);
     const ref = useRef();
 

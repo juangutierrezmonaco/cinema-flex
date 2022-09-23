@@ -8,10 +8,9 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket }) => {
         removeTicket(movie.id + screeningId);
     }
 
-    const buyTickets = (screeningId, cantidad) => {
-        alert('Simulación de proceso de compra.');
+    const buyTickets = (screeningId, cantidad, funcion) => {
         // Verificaciones, si todo salio bien la borro
-        removeTicket(movie.id + screeningId);
+        /* removeTicket(movie.id + screeningId); */
     }
 
     const backdropPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;

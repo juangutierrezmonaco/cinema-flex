@@ -8,7 +8,7 @@ import MovieCardListContainer from './components/MovieCard/MovieCardListContaine
 import MovieDetailContainer from './components/MovieDetail/MovieDetailContainer';
 import { CartProvider } from './context/CartContext'
 import Cart from './components/Cart/Cart';
-import MovieDetailCredits from './components/MovieDetail/MovieDetailCredits';
+import MovieCredits from './components/MovieCredits/MovieCredits';
 
 function App() {   
 
@@ -25,7 +25,7 @@ function App() {
 
                     <Route path='/movie/:movieId' element={<main className=''><MovieDetailContainer/></main>}></Route>
 
-                    <Route path='/movie/:movieId/credits' element={<main className='mt-9 lg:px-12'><MovieDetailCredits /></main>}></Route>
+                    <Route path='/movie/:movieId/credits' element={<main className='mt-9 lg:px-12'><MovieCredits /></main>}></Route>
 
                     <Route path='/tickets' element={<main><Cart/></main>}></Route>
                 </Routes>

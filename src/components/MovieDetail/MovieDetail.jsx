@@ -163,7 +163,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                         <div className='movieDetailCard-body_right_cast'>
                             <h3 className='text-3xl font-semibold  tracking-wider'>Reparto principal</h3>
 
-                            <MovieDetailActorList cast={cast} length={13} />
+                            <MovieDetailActorList cast={cast} />
                         </div>
                     </div>
 

@@ -19,7 +19,6 @@ const Cart = () => {
         isEmpty && functions.scrollTo('main');
     }, [cart]);
     
-    
     return (
         <div className="flex flex-col items-center px-10 xl:px-36">
             <h1 className="text text-5xl uppercase">Entradas</h1>
