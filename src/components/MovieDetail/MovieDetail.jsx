@@ -53,12 +53,12 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     // Manejo de carrito
     const { addTicket } = useCart();
 
-    const addToCart = ( screeningId, cantidad ) => {
+    const addToCart = ( screening, cantidad ) => {
         flyToCart();
         
         setTimeout(() => {
             const movie = { id, title, runtime, poster_path, backdrop_path };
-            addTicket(movie, screeningId, cantidad);
+            addTicket(movie, screening.id, cantidad);
         }, 2000);
     }
 

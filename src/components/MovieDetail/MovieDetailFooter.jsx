@@ -113,7 +113,7 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
         if (parseInt(count) + sizeInCart <= disponibles) {
             // De momento le paso los disponibles, pero después en la DB tendría que tener los ocupados
             const funcion = screenings.find(s => s.id == screeningId);
-            onAdd(screeningId, parseInt(count) );
+            onAdd({...funcion, horario: funcion.horario.toDate()}, parseInt(count) );
             setCount(1);
 
             // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.

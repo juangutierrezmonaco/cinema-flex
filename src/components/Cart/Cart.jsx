@@ -5,7 +5,7 @@ import functions from '../global/functions'
 import Ticket from "./Ticket";
 
 const Cart = () => {
-    const { cart, removeTicket, clearCart, isEmpty } = useCart();
+    const { cart, removeTicket, modifyTicket, clearCart, isEmpty } = useCart();
 
     const [ clear, setClear ] = useState(false);
 
@@ -22,12 +22,13 @@ const Cart = () => {
     return (
         <div className="flex flex-col items-center px-10 xl:px-36">
             <h1 className="text text-5xl uppercase">Entradas</h1>
+
             {   !isEmpty() &&
-                <ul className="text-2xl my-20 flex flex-col gap-4">
+                <ul className="text-2xl my-20 flex flex-col gap-4 w-full">
                 {   
                     cart.map( ({ movie, screeningId, ticketId, quantity}) => (
                         <li key={ticketId} className='flex justify-center items-end'> 
-                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId} removeTicket={removeTicket} ticketId={ticketId}/>
+                            <Ticket movie={movie} quantity={quantity} screeningId={screeningId} removeTicket={removeTicket} modifyTicket={modifyTicket} ticketId={ticketId}/>
                         </li>)
                     )
                 }

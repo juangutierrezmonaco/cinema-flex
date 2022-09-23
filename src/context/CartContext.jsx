@@ -34,6 +34,22 @@ const CartProvider = ({ defaultValue = [], children }) => {
         }
     }
 
+    // Es para alterar una función que ya está en el carrito
+    const modifyTicket = (oldScreeningId, movie, newScreeningId, newQuantity) => {
+        const oldTicketId = movie.id + oldScreeningId;
+        const newTicketId = movie.id + newScreeningId;
+        const newState = [...cart];
+        const index = newState.findIndex(ticket => ticket.ticketId == oldTicketId);
+        newState[index] = { 
+            movie: movie, 
+            screeningId: newScreeningId, 
+            ticketId: newTicketId, 
+            quantity: newQuantity
+        };
+        updateLocalStorage(newState);
+        setCart(newState);
+    }
+
     const removeTicket = (ticketId) => {
         setCart(prevState => {
             const newState = prevState.filter(ticket => ticket.ticketId != ticketId);
@@ -68,9 +84,9 @@ const CartProvider = ({ defaultValue = [], children }) => {
         return cart.length == 0;
     }
 
-    const howMuch = ( sala ) => {
+    const howMuch = (sala) => {
         // Devuelve el precio acorde a esa función
-        
+
         switch (true) {
             case sala.includes('SALA 1'):
                 return 800;
@@ -88,6 +104,7 @@ const CartProvider = ({ defaultValue = [], children }) => {
     const context = {
         cart,
         addTicket,
+        modifyTicket,
         removeTicket,
         findTicket,
         howMany,
