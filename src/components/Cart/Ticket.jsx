@@ -5,6 +5,18 @@ import movieNotFound from '/assets/img/movie-not-found.svg';
 import functions from '../global/functions'
 
 const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTicket }) => {
+
+    const [open, setOpen] = useState(false);
+    const [screeningData, setScreeningData] = useState({});
+    const ticketRef = useRef();
+    const cancelar = () =>  setOpen(false);
+    const continuar = () => { };
+
+    useEffect(() => {
+        functions.scrollTo('', ticketRef);
+    }, [open])
+
+    
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
 
     const clearMovie = () => {
@@ -12,7 +24,6 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
     }
 
     const buyTickets = (screening, cantidad) => {
-        
         setScreeningData({ funcion: screening, movie: movie, cantidad: cantidad });
         setOpen(true);
         /* modifyTicket(screeningId, movie, screening.id, cantidad); */
@@ -24,17 +35,6 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
     const backgroundStyle = {
         backgroundImage: `url(${backdropPath})`
     }
-
-    const [open, setOpen] = useState(false);
-    const [screeningData, setScreeningData] = useState({});
-    const ticketRef = useRef();
-    const cancelar = () =>  setOpen(false);
-    const continuar = () => { };
-
-    useEffect(() => {
-        functions.scrollTo('', ticketRef);
-    }, [open])
-    
 
     return (
         <div ref={ticketRef} className='w-full'>

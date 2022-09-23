@@ -15,8 +15,12 @@ const Cart = () => {
     
 
     useEffect(() => {
-        setClear(!isEmpty());
-        isEmpty && functions.scrollTo('main');
+        if (isEmpty()) {
+            setClear(false);
+            functions.scrollTo('main');
+        } else {
+            setClear(true);
+        }
     }, [cart]);
     
     return (

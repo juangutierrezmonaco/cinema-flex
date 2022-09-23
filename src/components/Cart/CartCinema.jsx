@@ -129,8 +129,8 @@ const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, ri
                 ))}
             </div>
 
-            <p className="flex flex-col items-center">
-                <span className="flex gap-4 uppercase font-bold">Butacas seleccionadas: {selected.join(', ')}</span>
+            <p className="flex justify-center px-5 uppercase font-bold w-full">
+                Butacas seleccionadas: {selected.join(', ')}
             </p>
         </div>
     )
