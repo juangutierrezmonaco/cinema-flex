@@ -1,4 +1,3 @@
-import CreditCard from "../CreditCard/CreditCard"
 import CartCinema from "./CartCinema"
 
 const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) => {

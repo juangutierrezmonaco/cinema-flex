@@ -1,50 +1,21 @@
 
+.App-payment {
+    padding: 30px;
+}
 
 form {
     margin: 30px auto 0;
     max-width: 400px;
 }
 
-.front {
-    position: relative;
-    transform: rotateY(0deg);
-    background-color: red;
+.form-actions {
+    margin-top: 15px;
 }
 
-.back {
-    position: relative;
-    transform: rotateY(180deg);
-    background-color: yellow;
-}
-
-.rccs__card {
-    height: 182.873px;
-    margin-top: 10;
-    margin-bottom: 10;
-    position: relative;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    -webkit-transition: all 0.4s linear;
-    transition: all 0.4s linear;
-    width: 290px;
-
-    /* background: linear-gradient(
-     25deg
-  , #986, #234); */
-}
-
-.front1 {
-    display: flex;
-    margin-top: 30px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-color: red;
-}
-
-.back1 {
-    transform: rotateY(360deg);
-    margin-bottom: 30px !important;
-    background-color: yellow;
+.App-cards {
+    margin: 0 auto;
+    max-width: 1280px;
+    text-align: center;
 }
 
 .App-cards-list {
@@ -59,27 +30,71 @@ form {
     margin-bottom: 30px !important;
 }
 
-.back3 {
-    display: flex;
-    position: relative;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background-image: url(./images/6.jpeg);
+.App-highlight {
+    font-family: serif;
+    margin: 15px auto 0;
+    max-width: 300px;
 }
 
-/* rccs-signature-background: repeating-linear-gradient(
-    0.1deg,
-    #fff 20%,
-    #fff 40%,
-    #fea 40%,
-    #fea 44%,
-    #fff 44%
-  );
-  rccs-default-background: linear-gradient(25deg, #d32121, #178a63);
-  rccs-unknown-background: linear-gradient(25deg, rgb(160, 18, 101), #999);
-  rccs-background-transition: 0.5s;
-  rccs-animate-background: true; */
+.App-highlight>div {
+    padding-left: 40px;
+}
 
-.rccs__card--unknown>div {
-    background-image: url(./6.jpeg);
+.App-badges {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.App-badges a {
+    display: block;
+}
+
+.App-badges a+a {
+    margin-top: 18px;
+}
+
+.github__btn {
+    align-items: center;
+    background-color: #ccc;
+    border-radius: 4px;
+    color: #444;
+    display: flex;
+    line-height: 1;
+    padding: 8px 12px;
+}
+
+.github__btn:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.github__btn img {
+    display: inline-block;
+    height: 28px;
+    margin-right: 8px;
+}
+
+.App-credits {
+    background-color: #000;
+    color: #fff;
+    line-height: 50px;
+    text-align: center;
+}
+
+.App-credits a {
+    color: #fff;
+    font-weight: bold;
+}
+
+@media screen and (min-width: 600px) {
+    .App-badges {
+        flex-direction: row;
+    }
+
+    .App-badges a+a {
+        margin-top: 0;
+        margin-left: 18px;
+    }
 }
