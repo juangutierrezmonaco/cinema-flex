@@ -26,6 +26,7 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
     const buyTickets = (screening, cantidad) => {
         setScreeningData({ funcion: screening, movie: movie, cantidad: cantidad });
         setOpen(true);
+
         /* modifyTicket(screeningId, movie, screening.id, cantidad); */
         // Verificaciones, si todo salio bien la borro
         /* removeTicket(movie.id + screeningId); */
@@ -63,7 +64,6 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
                 </div>
                 :
                 <CartCinemaContainer {...screeningData} cancelar={cancelar} continuar={continuar} />
-
             }
         </div>
     )

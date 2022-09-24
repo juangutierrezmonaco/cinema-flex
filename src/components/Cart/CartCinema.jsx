@@ -115,7 +115,7 @@ const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, ri
                             ))}
                         </div>
 
-                        {/* RIght side */}
+                        {/* Right side */}
                         <div className="cartCinema-container_seatsRow">
                             {[...Array(rightColumns)].map((_, j) => (
                                 <div className={(j < rightColumns && rightInitial <= i) ?
