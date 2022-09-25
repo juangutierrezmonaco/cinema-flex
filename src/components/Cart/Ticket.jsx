@@ -4,6 +4,7 @@ import CartCinemaContainer from './CartCinemaContainer';
 import movieNotFound from '/assets/img/movie-not-found.svg';
 import functions from '../global/functions'
 import CreditCardContainer from '../CreditCard/CreditCardContainer'
+import Swal from 'sweetalert2';
 
 const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTicket }) => {
 
@@ -36,15 +37,38 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
         backgroundImage: `url(${backdropPath})`
     }
 
-
+    const [selectedSeats, setSelectedSeats] = useState([]);
     const cancelar = () => setOpen(false);
-    const continuar = () => {
-        // Si se hace click en continuar hay que traer los asientos elegidos!!!
+    const continuar = ( seats ) => {
+        setSelectedSeats(seats);
         setOpenCreditCard(true);
     };
 
-    const finalizarCompra = () => {
+    const finalizarCompra = (  ) => {
+        setOpenCreditCard(false);
+        setOpen(false);
+
+        const { movie, funcion} = screeningData;
+        const horario = funcion.horario.getHours() + ':' + funcion.horario.getMinutes();
+        const dia = funcion.horario.toLocaleDateString();
+
+
+        // Completar en la DB
+        Swal.fire({
+            icon: 'success',
+            title: 'Todo piola, toma tu ticket',
+            text: `Película:   ${movie.title}
+            Función:    ${funcion.sala} - ${funcion.tipo} (${funcion.lenguaje})
+                        ${dia} - ${horario}
+            Asientos: ${selectedSeats}`
+
+        })
+
         console.log(screeningData);
+        console.log(selectedSeats);
+
+        // ACTUALIZAR DB SI SALE TODO BIEN ACá
+        // Primero actualizar DB, después cobrar y después lanzar cartel
     }
 
     const [openCreditCart, setOpenCreditCard] = useState(false);

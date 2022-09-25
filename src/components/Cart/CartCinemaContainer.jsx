@@ -1,4 +1,6 @@
+import { useRef } from "react"
 import CartCinema from "./CartCinema"
+import Swal from "sweetalert2";
 
 const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) => {
 
@@ -40,6 +42,33 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
             break;
     }
 
+    const selectedRef = useRef();
+
+    const submitSeats = () => {
+        if (selectedRef.current.length >= cantidad) {
+            continuar(selectedRef.current);
+        } else {
+            // Alert de error
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+
+            })
+            Toast.fire({
+                icon: 'error',
+                title: 'Te faltan asientos muñeco'
+            })
+
+        }
+    }
+
     return (
         <div className="cartCinemaContainer py-16">
 
@@ -49,10 +78,10 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
                 <span>Cantidad: {cantidad}</span>
             </div>
 
-            <CartCinema {...cinemaSeatsParams} maxSeats={cantidad} />
+            <CartCinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} />
 
             <div className="absolute right-5 bottom-5 flex gap-5">
-                <button className="btn btn-success" onClick={continuar}>Continuar</button>
+                <button className="btn btn-success" onClick={submitSeats}>Continuar</button>
                 <button className="btn btn-error" onClick={cancelar}>Cancelar</button>
             </div>
         </div>

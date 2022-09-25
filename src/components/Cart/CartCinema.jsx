@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats }) => {
+const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats, selectedRef }) => {
 
     // Si no se pasó un máximo, lo setteo igual a la cantidad de asientos
     const totalSeats = (totalRows - leftInitial) * leftColumns +
@@ -11,6 +11,7 @@ const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, ri
 
     const [count, setCount] = useState(0);
     const [selected, setSelected] = useState([]);
+    selectedRef.current = selected;
 
     // Alert de error
     const Toast = Swal.mixin({
@@ -68,10 +69,10 @@ const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, ri
                         'T5', 'T6', 'T7', 'T8', 'T9'
 
                     ];
+
     const ocupado = (seat) => {
         return ocupados.includes(seat) ? 'occupied' : '';
-    }
-    
+    }    
 
     return (
         <div className="cartCinema mb-10">

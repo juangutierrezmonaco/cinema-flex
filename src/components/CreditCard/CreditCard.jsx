@@ -91,7 +91,7 @@ const CreditCard = ({ onSubmit }) => {
     const { number, name, expiry, expiryyear, cvc, focused } = state;
 
     return (
-        <div className='bg-white w-1/2 flex flex-col items-center gap-5 py-10'>
+        <div className='bg-white w-lg-1/2 flex flex-col items-center gap-5 py-10'>
             <div>
                 <Card
                     locale={{ valid: "Expira" }}
@@ -106,7 +106,7 @@ const CreditCard = ({ onSubmit }) => {
             </div>
 
             <div className=' text-black w-full flex justify-center'>
-                <form className='flex flex-col gap-3 w-4/5' ref={formRef} onSubmit={handleSubmit} >
+                <form className='flex flex-col gap-3 w-full' ref={formRef} onSubmit={handleSubmit} >
 
                     <div className="form-control">
 
