@@ -1,10 +1,10 @@
 import CreditCard from './CreditCard'
 
-const CreditCardContainer = () => {
+const CreditCardContainer = ({ onSubmit }) => {
   return (
     <div className='w-full '>
         <div className='w-full flex justify-center'>
-            <CreditCard/>
+            <CreditCard onSubmit={onSubmit}/>
         </div>
     </div>
   )

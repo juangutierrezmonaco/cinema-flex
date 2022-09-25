@@ -3,20 +3,19 @@ import MovieDetailFooter from '../MovieDetail/MovieDetailFooter';
 import CartCinemaContainer from './CartCinemaContainer';
 import movieNotFound from '/assets/img/movie-not-found.svg';
 import functions from '../global/functions'
+import CreditCardContainer from '../CreditCard/CreditCardContainer'
 
 const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTicket }) => {
 
     const [open, setOpen] = useState(false);
     const [screeningData, setScreeningData] = useState({});
     const ticketRef = useRef();
-    const cancelar = () =>  setOpen(false);
-    const continuar = () => { };
 
     useEffect(() => {
         functions.scrollTo('', ticketRef);
     }, [open])
 
-    
+
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
 
     const clearMovie = () => {
@@ -35,6 +34,22 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
     const backdropPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
     const backgroundStyle = {
         backgroundImage: `url(${backdropPath})`
+    }
+
+
+    const cancelar = () => setOpen(false);
+    const continuar = () => {
+        // Si se hace click en continuar hay que traer los asientos elegidos!!!
+        setOpenCreditCard(true);
+    };
+
+    const finalizarCompra = () => {
+        console.log(screeningData);
+    }
+
+    const [openCreditCart, setOpenCreditCard] = useState(false);
+    const closeCreditCard = ( ) => {
+        setOpenCreditCard(false);
     }
 
     return (
@@ -65,7 +80,23 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
                 :
                 <CartCinemaContainer {...screeningData} cancelar={cancelar} continuar={continuar} />
             }
-        </div>
+
+            {openCreditCart &&
+                <div>
+                    <input type="checkbox" id="my-modal-5" className="modal-toggle" checked={openCreditCart} onChange={() => setOpenCreditCard(true)} />
+                    <div className="modal">
+                        <div className="modal-box w-11/12 max-w-5xl">
+                            <div className='text-center text-black text-3xl'>Complete los datos para finalizar su compra!</div>
+                            <CreditCardContainer onSubmit={finalizarCompra} />
+                            <div className="modal-action">
+                                <label htmlFor="my-modal-5" className="btn btn-error" onClick={closeCreditCard}>Volver</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div >
     )
 }
 export default Ticket;

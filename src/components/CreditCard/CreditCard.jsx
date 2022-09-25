@@ -10,7 +10,7 @@ import {
     createData
 } from './CreditCardUtils';
 
-const CreditCard = () => {
+const CreditCard = ({ onSubmit }) => {
     const thisYear = new Date().getFullYear();
 
     const [formData, setFormData] = useState();
@@ -58,6 +58,8 @@ const CreditCard = () => {
         if (issuer) {
 
             // Compra correcta
+            onSubmit();
+            
             setFormData(state);
             formRef.current.reset();
             setState({
