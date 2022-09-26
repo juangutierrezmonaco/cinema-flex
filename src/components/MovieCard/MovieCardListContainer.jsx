@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import MovieCardList from './MovieCardList';
-import functions from '../global/functions';
+import { scrollTo } from '../global/functions';
 
 const MovieCardListContainer = ( {greeting} ) => {
     const categoryId = useParams().categoryId || 'inicio';
@@ -67,7 +67,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     }
 
     useEffect(() => {
-        categoryId != 'inicio' ? functions.scrollTo('main') : functions.scrollTo('body');
+        categoryId != 'inicio' ? scrollTo('main') : scrollTo('body');
         setLoading(true);
         getMovies(0)
             .then(res => {

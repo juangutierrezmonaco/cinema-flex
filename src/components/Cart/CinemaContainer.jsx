@@ -1,8 +1,11 @@
 import { useRef } from "react"
-import CartCinema from "./CartCinema"
+import Cinema from "./Cinema"
 import Swal from "sweetalert2";
+import { usePurchase } from "../../context/PurchaseContext";
 
-const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) => {
+const CinemaContainer = ({  continuar, cancelar }) => {
+    const { order } = usePurchase();
+    const { screening, movie, cantidad } = order;
 
     const cinemaSeatsParams1 = {
         leftInitial: 0, leftColumns: 4,
@@ -26,7 +29,7 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
     }
 
     let cinemaSeatsParams = {};
-    const sala = funcion && funcion.sala;
+    const sala = screening && screening.sala;
     switch (sala) {
         case 'SALA 1':
             cinemaSeatsParams = cinemaSeatsParams1;
@@ -63,7 +66,7 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
             })
             Toast.fire({
                 icon: 'error',
-                title: 'Te faltan asientos muñeco'
+                title: 'Debe seleccionar todos los asientos!'
             })
 
         }
@@ -74,11 +77,11 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
 
             <div className="flex flex-col items-center mb-5">
                 <span>Película: {movie && movie.title}</span>
-                <span>Función: {funcion && funcion.horario.toLocaleString()}</span>
+                <span>Función: {screening && screening.horario.toLocaleString()}</span>
                 <span>Cantidad: {cantidad}</span>
             </div>
 
-            <CartCinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} />
+            <Cinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} />
 
             <div className="absolute right-5 bottom-5 flex gap-5">
                 <button className="btn btn-success" onClick={submitSeats}>Continuar</button>
@@ -89,4 +92,4 @@ const CartCinemaContainer = ({ funcion, movie, cantidad, cancelar, continuar }) 
 
     )
 }
-export default CartCinemaContainer;
+export default CinemaContainer;

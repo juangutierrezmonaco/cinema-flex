@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useCart } from "../../context/CartContext";
 
-import MovieDetailFooter from "./MovieDetailFooter";
+import MovieFooter from "../MovieFooter/MovieFooter";
 import MovieDetailActorList from "./MovieDetailActorList";
 import movieNotFound from '/assets/img/movie-not-found.svg';
 import MovieDetailTrailer from "./MovieDetailTrailer";
@@ -168,7 +168,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                     </div>
 
                     <div className="movieDetailCard-body_bottom">
-                        <MovieDetailFooter onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id} />
+                        <MovieFooter onAdd={addToCart} submitText='Agregar a mis entradas' movieId={id} />
                     </div>
                 </div>
             </article>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats, selectedRef }) => {
+const Cinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats, selectedRef }) => {
 
     // Si no se pasó un máximo, lo setteo igual a la cantidad de asientos
     const totalSeats = (totalRows - leftInitial) * leftColumns +
@@ -137,4 +137,4 @@ const CartCinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, ri
     )
 }
 
-export default CartCinema;
+export default Cinema;

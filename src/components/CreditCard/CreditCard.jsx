@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import Card from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
-import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
     formatCreditCardNumber,
@@ -55,28 +55,38 @@ const CreditCard = ({ onSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const { issuer } = state;
+
         if (issuer) {
-
-            // Compra correcta
-            onSubmit();
+            const submitButton = e.nativeEvent.submitter;
+            submitButton.innerText = 'Verificando pago';
+            submitButton.classList.remove('btn-primary');
+            submitButton.classList.add('btn-warning', 'loading');
             
-            setFormData(state);
-            formRef.current.reset();
-            setState({
-                number: '',
-                name: '',
-                expiry: '',
-                expiryyear: '',
-                cvc: '',
-                focused: '',
-                issuer: ''
-            });
-        } else {
+            setTimeout(() => {                
+                submitButton.innerText = 'Pago exitoso!';
+                submitButton.classList.remove('btn-warning', 'loading');
+                submitButton.classList.add('btn-success')
+            }, 2000);
 
-            Swal.fire({
-                icon: 'error',
-                text: 'Tarjeta inválida',
-            })
+            setTimeout(() => {
+                
+                const id = uuidv4();
+                onSubmit({ paymentStatus: 'success', paymentId: id });
+
+                setFormData(state);
+                formRef.current.reset();
+                setState({
+                    number: '',
+                    name: '',
+                    expiry: '',
+                    expiryyear: '',
+                    cvc: '',
+                    focused: '',
+                    issuer: ''
+                });
+            }, 2500);
+        } else {
+            onSubmit({ paymentStatus: 'rejected', errorDetail: 'Tarjeta inválida' });
         }
     };
 
@@ -91,7 +101,7 @@ const CreditCard = ({ onSubmit }) => {
     const { number, name, expiry, expiryyear, cvc, focused } = state;
 
     return (
-        <div className='bg-white w-lg-1/2 flex flex-col items-center gap-5 py-10'>
+        <div className='flex flex-col items-center gap-5 py-10 creditCard'>
             <div>
                 <Card
                     locale={{ valid: "Expira" }}

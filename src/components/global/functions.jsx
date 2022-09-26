@@ -9,5 +9,5 @@ const scrollTo = (section, ref = undefined) => {
     });
 }
 
-export default { scrollTo };
+export { scrollTo };
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
-import functions from '../global/functions';
+import { scrollTo } from '../global/functions';
 import MovieCast from "./MovieCast";
 import MovieCrew from "./MovieCrew";
 
@@ -23,7 +23,7 @@ const MovieCredits = () => {
     }
 
     useEffect(() => {
-        functions.scrollTo('main');
+        scrollTo('main');
         setLoading(true);
         getCredits()
             .then(res => {

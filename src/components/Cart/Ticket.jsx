@@ -1,84 +1,138 @@
 import { useEffect, useRef, useState } from 'react';
-import MovieDetailFooter from '../MovieDetail/MovieDetailFooter';
-import CartCinemaContainer from './CartCinemaContainer';
-import movieNotFound from '/assets/img/movie-not-found.svg';
-import functions from '../global/functions'
+import MovieFooter from '../MovieFooter/MovieFooter';
+import CinemaContainer from './CinemaContainer';
 import CreditCardContainer from '../CreditCard/CreditCardContainer'
+
+import movieNotFound from '/assets/img/movie-not-found.svg';
+import { scrollTo } from '../global/functions'
 import Swal from 'sweetalert2';
+import { usePurchase } from '../../context/PurchaseContext';
+import { useCart } from '../../context/CartContext';
+import OrderContainer from '../Order/OrderContainer';
 
-const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTicket }) => {
-
-    const [open, setOpen] = useState(false);
-    const [screeningData, setScreeningData] = useState({});
-    const ticketRef = useRef();
-
-    useEffect(() => {
-        functions.scrollTo('', ticketRef);
-    }, [open])
-
+const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modifyTicket }) => {
 
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
-
-    const clearMovie = () => {
-        removeTicket(movie.id + screeningId);
-    }
-
-    const buyTickets = (screening, cantidad) => {
-        setScreeningData({ funcion: screening, movie: movie, cantidad: cantidad });
-        setOpen(true);
-
-        /* modifyTicket(screeningId, movie, screening.id, cantidad); */
-        // Verificaciones, si todo salio bien la borro
-        /* removeTicket(movie.id + screeningId); */
-    }
 
     const backdropPath = `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`;
     const backgroundStyle = {
         backgroundImage: `url(${backdropPath})`
     }
 
-    const [selectedSeats, setSelectedSeats] = useState([]);
-    const cancelar = () => setOpen(false);
-    const continuar = ( seats ) => {
-        setSelectedSeats(seats);
+    const ticketRef = useRef();
+
+    const [openCinema, setOpenCinema] = useState(false);
+    const closeCinema = () => {
+        // Antes de cerrarlo modifico el ticket en el que estoy
+        const { screening, cantidad } = order;
+        modifyTicket(initialScreeningId, movie, screening.id, cantidad);
+        setOpenCinema(false);
+    };
+
+    const [openCreditCard, setOpenCreditCard] = useState(false);
+    const closeCreditCard = () => {
+        setOpenCreditCard(false);
+        scrollTo('', ticketRef);
+    }
+
+    const [openOrder, setOpenOrder] = useState(false);
+    const closeOrder = () => {
+        setOpenOrder(false);
+    }
+
+    useEffect(() => {
+        scrollTo('', ticketRef);
+        setIsActive(openCinema);    // Sólo se puede comprar las entradas de a una función por vez
+    }, [openCinema])
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    const clearTicket = () => {
+        // Modificar para que se elimine el id que realmente tiene (modify ticket)
+        removeTicket(movie.id + initialScreeningId);
+    }
+
+    const { order, setScreeningData, setSeats, setPaymentId, isActive, setIsActive, submitOrderToDB } = usePurchase();
+
+    /* useEffect(() => {
+        console.log(order);
+    }, [order]) */
+
+    useEffect(() => {
+        document.body.style.overflowY = openCreditCard ? "hidden" : 'scroll';
+    }, [openCreditCard])
+    
+
+
+    const submitScreening = (screening, cantidad, precio) => {
+        if (!isActive) {
+            setScreeningData(screening, movie, cantidad, precio);
+            setOpenCinema(true);
+        } else {
+            Toast.fire({
+                icon: 'error',
+                title: 'Ya estás en proceso de compra de una película'
+            })
+        }
+    }
+
+    const submitSeats = (seats) => {
+        // ANTES QUE NADA TENÉS QUE ESTAR LOGGEADO PARA COMPRAR PAPÁ
+        setSeats(seats);
         setOpenCreditCard(true);
     };
 
-    const finalizarCompra = (  ) => {
-        setOpenCreditCard(false);
-        setOpen(false);
+    const finishPurchase = (paymentInfo) => {
+        const { paymentStatus } = paymentInfo;
 
-        const { movie, funcion} = screeningData;
-        const horario = funcion.horario.getHours() + ':' + funcion.horario.getMinutes();
-        const dia = funcion.horario.toLocaleDateString();
+        if (paymentStatus == 'success') {
+            const { paymentId } = paymentInfo;
+
+            const callbackPayment = ( currentOrder ) => {
+                setOpenCreditCard(false);
+                setOpenCinema(false);
+                submitOrderToDB( currentOrder );
+                /* clearTicket(); */
+
+                Swal.fire({
+                    icon: 'success',
+                    text: 'Cobrado correctamente!',
+                })
+            }
+
+            setPaymentId(paymentId, callbackPayment);
 
 
-        // Completar en la DB
-        Swal.fire({
-            icon: 'success',
-            title: 'Todo piola, toma tu ticket',
-            text: `Película:   ${movie.title}
-            Función:    ${funcion.sala} - ${funcion.tipo} (${funcion.lenguaje})
-                        ${dia} - ${horario}
-            Asientos: ${selectedSeats}`
+        } else {
+            const { errorDetail } = paymentInfo;
+            Swal.fire({
+                icon: 'error',
+                text: errorDetail,
+            })
+        }
 
-        })
 
-        console.log(screeningData);
-        console.log(selectedSeats);
+        // Verificaciones, si todo salio bien la borro
+        /* removeTicket(movie.id + initialScreeningId); */
 
         // ACTUALIZAR DB SI SALE TODO BIEN ACá
         // Primero actualizar DB, después cobrar y después lanzar cartel
     }
 
-    const [openCreditCart, setOpenCreditCard] = useState(false);
-    const closeCreditCard = ( ) => {
-        setOpenCreditCard(false);
-    }
 
     return (
         <div ref={ticketRef} className='w-full'>
-            {!open ?
+            {!openCinema ?
                 <div className="cartCard">
                     <div className='cartCard-background'>
                         <div style={backgroundStyle}></div>
@@ -91,36 +145,28 @@ const Ticket = ({ movie, screeningId, quantity, ticketId, removeTicket, modifyTi
                         <div className='cartCard-right_top rounded-xl'>
                             <span className='font-semibold text-4xl underline mb-5'>{`Título: ${movie.title}`}</span>
                             <span className='text-2xl'>{`Duración: ${movie.runtime} minutos`}</span>
-                            <span className="text-2xl italic">{`ID de la función: ${ticketId}`}</span>
                         </div>
 
                         <div className='cartCard-right_bottom'>
-                            <MovieDetailFooter initial={quantity} submitText='Comprar entradas!' onAdd={buyTickets} movieId={movie.id} selectedScreeningId={screeningId} />
+                            <MovieFooter initial={initialQuantity} submitText='Comprar entradas!' onAdd={submitScreening} movieId={movie.id} selectedScreeningId={initialScreeningId} />
                         </div>
                     </div>
 
-                    <button className="cartCard-deleteBtn btn" onClick={clearMovie}>Borrar</button>
+                    <button className="cartCard-deleteBtn btn" onClick={clearTicket}>Borrar</button>
                 </div>
                 :
-                <CartCinemaContainer {...screeningData} cancelar={cancelar} continuar={continuar} />
+                <CinemaContainer continuar={submitSeats} cancelar={closeCinema} />
             }
 
-            {openCreditCart &&
-                <div>
-                    <input type="checkbox" id="my-modal-5" className="modal-toggle" checked={openCreditCart} onChange={() => setOpenCreditCard(true)} />
-                    <div className="modal">
-                        <div className="modal-box w-11/12 max-w-5xl">
-                            <div className='text-center text-black text-3xl'>Complete los datos para finalizar su compra!</div>
-                            <CreditCardContainer onSubmit={finalizarCompra} />
-                            <div className="modal-action">
-                                <label htmlFor="my-modal-5" className="btn btn-error" onClick={closeCreditCard}>Volver</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            {openCreditCard &&
+                <CreditCardContainer onSubmit={finishPurchase} onCancel={closeCreditCard} open={openCreditCard} />
             }
 
-        </div >
+            {openOrder &&
+                <OrderContainer />
+            }
+
+        </div>
     )
 }
 export default Ticket;

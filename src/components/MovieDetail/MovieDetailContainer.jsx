@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
 import MovieDetail from './MovieDetail';
-import functions from '../global/functions';
+import { scrollTo } from '../global/functions';
 
 const MovieDetailContainer = () => {
     const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const MovieDetailContainer = () => {
     }
 
     useEffect(() => {
-        functions.scrollTo('main');
+        scrollTo('main');
         setLoading(true);
         getMovie()
             .then(res => {

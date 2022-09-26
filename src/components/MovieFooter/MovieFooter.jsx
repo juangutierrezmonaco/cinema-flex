@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 import Swal from 'sweetalert2'
 
-const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreeningId }) => {
+const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreeningId }) => {
 
     /* Traigo las funciones de la base de datos */
     const [screenings, setScreenings] = useState([]);
@@ -113,8 +113,8 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
         if (parseInt(count) + sizeInCart <= disponibles) {
             // De momento le paso los disponibles, pero después en la DB tendría que tener los ocupados
             const funcion = screenings.find(s => s.id == screeningId);
-            onAdd({...funcion, horario: funcion.horario.toDate()}, parseInt(count) );
-            setCount(1);
+            onAdd( {...funcion, horario: funcion.horario.toDate()}, parseInt(count), precioTotal );
+            !imInCart && setCount(1);
 
             // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
             !imInCart && setToggleSubmitButtton(true);
@@ -201,4 +201,4 @@ const MovieDetailFooter = ({ initial = 1, onAdd, submitText, movieId, selectedSc
     )
 }
 
-export default MovieDetailFooter;
+export default MovieFooter;
