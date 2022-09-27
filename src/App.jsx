@@ -20,7 +20,7 @@ function App() {
             <CartProvider>
                 <BrowserRouter>
                     <NavBar />
-                    {/* <MovieCarouselContainer /> */}
+                    <MovieCarouselContainer />
 
                     <Routes>
                         <Route path='/' element={<main className='lg:px-24'><MovieCardListContainer greeting="Inicio" /></main>}></Route>

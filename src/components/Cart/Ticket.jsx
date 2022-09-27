@@ -18,29 +18,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         backgroundImage: `url(${backdropPath})`
     }
 
-    const ticketRef = useRef();
-
-    const [openCinema, setOpenCinema] = useState(false);
-    const closeCinema = () => {
-        setOpenCinema(false);
-    };
-
-    const [openCreditCard, setOpenCreditCard] = useState(false);
-    const closeCreditCard = () => {
-        setOpenCreditCard(false);
-        scrollTo('', ticketRef);
-    }
-
-    const [openOrder, setOpenOrder] = useState(false);
-    const closeOrder = () => {
-        setOpenOrder(false);
-    }
-
-    useEffect(() => {
-        scrollTo('', ticketRef);
-        setIsActive(openCinema);    // Sólo se puede comprar las entradas de a una función por vez
-    }, [openCinema])
-
     const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
@@ -53,23 +30,44 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         }
     })
 
-    const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrderToDB } = usePurchase();
+    const ticketRef = useRef();
+
+    const [openCinema, setOpenCinema] = useState(false);
+    const closeCinema = () => {
+        const { screening, cantidad } = order;
+        if (screening.id != initialScreeningId) {
+            modifyTicket(initialScreeningId, movie, screening.id, cantidad);
+        }
+        setOpenCinema(false);
+    };
+
+    useEffect(() => {
+        scrollTo('', ticketRef);
+        setIsActive(openCinema);    // Sólo se puede comprar las entradas de a una función por vez
+    }, [openCinema]);
+
+
+    const [openCreditCard, setOpenCreditCard] = useState(false);
+    const closeCreditCard = () => {
+        setOpenCreditCard(false);
+        scrollTo('', ticketRef);
+    }
 
     const clearTicket = () => {
-        const { movie, screening } = order;
         scrollTo('', ticketRef);
-        removeTicket(movie.id + screening.id);
+        removeTicket(movie.id + initialScreeningId);
     }
+
+    const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrderToDB } = usePurchase();
 
     const submitScreening = (screening, cantidad, precio) => {
         if (screening.asientosOcupados == undefined) {
-            screening = {...screening, asientosOcupados: []};
+            screening = { ...screening, asientosOcupados: [] };
         }
 
         if (!isActive) {
             setScreeningData(screening, movie, cantidad, precio);
             setOpenCinema(true);
-            modifyTicket(initialScreeningId, movie, screening.id, cantidad);
         } else {
             Toast.fire({
                 icon: 'error',
@@ -91,11 +89,11 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         if (paymentStatus == 'success') {
             const { paymentId } = paymentInfo;
             setUserId(user.id);
-            
-            const callbackPayment = ( currentOrder ) => {
+
+            const callbackPayment = (currentOrder) => {
                 setOpenCreditCard(false);
                 setOpenCinema(false);
-                submitOrderToDB( currentOrder );
+                submitOrderToDB(currentOrder);
                 clearTicket();
 
                 Swal.fire({
@@ -113,7 +111,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
             })
         }
     }
-
 
     return (
         <div ref={ticketRef} className='w-full'>
