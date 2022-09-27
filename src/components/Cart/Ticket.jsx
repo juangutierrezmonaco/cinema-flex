@@ -8,8 +8,8 @@ import { scrollTo } from '../global/functions'
 import Swal from 'sweetalert2';
 import { usePurchase } from '../../context/PurchaseContext';
 import { useUser } from '../../context/UserContext';
-
-const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modifyTicket }) => {
+import { Link, useLocation, useNavigate } from "react-router-dom";
+const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modifyTicket, toMyTickets }) => {
 
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;
 
@@ -58,7 +58,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         removeTicket(movie.id + initialScreeningId);
     }
 
-    const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrderToDB } = usePurchase();
+    const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrder } = usePurchase();
 
     const submitScreening = (screening, cantidad, precio) => {
         if (screening.asientosOcupados == undefined) {
@@ -93,12 +93,19 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
             const callbackPayment = (currentOrder) => {
                 setOpenCreditCard(false);
                 setOpenCinema(false);
-                submitOrderToDB(currentOrder);
+                setIsActive(false);
+                submitOrder(currentOrder);
                 clearTicket();
 
                 Swal.fire({
                     icon: 'success',
-                    text: 'Cobrado correctamente!',
+                    title: 'Cobrado correctamente!',
+                    text: "Puede ir a ver sus tickets!",
+                    showCancelButton: true,
+                    confirmButtonText: 'Ir a mis tickets!',
+                    cancelButtonText: "Quedarme aquí"
+                }).then(({ isConfirmed }) => {
+                    isConfirmed && toMyTickets();
                 })
             }
 
@@ -110,7 +117,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                 text: errorDetail,
             })
         }
-    }
+    }    
 
     return (
         <div ref={ticketRef} className='w-full'>

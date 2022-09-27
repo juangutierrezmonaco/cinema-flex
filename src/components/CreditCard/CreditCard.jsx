@@ -10,7 +10,7 @@ import {
     createData
 } from './CreditCardUtils';
 
-const CreditCard = ({ onSubmit }) => {
+const CreditCard = ({ onSubmit, children }) => {
     const thisYear = new Date().getFullYear();
 
     const [formData, setFormData] = useState();
@@ -61,15 +61,15 @@ const CreditCard = ({ onSubmit }) => {
             submitButton.innerText = 'Verificando pago';
             submitButton.classList.remove('btn-primary');
             submitButton.classList.add('btn-warning', 'loading');
-            
-            setTimeout(() => {                
+
+            setTimeout(() => {
                 submitButton.innerText = 'Pago exitoso!';
                 submitButton.classList.remove('btn-warning', 'loading');
                 submitButton.classList.add('btn-success')
             }, 2000);
 
             setTimeout(() => {
-                
+
                 const id = uuidv4();
                 onSubmit({ paymentStatus: 'success', paymentId: id });
 
@@ -101,7 +101,14 @@ const CreditCard = ({ onSubmit }) => {
     const { number, name, expiry, expiryyear, cvc, focused } = state;
 
     return (
-        <div className='flex flex-col items-center gap-5 py-10 creditCard'>
+        <div className='flex flex-col items-center gap-5 creditCard'>
+            <div className="flex justify-between w-full">
+                <h3 className="text-2xl font-semibold text-slate-900  ">
+                    Información de pago
+                </h3>
+                {children}
+            </div>
+
             <div>
                 <Card
                     locale={{ valid: "Expira" }}

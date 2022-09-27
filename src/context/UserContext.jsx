@@ -123,7 +123,7 @@ const UserProvider = ({ children }) => {
                     callback();
                     Toast.fire({
                         icon: 'success',
-                        title: `Bienvenido de vuelta ${res.firstName}!`
+                        title: `Bienvenid@ de vuelta ${res.firstName}!`
                     })
                 }
             })

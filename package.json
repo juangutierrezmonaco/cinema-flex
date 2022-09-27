@@ -17,6 +17,7 @@
     "react-barcode": "^1.4.5",
     "react-credit-cards": "^0.8.3",
     "react-dom": "^18.2.0",
+    "react-qr-code": "^2.0.8",
     "react-router-dom": "^6.3.0",
     "sass": "^1.54.8",
     "sweetalert2": "^11.4.33",

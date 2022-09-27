@@ -33,7 +33,7 @@ function App() {
 
                         <Route path='/tickets' element={<main><Cart /></main>}></Route>
 
-                        <Route path='/user/tickets' element={<main><UserTickets /></main>}></Route>
+                        <Route path='/user/tickets' element={<main className='mt-9 lg:px-12'><UserTickets /></main>}></Route>
 
                     </Routes>
 

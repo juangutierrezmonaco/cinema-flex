@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.userTickets {
+	font-family: "Staatliches", cursive;
+	color: black;
+	letter-spacing: 0.1em;
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.userTicket {
+    display: flex;
+    flex-wrap: wrap;
+    border: solid 1px black;
+    width: fit-content;
+
+    &_left {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        border-right: solid 1px black;
+
+        &-order {
+            width: fit-content;
+            padding: 10px 20px;
+            border: solid 1px black;
+            border-width: 0 1px 1px 0;
+        }
+
+        &-items {
+            height: fit-content;
+            width: fit-content;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            top: 20px;
+            left: 20px;
+        }
+        
+    }
+
+    &_right {
+        width: 40%;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        gap: 20px;
+        padding: 30px;
+        text-align: center;
+
+        &-qrCode {
+            width: 70%;
+        }
+    }
+
+    &_bottom {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        background-color: black;
+        color: white;
+        border-top: solid 1px black;
+
+        &-text {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        &-barcode {
+            background-color: white;
+            height: 100%;
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+        }
+    }
+}

@@ -7,13 +7,11 @@ const CreditCardContainer = ({ onSubmit, onCancel, open }) => {
             <div className="modal">
 
                 <div className="modal-box creditCardContainer rounded">
-                    <div className='text-center text-black text-3xl'>Complete los datos para finalizar su compra!</div>
-
-                    <CreditCard onSubmit={onSubmit} />
-
-                    <div className="modal-action m-0">
-                        <label htmlFor="creditCardModal" className="btn btn-error" onClick={onCancel}>Volver</label>
-                    </div>      
+                    <CreditCard onSubmit={onSubmit} >
+                        <label htmlFor="creditCardModal" className="btn btn-circle btn-outline" onClick={onCancel}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </label>
+                    </CreditCard>  
                 </div>
 
             </div>

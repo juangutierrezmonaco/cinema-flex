@@ -4,6 +4,7 @@ import { useCart } from "../../context/CartContext"
 import { scrollTo } from '../global/functions'
 import Ticket from "./Ticket";
 import { PurchaseProvider } from '../../context/PurchaseContext'
+import { useRef } from "react";
 
 const Cart = () => {
     const { cart, removeTicket, modifyTicket, clearCart, isEmpty } = useCart();
@@ -24,6 +25,11 @@ const Cart = () => {
         }
     }, [cart]);
 
+    const linkRef = useRef();
+    const toMyTickets = () => {
+        linkRef.current && linkRef.current.click();
+    }
+
     return (
         <PurchaseProvider>
             <div className="flex flex-col items-center px-10 xl:px-36">
@@ -34,7 +40,7 @@ const Cart = () => {
                         {
                             cart.map(({ movie, screeningId, ticketId, quantity }) => (
                                 <li key={ticketId} className='flex justify-center items-end'>
-                                    <Ticket movie={movie} initialQuantity={quantity} initialScreeningId={screeningId} removeTicket={removeTicket} modifyTicket={modifyTicket} />
+                                    <Ticket movie={movie} initialQuantity={quantity} initialScreeningId={screeningId} removeTicket={removeTicket} modifyTicket={modifyTicket} toMyTickets={toMyTickets}/>
                                 </li>)
                             )
                         }
@@ -48,6 +54,8 @@ const Cart = () => {
                         <Link to={'/'} className="btn">Volver a la página principal</Link>
                     </div>
                 }
+
+                <Link to='/user/tickets' ref={linkRef} className='hidden'></Link>
             </div>
         </PurchaseProvider>
     )

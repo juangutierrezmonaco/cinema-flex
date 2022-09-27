@@ -81,13 +81,21 @@ const PurchaseProvider = ({ children }) => {
 
     const { addOrder } = useUser()
 
-    const submitOrderToDB = (currentOrder) => {
+    const submitOrder = (currentOrder) => {
         const { movie, screening, seatsNumbers, precio, paymentId, userId } = currentOrder;
         const { sala, tipo, lenguaje, horario, id: funcionId } = screening;
         const { title, id: movieId } = movie;
 
+        console.log(currentOrder);
         // Código que se genera para retirar las entradas
-        let codigoParaRetirar = String(movieId).slice(0, 2) + funcionId.slice(0, 2) + paymentId.slice(0, 2);
+        /**
+         * FORMATO: 
+         *          - 2 primeros dígitos del ID de la película
+         *          - 2 últimos dígitos del ID de la función
+         *          - 2 últimos dígitos del ID del pago
+         *          - 2 primeros dígitos del ID del usuario   
+         */
+        let codigoParaRetirar = String(movieId).slice(0, 2) + funcionId.slice(-2) + paymentId.slice(-2) + userId.slice(0, 2);
         codigoParaRetirar = codigoParaRetirar.toUpperCase();
 
         const orderToSend = {
@@ -117,7 +125,7 @@ const PurchaseProvider = ({ children }) => {
         setUserId,
         isActive,
         setIsActive,
-        submitOrderToDB
+        submitOrder
     };
 
 
