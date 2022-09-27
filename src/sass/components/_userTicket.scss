@@ -1,17 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .userTickets {
 	font-family: "Staatliches", cursive;
 	color: black;
 	letter-spacing: 0.1em;
-    width: 1000px;
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -26,8 +19,10 @@
     &_left {
         display: flex;
         flex-direction: column;
+        gap: 20px;
         flex-grow: 1;
         border-right: solid 1px black;
+        width: 60%;
 
         &-order {
             width: fit-content;
@@ -42,9 +37,8 @@
             background-color: white;
             display: flex;
             flex-direction: column;
-            position: relative;
-            top: 20px;
-            left: 20px;
+            padding-left: 20px;
+            padding-bottom: 30px;
         }
         
     }
