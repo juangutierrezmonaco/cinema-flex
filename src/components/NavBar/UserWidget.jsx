@@ -1,10 +1,9 @@
-import { useRef } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useUser } from '../../context/UserContext'
 import UserFormContainer from "../UserForm/UserFormContainer";
 
 const UserWidget = ({ btnStyles }) => {
-    const { isLogged, logout } = useUser();
+    const { isLogged, logout, userWidgetRef } = useUser();
     const [openForm, setOpenForm] = useState(false);
     const [wichForm, setWichForm] = useState();
 
@@ -15,17 +14,17 @@ const UserWidget = ({ btnStyles }) => {
 
     const closeForm = () => {
         setOpenForm(false);
-    }    
+    }
 
-    const userButtonRef = useRef();
     const closeDropDown = (e) => {
         e.target.blur();
     }
+    
     return (
         <div>
             {openForm && <UserFormContainer open={openForm} closeForm={closeForm} wichForm={wichForm}/>}
             <div className="dropdown dropdown-end">
-                <label tabIndex={0} className={btnStyles} ref={userButtonRef}>
+                <label tabIndex={0} className={btnStyles} ref={userWidgetRef}>
                     <button><i className="fa-regular fa-user"></i></button>
                 </label>
 

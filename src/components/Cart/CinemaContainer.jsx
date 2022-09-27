@@ -68,9 +68,10 @@ const CinemaContainer = ({  continuar, cancelar }) => {
                 icon: 'error',
                 title: 'Debe seleccionar todos los asientos!'
             })
-
         }
     }
+
+    
 
     return (
         <div className="cartCinemaContainer py-16">
@@ -81,7 +82,7 @@ const CinemaContainer = ({  continuar, cancelar }) => {
                 <span>Cantidad: {cantidad}</span>
             </div>
 
-            <Cinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} />
+            <Cinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} ocupados={screening.asientosOcupados}/>
 
             <div className="absolute right-5 bottom-5 flex gap-5">
                 <button className="btn btn-success" onClick={submitSeats}>Continuar</button>

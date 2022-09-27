@@ -5,6 +5,7 @@ import { useCart } from '../../context/CartContext';
 import { Link, useLocation } from 'react-router-dom';
 import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 import Swal from 'sweetalert2'
+import { useUser } from '../../context/UserContext';
 
 const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreeningId }) => {
 
@@ -55,7 +56,7 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
     const [disponibles, setDisponibles] = useState(0);
 
     useEffect(() => {
-        // Setteo el precio
+        
         if (screenings.length > 0 && screeningId) {
             // Set disponibles
             setDisponibles(screenings.find(s => s.id == screeningId) && screenings.find(s => s.id == screeningId).asientosDisponibles)
@@ -107,31 +108,46 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
 
     const [toggleSubmitButtton, setToggleSubmitButtton] = useState(false);
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'bottom-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    const { userWidgetRef, isLogged } = useUser();
+
     const submitTickets = () => {
         const sizeInCart = imInCart ? 0 : howMany(movieId + screeningId);
 
         if (parseInt(count) + sizeInCart <= disponibles) {
-            // De momento le paso los disponibles, pero después en la DB tendría que tener los ocupados
-            const funcion = screenings.find(s => s.id == screeningId);
-            onAdd( {...funcion, horario: funcion.horario.toDate()}, parseInt(count), precioTotal );
-            !imInCart && setCount(1);
+            if (imInCart && !isLogged) {
 
-            // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
-            !imInCart && setToggleSubmitButtton(true);
+                userWidgetRef.current && userWidgetRef.current.parentElement.classList.add('shake-horizontal');
+                userWidgetRef.current && userWidgetRef.current.classList.add('bg-white', 'text-black');
+                setTimeout(() => {
+                    userWidgetRef.current && userWidgetRef.current.parentElement.classList.remove('shake-horizontal');
+                userWidgetRef.current && userWidgetRef.current.classList.remove('bg-white', 'text-black');
+                }, 500);
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Tenes que contar con una sesión activa para comprar las entradas.'
+                })
+            } else {
+                const funcion = screenings.find(s => s.id == screeningId);
+                onAdd({ ...funcion, horario: funcion.horario.toDate() }, parseInt(count), precioTotal);
+                !imInCart && setCount(1);
+
+                // Esto cambia el estado del botón de agregar al carrito, pero si estoy en el carrito no lo cambio.
+                !imInCart && setToggleSubmitButtton(true);
+            }
         } else {
-            
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'bottom-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
             Toast.fire({
                 icon: 'error',
                 title: 'No disponemos de esa cantidad de entradas para la función seleccionada.'

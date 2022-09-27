@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { addDoc, collection, getDoc, getDocs, getFirestore, limit, query, where } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, updateDoc, where } from 'firebase/firestore';
 import Swal from "sweetalert2";
+import { useRef } from "react";
 
 const UserContext = React.createContext([]);
 
@@ -14,12 +15,12 @@ const UserProvider = ({ children }) => {
         lastName: '',
         email: '',
         password: '',
-        tickets: [],
+        orders: [],
         id: ''
     };
 
     const localStorageUser = localStorage.getItem('activeUser') != 'undefined' ? localStorage.getItem('activeUser') : null;
-    const [user, setUser] = useState( JSON.parse(localStorageUser) || defaultValue );
+    const [user, setUser] = useState(JSON.parse(localStorageUser) || defaultValue);
 
     const updateLocalStorage = (newState) => {
         localStorage.removeItem('activeUser');
@@ -28,22 +29,13 @@ const UserProvider = ({ children }) => {
 
     const isLogged = ((JSON.stringify(user) != JSON.stringify(defaultValue))) ? true : false;
 
-    useEffect(() => {
-        console.log(isLogged);
-    }, [isLogged])
-    
-
     const setUserId = (id) => {
         setUser(prevState => ({ ...prevState, id }));
     }
 
-    useEffect(() => {
-        console.log(user);
-    }, [user])
-
     const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: 'bottom-end',
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
@@ -92,7 +84,8 @@ const UserProvider = ({ children }) => {
                     const db = getFirestore();
                     const userCollection = collection(db, 'users');
                     addDoc(userCollection, newUser)
-                        .then(({ id }) => setUserId(id));
+                        .then(({ id }) => setUserId(id))
+                        .catch(error => console.log(error));
 
                     callback();
                     Toast.fire({
@@ -110,12 +103,15 @@ const UserProvider = ({ children }) => {
 
         findUser(email)
             .then(res => {
-                if (!res) errorMessage = 'No hay ningún usuario registrado con ese mail.';
-                if (res && (res.password != password)) {
-                    errorMessage = 'La contraseña es incorrecta.';
+                if (!res) {
+                    errorMessage = 'No hay ningún usuario registrado con ese mail.';
                 } else {
-                    setUser(res);
-                    updateLocalStorage(res)
+                    if (res.password != password) {
+                        errorMessage = 'La contraseña es incorrecta.';
+                    } else {
+                        setUser(res);
+                        updateLocalStorage(res)
+                    }
                 }
 
                 if (errorMessage) {
@@ -141,14 +137,40 @@ const UserProvider = ({ children }) => {
         })
         setUser(defaultValue);
         updateLocalStorage(defaultValue);
+        window.location.reload();   // Esto es para que no pueda terminar una compra si se desloggea en medio del proceso
     }
+
+    const addOrder = (newOrderId) => {
+        const db = getFirestore();
+        const userDoc = doc(db, 'users', user.id);
+        getDoc(userDoc)
+            .then((res) => {
+                // En este punto recupero las órdenes que el usuario tenía
+                let { orders } = res.data();
+                             
+                const newOrders = orders ? orders.concat(newOrderId) : newOrderId;
+                
+                updateDoc(userDoc, {
+                    orders: newOrders
+                });
+
+                const newState = { ...user, orders: newOrders };
+                setUser( newState );
+                updateLocalStorage(newState);
+            })
+            .catch(error => console.log(error));
+    }
+
+    const userWidgetRef = useRef();
 
     const context = {
         user,
         isLogged,
         createUser,
         login,
-        logout
+        logout,
+        addOrder,
+        userWidgetRef
     };
 
     return (

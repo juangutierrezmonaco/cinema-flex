@@ -33,7 +33,8 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
             const certification = (releaseDatesUS || releaseDates).release_dates[0].certification;
             
             setDetails({...data, 'director': director, 'cast': actores, 'rate': certification });
-        });
+        })
+        .catch(error => console.log(error));
     }, [])
     
     const { runtime, genres, director, cast} = details;

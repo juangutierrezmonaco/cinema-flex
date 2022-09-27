@@ -55,7 +55,7 @@ const RegistrationForm = ({ onSubmit, close, children }) => {
                 lastName,
                 email,
                 password,
-                tickets: []
+                orders: []
             }
 
             onSubmit(user, close);

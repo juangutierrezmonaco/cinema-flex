@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const Cinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats, selectedRef }) => {
+const Cinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightInitial, rightColumns, totalRows, maxSeats, selectedRef, ocupados }) => {
 
     // Si no se pasó un máximo, lo setteo igual a la cantidad de asientos
     const totalSeats = (totalRows - leftInitial) * leftColumns +
@@ -55,20 +55,6 @@ const Cinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightI
 
         return String.fromCharCode(code + number);
     }
-
-    // De momento genero algunos ocupados al azar.
-    const ocupados = [  'A1', 'A3',
-                        'C3', 'C11',
-                        'D9',
-                        'F8', 'F9',
-                        'G10',
-                        'J5',
-                        'K4', 'K5', 'K6', 'K7',
-                        'M1', 'M2', 'M9',
-                        'R10', 'R12',
-                        'T5', 'T6', 'T7', 'T8', 'T9'
-
-                    ];
 
     const ocupado = (seat) => {
         return ocupados.includes(seat) ? 'occupied' : '';

@@ -1,5 +1,8 @@
+import { addDoc, collection, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import { useStateWithCallbackLazy } from 'use-state-with-callback';
+import { useUser } from "./UserContext";
 
 const PurchaseContext = React.createContext([]);
 
@@ -11,16 +14,17 @@ const PurchaseProvider = ({ children }) => {
 
     const [isActive, setIsActive] = useState(false);
 
-    // estado de compra - respuesta hacer promesa credit card
-    const [order, setOrder] = useStateWithCallbackLazy({
+    const defaultValue = {
         screening: {},
         movie: {},
         cantidad: 0,
         precio: 0,
         seatsNumbers: [],
         paymentId: '',
-        orderId: ''
-    });
+        userId: ''
+    }
+
+    const [order, setOrder] = useStateWithCallbackLazy(defaultValue);
 
     const setScreeningData = (screening, movie, cantidad, precio, callback) => {
         setOrder(prevState => ({ ...prevState, screening, movie, cantidad, precio }), callback)
@@ -34,35 +38,75 @@ const PurchaseProvider = ({ children }) => {
         setOrder(prevState => ({ ...prevState, paymentId: paymentId }), callback)
     }
 
-    const submitOrderToDB = ( currentOrder ) => {
-        // Mandar a la db+
-        // Modificar funciones en la db
-        const { movie, screening, seatsNumbers } = currentOrder;
-        const horario = screening.horario.toLocaleString()
-        const { sala, tipo, lenguaje } = screening;
-        
-        // MAnejar data acá en vez de mostrarla
-        console.log(currentOrder);
+    const setUserId = (userId) => {
+        setOrder(prevState => ({ ...prevState, userId: userId }))
+    }
 
-        // Completar en la DB
-        /* console.log(
-            `Película:   ${movie.title}
-            Función:    ${sala} - ${tipo} (${lenguaje})
-                        ${horario}
-            Asientos: ${seats}`
-        ); */
+    const setOrderId = (orderId) => {
+        setOrder(prevState => ({ ...prevState, orderId: orderId }));
+    }
 
-        // Luego agregarla al userContext --> [] de ordenes del usuario
-        // Por último se resetea
-        /* setOrder({
-            screening: {},
-            movie: {},
-            cantidad: 0,
-            precio: 0,
-            seatsNumbers: [],
-            paymentId: '',
-            orderId: ''
-        }); */
+    const updateScreening = (screeningId, seatsNumbers) => {
+        const db = getFirestore();
+        const screeningDoc = doc(db, 'screenings', screeningId);
+
+        getDoc(screeningDoc)
+            .then((res) => {
+                // En este punto recupero los asientos que hay en ese instante para estar seguro que hay lugar
+                const { asientosDisponibles, asientosOcupados } = res.data();
+                const nuevosDisponibles = asientosDisponibles - seatsNumbers.length;
+
+                const nuevosOcupados = asientosOcupados ? asientosOcupados.concat(seatsNumbers) : seatsNumbers;
+
+                updateDoc(screeningDoc, {
+                    asientosDisponibles: nuevosDisponibles,
+                    asientosOcupados: nuevosOcupados
+                });
+            })
+            .catch(error => console.log(error));
+
+    }
+
+    const uploadOrder = (newOrder) => {
+        const db = getFirestore();
+        const orderCollection = collection(db, 'orders');
+        addDoc(orderCollection, newOrder)
+            .then(({ id }) => {
+                // Settteo el orderId y la agrego al usuario
+                setOrderId(id);
+                addOrder(id);
+            })
+            .catch(error => console.log(error));
+    }
+
+    const { addOrder } = useUser()
+
+    const submitOrderToDB = (currentOrder) => {
+        const { movie, screening, seatsNumbers, precio, paymentId, userId } = currentOrder;
+        const { sala, tipo, lenguaje, horario, id: funcionId } = screening;
+        const { title, id: movieId } = movie;
+
+        // Código que se genera para retirar las entradas
+        let codigoParaRetirar = String(movieId).slice(0, 2) + funcionId.slice(0, 2) + paymentId.slice(0, 2);
+        codigoParaRetirar = codigoParaRetirar.toUpperCase();
+
+        const orderToSend = {
+            funcion: { sala, tipo, lenguaje, horario, seatsNumbers, funcionId },
+            movie: { title, movieId },
+            precio: precio,
+            paymentId: paymentId,
+            userId: userId,
+            codigoParaRetirar
+        }
+
+        // mandar order a db
+        uploadOrder(orderToSend);
+
+        // Modifico la función de cine en la DB
+        updateScreening(funcionId, seatsNumbers);
+
+        // Una vez que ya hice todo lo necesario con la order la vuelvo a su estado original
+        setOrder(defaultValue);
     }
 
     const context = {
@@ -70,6 +114,7 @@ const PurchaseProvider = ({ children }) => {
         setScreeningData,
         setSeats,
         setPaymentId,
+        setUserId,
         isActive,
         setIsActive,
         submitOrderToDB

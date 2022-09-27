@@ -7,8 +7,7 @@ import movieNotFound from '/assets/img/movie-not-found.svg';
 import { scrollTo } from '../global/functions'
 import Swal from 'sweetalert2';
 import { usePurchase } from '../../context/PurchaseContext';
-import { useCart } from '../../context/CartContext';
-import OrderContainer from '../Order/OrderContainer';
+import { useUser } from '../../context/UserContext';
 
 const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modifyTicket }) => {
 
@@ -23,9 +22,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
 
     const [openCinema, setOpenCinema] = useState(false);
     const closeCinema = () => {
-        // Antes de cerrarlo modifico el ticket en el que estoy
-        const { screening, cantidad } = order;
-        modifyTicket(initialScreeningId, movie, screening.id, cantidad);
         setOpenCinema(false);
     };
 
@@ -57,27 +53,23 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         }
     })
 
+    const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrderToDB } = usePurchase();
+
     const clearTicket = () => {
-        // Modificar para que se elimine el id que realmente tiene (modify ticket)
-        removeTicket(movie.id + initialScreeningId);
+        const { movie, screening } = order;
+        scrollTo('', ticketRef);
+        removeTicket(movie.id + screening.id);
     }
 
-    const { order, setScreeningData, setSeats, setPaymentId, isActive, setIsActive, submitOrderToDB } = usePurchase();
-
-    /* useEffect(() => {
-        console.log(order);
-    }, [order]) */
-
-    useEffect(() => {
-        document.body.style.overflowY = openCreditCard ? "hidden" : 'scroll';
-    }, [openCreditCard])
-    
-
-
     const submitScreening = (screening, cantidad, precio) => {
+        if (screening.asientosOcupados == undefined) {
+            screening = {...screening, asientosOcupados: []};
+        }
+
         if (!isActive) {
             setScreeningData(screening, movie, cantidad, precio);
             setOpenCinema(true);
+            modifyTicket(initialScreeningId, movie, screening.id, cantidad);
         } else {
             Toast.fire({
                 icon: 'error',
@@ -87,22 +79,24 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
     }
 
     const submitSeats = (seats) => {
-        // ANTES QUE NADA TENÉS QUE ESTAR LOGGEADO PARA COMPRAR PAPÁ
         setSeats(seats);
         setOpenCreditCard(true);
     };
+
+    const { user } = useUser();
 
     const finishPurchase = (paymentInfo) => {
         const { paymentStatus } = paymentInfo;
 
         if (paymentStatus == 'success') {
             const { paymentId } = paymentInfo;
-
+            setUserId(user.id);
+            
             const callbackPayment = ( currentOrder ) => {
                 setOpenCreditCard(false);
                 setOpenCinema(false);
                 submitOrderToDB( currentOrder );
-                /* clearTicket(); */
+                clearTicket();
 
                 Swal.fire({
                     icon: 'success',
@@ -111,8 +105,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
             }
 
             setPaymentId(paymentId, callbackPayment);
-
-
         } else {
             const { errorDetail } = paymentInfo;
             Swal.fire({
@@ -120,13 +112,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                 text: errorDetail,
             })
         }
-
-
-        // Verificaciones, si todo salio bien la borro
-        /* removeTicket(movie.id + initialScreeningId); */
-
-        // ACTUALIZAR DB SI SALE TODO BIEN ACá
-        // Primero actualizar DB, después cobrar y después lanzar cartel
     }
 
 
@@ -160,10 +145,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
 
             {openCreditCard &&
                 <CreditCardContainer onSubmit={finishPurchase} onCancel={closeCreditCard} open={openCreditCard} />
-            }
-
-            {openOrder &&
-                <OrderContainer />
             }
 
         </div>
