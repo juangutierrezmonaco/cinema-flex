@@ -1,11 +1,10 @@
 import RegistrationForm from "./RegistrationForm"
 import LoginForm from './LoginForm';
 import { useUser } from "../../context/UserContext"
-import { useEffect } from "react";
 
 const UserFormContainer = ({ closeForm, open, wichForm }) => {
 
-    const { user, createUser, login } = useUser();
+    const { createUser, login } = useUser();
     
     return (
         <div className='w-full flex justify-center px-32 absolute top-0'>

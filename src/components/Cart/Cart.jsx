@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext"
-import { scrollTo } from '../global/functions'
+import { scrollTo } from '../Utils/functions'
 import Ticket from "./Ticket";
 import { PurchaseProvider } from '../../context/PurchaseContext'
 import { useRef } from "react";

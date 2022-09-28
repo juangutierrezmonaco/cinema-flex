@@ -4,7 +4,7 @@ import CinemaContainer from './CinemaContainer';
 import CreditCardContainer from '../CreditCard/CreditCardContainer'
 
 import movieNotFound from '/assets/img/movie-not-found.svg';
-import { scrollTo } from '../global/functions'
+import { scrollTo } from '../Utils/functions'
 import Swal from 'sweetalert2';
 import { usePurchase } from '../../context/PurchaseContext';
 import { useUser } from '../../context/UserContext';

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from '../Loader/Loader';
-import { scrollTo } from '../global/functions';
+import { scrollTo } from '../Utils/functions';
 import MovieCast from "./MovieCast";
 import MovieCrew from "./MovieCrew";
 

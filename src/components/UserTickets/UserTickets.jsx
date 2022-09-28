@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { scrollTo } from '../global/functions'
-import { collection, getDoc, getDocs, getFirestore, query, where } from 'firebase/firestore'
+import { scrollTo } from '../Utils/functions'
+import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
 import { useUser } from '../../context/UserContext';
 import UserTicket from './UserTicket';
 import Loader from '../Loader/Loader'

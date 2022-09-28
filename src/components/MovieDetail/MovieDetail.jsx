@@ -34,8 +34,8 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
         const rate = release_dates && (release_dates.results.find(rD => rD.iso_3166_1 == 'US') || release_dates.results[0]).release_dates[0].certification;
         rate && setRate(rate)
 
-        const director = credits && credits.crew.filter(c => c.job == 'Director')[0].name;
-        director && setDirector(director);
+        const director = credits && credits.crew.filter(c => c.job == 'Director')[0];
+        director && director.name && setDirector(director.name);
 
         const cast = credits && credits.cast;
         cast && setCast(cast);
@@ -155,9 +155,9 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                         </ul>
 
 
-                        <p className='tracking-wider text-base flex flex-col gap-2'>
+                        <p className='tracking-wider text-base flex flex-col gap-2 min-h-[200px]'>
                             <span className='text-2xl lg:text-4xl'>Sinopsis</span>
-                            <span className='text-lg lg:text-xl'>{overview}</span>
+                            <span className='text-lg lg:text-xl'>{overview || 'Sin datos sobre la sinopsis de esta película'}</span>
                         </p>
 
                         <div className='movieDetailCard-body_right_cast'>

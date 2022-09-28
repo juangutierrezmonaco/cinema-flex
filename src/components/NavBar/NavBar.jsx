@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import CartWidget from './CartWidget'
+import SearchWidget from './SearchWidget';
 import UserWidget from './UserWidget';
 
 const NavBar = () => {
@@ -132,7 +133,7 @@ const NavBar = () => {
             </nav>
 
             <ul className="flex items-center gap-2">
-                <li className={btnStyles} onClick={closeNav}><button><i className="fa-solid fa-magnifying-glass"></i></button></li>
+                <li onClick={closeNav}><SearchWidget btnStyles={btnStyles}/></li>
                 <li onClick={closeNav}><UserWidget btnStyles={btnStyles}/></li>
                 <li onClick={closeNav}><CartWidget btnStyles={btnStyles}/></li>
             </ul>

@@ -2,20 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import MovieCardList from './MovieCardList';
-import { scrollTo } from '../global/functions';
+import { scrollTo } from '../Utils/functions';
 
 const MovieCardListContainer = ( {greeting} ) => {
     const categoryId = useParams().categoryId || 'inicio';
-
     const [loading, setLoading] = useState(false);
     const [movieLists, setMovieLists] = useState([]);
     const [listTitles, setListTitles] = useState([]);
     
-    
     /* Me traigo los géneros para encontrar a este id qué nombre le pertenece por si estoy en algún género*/
     const [genre, setGenre] = useState('');
     useEffect(() => {
-        if (categoryId != 'inicio') {
+        // Si estoy en alguna categoría de géneros, le setteo el nombre
+        if (!isNaN(parseInt(categoryId))) {
             fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES`)
                 .then(res => res.json())
                 .then(data => {
@@ -47,7 +46,6 @@ const MovieCardListContainer = ( {greeting} ) => {
                 URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR`);
                 break;
             default:
-
                 URLS.push(`https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR&with_genres=${categoryId}`);
 
                 URLS.push(`https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES&region=AR&with_genres=${categoryId}`);
@@ -69,7 +67,7 @@ const MovieCardListContainer = ( {greeting} ) => {
     useEffect(() => {
         categoryId != 'inicio' ? scrollTo('main') : scrollTo('body');
         setLoading(true);
-        getMovies(0)
+        getMovies()
             .then(res => {
                 setMovieLists(res);
                 setLoading(false);

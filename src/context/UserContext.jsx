@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, updateDoc, where } from 'firebase/firestore';
 import Swal from "sweetalert2";
 import { useRef } from "react";
+import { useCart } from "./CartContext";
 
 const UserContext = React.createContext([]);
 
@@ -46,7 +47,6 @@ const UserProvider = ({ children }) => {
     })
 
     const findUser = (email) => {
-
         return new Promise((resolve, reject) => {
             const db = getFirestore();
             const q = query(
@@ -69,6 +69,12 @@ const UserProvider = ({ children }) => {
         });
     }
 
+    const { cart } = useCart();
+
+    const addCartToUser = () => {
+        console.log(cart);
+    }
+
     const createUser = (newUser, callback) => {
         const { email } = newUser;
         findUser(email)
@@ -84,7 +90,10 @@ const UserProvider = ({ children }) => {
                     const db = getFirestore();
                     const userCollection = collection(db, 'users');
                     addDoc(userCollection, newUser)
-                        .then(({ id }) => setUserId(id))
+                        .then(({ id }) => {
+                            setUserId(id);
+                            addCartToUser();
+                        })
                         .catch(error => console.log(error));
 
                     callback();
@@ -135,6 +144,8 @@ const UserProvider = ({ children }) => {
             icon: 'success',
             title: `Hasta luego ${user.firstName}!`
         })
+
+        // Cuando sale le guardo el cart que traía
         setUser(defaultValue);
         updateLocalStorage(defaultValue);
         window.location.reload();   // Esto es para que no pueda terminar una compra si se desloggea en medio del proceso
