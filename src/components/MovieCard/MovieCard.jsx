@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import movieNotFound from '/assets/img/movie-not-found.svg'
 
-const MovieCard = ({ title, overview, poster_path, id, release_date, start, end }) => {
+const MovieCard = ({ title, overview, poster_path, id, release_date, start, end, listTitle }) => {
 
     /* Es estreno ? */
     const [esEstreno, setEstreno] = useState(false);
@@ -50,7 +50,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
 
             <div className="movieCard_info">
 
-                {esEstreno &&
+                {esEstreno && !listTitle.includes('Próximos estrenos') &&
                     <ul className="movieCard_info__premiere rounded font-bold uppercase ">
                         <li><i className="fa-solid fa-star"></i></li>
                         <li className="flex"><span className="text-center">Estreno de la semana</span></li>

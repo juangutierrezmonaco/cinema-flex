@@ -32,7 +32,7 @@ const MovieCardList = ({ movies, listTitle }) => {
             <ul className='moviesCards'>
                 {movies.slice(0, itemsToShow).map(m => (
                     <li key={m.id} className="mb-10 movieCardContainer">
-                        <MovieCard {...m} start={start} end={end} />
+                        <MovieCard {...m} start={start} end={end} listTitle={listTitle}/>
                     </li>
                 ))}
             </ul>
