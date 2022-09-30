@@ -9,5 +9,12 @@ const scrollTo = (section, ref = undefined) => {
     });
 }
 
-export { scrollTo };
+const RemoveDuplicates = (array, key) => {
+    return array.reduce((arr, item) => {
+        const removed = arr.filter(i => i[key] !== item[key]);
+        return [...removed, item];
+    }, []);
+}
+
+export { scrollTo, RemoveDuplicates };
 

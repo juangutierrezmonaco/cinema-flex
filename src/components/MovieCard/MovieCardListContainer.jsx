@@ -75,7 +75,7 @@ const MovieCardListContainer = () => {
 
     /* Explicación: Como podemos tener varias peticiones, hice que haya varias listas de películas y está todo preparado para agregar más peticiones y que se sigan agregando más películas separas por listas. */
     return (
-        <div className="movieCardContainer flex flex-col items-center lg:pt-4">
+        <div className="">
             {!loading ? (
                 movieLists.map((movieList, index) => (
                     <MovieCardList movies={movieList} listTitle={listTitles[index]} key={categoryId + index} />)

@@ -12,15 +12,15 @@ const MovieDetailActorList = ({ cast, length = 13 }) => {
 
     return (
         <ul className='movieDetailCard-body_right_cast_actors' onMouseOver={scrollHorizontal} ref={ref}>
-            {castList && castList.map(actor => (
+            {castList && castList.slice(0, 4).map(actor => (
                 <li key={actor.id}><MovieDetailActor {...actor} /></li>
             ))}
 
 
-            <li >
-                <Link to='./credits' className='flex flex-col text-center justify-center text-2xl font-bold'>
-                    <span>Ver más</span>
-                    <i className="fa-solid fa-arrow-right"></i>
+            <li>
+                <Link to='./credits' className='movieDetailCard-body_right_cast_actors-seeMore text-lg rounded'>
+                    <span>Ver todos</span>
+                    <span><i className="fa-solid fa-arrow-right"></i></span>
                 </Link>
             </li>
         </ul>

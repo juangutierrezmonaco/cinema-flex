@@ -116,31 +116,38 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                 text: errorDetail,
             })
         }
-    }    
+    }
 
     return (
         <div ref={ticketRef} className='w-full'>
             {!openCinema ?
-                <div className="cartCard">
+                <div className="cartCard font-albert">
                     <div className='cartCard-background'>
                         <div style={backgroundStyle}></div>
                     </div>
 
-                    <figure className="cartCard-img"><img src={posterPath} alt={`Poster de la película ${movie.title}`} className={!movie.poster_path ? 'cartCard-img_notFound' : ''} /></figure>
-
-                    <div className='cartCard-right'>
-
-                        <div className='cartCard-right_top rounded-xl'>
-                            <span className='font-semibold text-4xl underline mb-5'>{`Título: ${movie.title}`}</span>
-                            <span className='text-2xl'>{`Duración: ${movie.runtime} minutos`}</span>
-                        </div>
-
-                        <div className='cartCard-right_bottom'>
-                            <MovieFooter initial={initialQuantity} submitText='Comprar entradas!' onAdd={submitScreening} movieId={movie.id} selectedScreeningId={initialScreeningId} />
-                        </div>
+                    <div className="cartCard-img">
+                        <img src={posterPath} alt={`Poster de la película ${movie.title}`} className={!movie.poster_path ? 'cartCard-img_notFound' : ''} />
                     </div>
 
-                    <button className="cartCard-deleteBtn btn" onClick={clearTicket}>Borrar</button>
+                    <div className='cartCard-right'>
+                        <div className='cartCard-right-details uppercase text-md font-bold '>
+                            <span className='flex gap-1 justify-start items-center'>
+                                <i className="fa-solid fa-film"></i>
+                                {movie.title}
+                            </span>
+                            <span className='flex gap-1 justify-start items-center'>
+                                <i className="fa-regular fa-clock"></i>
+                                {`${movie.runtime} minutos`}
+                            </span>
+                        </div>
+                        <MovieFooter initial={initialQuantity} submitText='¡Comprar entradas!' onAdd={submitScreening} movieId={movie.id} selectedScreeningId={initialScreeningId} />
+                    </div>
+
+                    <button className="cartCard-deleteBtn btn btn-primary" onClick={clearTicket}>
+                        <span>Eliminar</span>
+                        <span><i className="fa-solid fa-trash"></i></span>
+                    </button>
                 </div>
                 :
                 <CinemaContainer continuar={submitSeats} cancelar={closeCinema} />

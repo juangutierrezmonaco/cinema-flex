@@ -32,11 +32,11 @@ const Cart = () => {
 
     return (
         <PurchaseProvider>
-            <div className="flex flex-col items-center px-10 xl:px-36">
-                <h1 className="text text-5xl uppercase font-bowlby">Entradas</h1>
+            <div className="flex flex-col items-center mb-7 pb-10">
+                <h1 className="text text-4xl uppercase mb-14 underline font-bowlby ">Entradas</h1>
 
                 {!isEmpty() &&
-                    <ul className="text-2xl my-20 flex flex-col gap-4 w-full">
+                    <ul className="cartCards">
                         {
                             cart.map(({ movie, screeningId, ticketId, quantity }) => (
                                 <li key={ticketId} className='flex justify-center items-end'>
@@ -47,7 +47,7 @@ const Cart = () => {
                     </ul>
                 }
                 {clear ?
-                    <button className="btn btn-warning" onClick={clearCart}>Limpiar entradas</button>
+                    <button className="btn btn-warning mt-10" onClick={clearCart}>Limpiar entradas</button>
                     :
                     <div className="flex flex-col gap-5">
                         <span className="mt-10">Aún no ha seleccionado entradas</span>

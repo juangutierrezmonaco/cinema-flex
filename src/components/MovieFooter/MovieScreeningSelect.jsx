@@ -66,14 +66,14 @@ const MovieScreeningSelect = ({ screenings, setScreeningId, defaultScreening }) 
     
     return (
         <div className="flex flex-col gap-3">
-            <select className="select select-bordered w-full max-w-xs" value={firstValue} onChange={firstHandler}>
+            <select className="select select-ghost select-sm bg-white/50 w-full max-w-xs" value={firstValue} onChange={firstHandler}>
                 <option disabled value={'default'} readOnly>Sala</option>
                 {salas.map((sala, index) => (
                     <option key={index} value={sala}> {sala} </option>
                 ))}
             </select>
 
-            <select className={funciones.length > 0 ? 'select select-bordered w-full max-w-xs visible' : 'select select-bordered w-full max-w-xs invisible'} value={secondValue} onChange={secondHandler}>
+            <select className={funciones.length > 0 ? 'select select-ghost select-sm bg-white/50 w-full max-w-xs visible' : 'select bg-white/50 w-full max-w-xs invisible'} value={secondValue} onChange={secondHandler}>
 
                 <option disabled value={'default'} readOnly>Horario</option>
                 {funciones.map((func, i) => (

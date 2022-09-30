@@ -68,8 +68,6 @@ const UserProvider = ({ children }) => {
         });
     }
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];    // No uso el context de cart porque estoy afuera del provider
-    
     const createUser = (newUser, callback) => {
         const { email } = newUser;
         findUser(email)
@@ -80,8 +78,9 @@ const UserProvider = ({ children }) => {
                         title: 'Ese mail ya está registrado.'
                     })
                 } else {
-                    const userPlusCart = {...newUser, cart};
-                    
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];    // No uso el context de cart porque estoy afuera del provider
+                    const userPlusCart = { ...newUser, cart };
+
                     setUser(userPlusCart);
                     const db = getFirestore();
                     const userCollection = collection(db, 'users');
@@ -89,7 +88,7 @@ const UserProvider = ({ children }) => {
                     addDoc(userCollection, userPlusCart)
                         .then(({ id }) => {
                             setUserId(id);
-                            updateLocalStorage({...userPlusCart, id});
+                            updateLocalStorage({ ...userPlusCart, id });
                         })
                         .catch(error => console.log(error));
 
@@ -142,7 +141,10 @@ const UserProvider = ({ children }) => {
             title: `Hasta luego ${user.firstName}!`
         })
 
-        // Cuando sale le guardo el cart que traía
+        // Cuando sale borro el cart del localStorage porque ya lo tiene guardado el usuario        
+        localStorage.removeItem('cart');
+
+        // Vuelvo el activeUser a los parámetros por default
         setUser(defaultValue);
         updateLocalStorage(defaultValue);
         window.location.reload();   // Esto es para que no pueda terminar una compra si se desloggea en medio del proceso
@@ -155,18 +157,29 @@ const UserProvider = ({ children }) => {
             .then((res) => {
                 // En este punto recupero las órdenes que el usuario tenía
                 let { orders } = res.data();
-                             
+
                 const newOrders = orders ? orders.concat(newOrderId) : newOrderId;
-                
+
                 updateDoc(userDoc, {
                     orders: newOrders
                 });
 
                 const newState = { ...user, orders: newOrders };
-                setUser( newState );
+                setUser(newState);
                 updateLocalStorage(newState);
             })
             .catch(error => console.log(error));
+    }
+
+    const modifyUserCart = (newCart) => {
+        const db = getFirestore();
+        const userDoc = doc(db, 'users', user.id);
+        updateDoc(userDoc, {
+            cart: newCart
+        })
+
+        const newState = { ...user, cart: newCart };
+        updateLocalStorage(newState);
     }
 
     const userWidgetRef = useRef();
@@ -178,6 +191,7 @@ const UserProvider = ({ children }) => {
         login,
         logout,
         addOrder,
+        modifyUserCart,
         userWidgetRef
     };
 

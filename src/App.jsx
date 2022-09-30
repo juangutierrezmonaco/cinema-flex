@@ -31,7 +31,7 @@ function App() {
 
                         <Route path='/movie/:movieId/credits' element={<main className='mt-9 lg:px-12'><MovieCredits /></main>}></Route>
 
-                        <Route path='/tickets' element={<main><Cart /></main>}></Route>
+                        <Route path='/tickets' element={<main className='px-24'><Cart /></main>}></Route>
 
                         <Route path='/user/tickets' element={<main className='mt-9 lg:px-12'><UserTickets /></main>}></Route>
 

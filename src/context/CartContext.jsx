@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { useUser } from './UserContext'
 
 const CartContext = React.createContext([]);
@@ -8,15 +8,39 @@ const useCart = () => {
 }
 
 const CartProvider = ({ defaultValue = [], children }) => {
-    const { user } = useUser();
-    console.log(user);
 
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);    
 
-    const updateLocalStorage = (newState) => {
+    const updateLocalStorageAndDB = (newState) => {
+        // Cart in usersDB
+        isLogged && modifyUserCart(newState);
+
+        // Local Storage
         localStorage.removeItem('cart');
         localStorage.setItem('cart', JSON.stringify(newState));
     }
+     
+    const { user, isLogged, modifyUserCart } = useUser();
+    useEffect(() => {
+        // Si se loggea le tengo que agregar el cart que ya estaba
+        
+        if (isLogged) {
+            const userCart = user.cart;
+            cart.map(( ticket ) => {
+                // Busco en el usuario si tiene en su cart el ticket
+                const userTicketIndex = userCart.findIndex(t => t.ticketId == ticket.ticketId);
+
+                // Si existe, lo actualizo (lo piso) y sino lo agrego.
+                if ( userTicketIndex != -1 ) {
+                    userCart[userTicketIndex] = ticket;
+                } else {
+                    userCart.push(ticket);
+                }
+            })
+            setCart(userCart);
+            updateLocalStorageAndDB(userCart);
+        }
+    }, [user])
 
     const addTicket = (movie, screeningId, quantity) => {
         const ticketId = movie.id + screeningId;
@@ -27,11 +51,11 @@ const CartProvider = ({ defaultValue = [], children }) => {
             const index = newState.findIndex(ticket => ticket.ticketId == ticketId);
             newState[index].quantity += quantity;
             setCart(newState);
-            updateLocalStorage(newState);
+            updateLocalStorageAndDB(newState);
         } else {
             setCart(prevState => {
                 const newState = prevState.concat({ movie, screeningId, ticketId, quantity });
-                updateLocalStorage(newState);
+                updateLocalStorageAndDB(newState);
                 return newState;
             });
         }
@@ -49,14 +73,14 @@ const CartProvider = ({ defaultValue = [], children }) => {
             ticketId: newTicketId, 
             quantity: newQuantity
         };
-        updateLocalStorage(newState);
+        updateLocalStorageAndDB(newState);
         setCart(newState);
     }
 
     const removeTicket = (ticketId) => {
         setCart(prevState => {
             const newState = prevState.filter(ticket => ticket.ticketId != ticketId);
-            updateLocalStorage(newState);
+            updateLocalStorageAndDB(newState);
             return newState;
         });
     }
@@ -71,7 +95,7 @@ const CartProvider = ({ defaultValue = [], children }) => {
     }
 
     const clearCart = () => {
-        updateLocalStorage([]);
+        updateLocalStorageAndDB([]);
         setCart([]);
     }
 

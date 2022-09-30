@@ -1,0 +1,23 @@
+.movieDetailFooter {
+    display: flex;
+    justify-content: space-between;
+
+    &_selectContainer {
+        display: flex;
+        gap: 30px;
+    }
+
+    &_select {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    &_price {
+        color: #FFBA08;
+        height: fit-content;
+        display: flex;
+        align-self: flex-end;
+    }
+}

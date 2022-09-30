@@ -4,12 +4,16 @@ import { useUser } from "../../context/UserContext"
 
 const UserFormContainer = ({ closeForm, open, wichForm }) => {
 
-    const { createUser, login } = useUser();
+    const { createUser, login } = useUser();    
+
+    const closeOnClickOutside = (e) => {
+        e.target.classList.contains('modal') && closeForm();            
+    }
     
     return (
         <div className='w-full flex justify-center px-32 absolute top-0 font-albert'>
             <input type="checkbox" id="userFormModal" className="modal-toggle" checked={open} onChange={() => { }} />
-            <div className="modal">
+            <div className="modal" onClick={closeOnClickOutside}>
 
                 <div className="modal-box creditCardContainer rounded">
                     {wichForm == 'Registrarse' ?

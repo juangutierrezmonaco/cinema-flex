@@ -56,7 +56,7 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
     const [disponibles, setDisponibles] = useState(0);
 
     useEffect(() => {
-        
+
         if (screenings.length > 0 && screeningId) {
             // Set disponibles
             setDisponibles(screenings.find(s => s.id == screeningId) && screenings.find(s => s.id == screeningId).asientosDisponibles)
@@ -132,7 +132,7 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
                 userWidgetRef.current && userWidgetRef.current.classList.add('bg-white', 'text-black');
                 setTimeout(() => {
                     userWidgetRef.current && userWidgetRef.current.parentElement.classList.remove('shake-horizontal');
-                userWidgetRef.current && userWidgetRef.current.classList.remove('bg-white', 'text-black');
+                    userWidgetRef.current && userWidgetRef.current.classList.remove('bg-white', 'text-black');
                 }, 500);
 
                 Toast.fire({
@@ -170,47 +170,37 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
     return (
         <div className='movieDetailFooter'>
 
-            <div className='movieDetailFooter_select'>
-                <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione la función</span>
-                <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue} />
-            </div>
+            <div className='movieDetailFooter_selectContainer'>
+                <div className='movieDetailFooter_select'>
+                    <span className='uppercase font-extrabold text-lg tracking-wider bg-primary/70 p-1'>Seleccione la función</span>
+                    <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue} />
+                </div>
 
-            <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
-                <span className='uppercase font-extrabold text-xl tracking-wider'>Seleccione entradas</span>
-                {!toggleSubmitButtton ?
-                    <div className="flex flex-col gap-3">
+                <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
+                    <span className='uppercase font-extrabold text-lg tracking-wider bg-primary/70 p-1'>Seleccione entradas</span>
+                    {!toggleSubmitButtton ?
+                        <div className="flex flex-col gap-3">
+                            <div className="flex justify-between items-center">
+                                <button className="btn btn-ghost btn-sm bg-white/50" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
+                                <span className="px-7 text-2xl font-bold">{count}</span>
+                                <button className="btn btn-ghost btn-sm bg-white/50" onClick={increaseCount}><i className="fa fa-plus"></i></button>
+                            </div>
 
-                        <div className='flex justify-end'>
-                            <span className=' badge badge-lg badge-success font-semibold   '>Disponibles: {disponibles || '...'}</span>
+                            <button className="btn btn-ghost btn-sm hover:btn-primary bg-white/50" onClick={submitTickets}>{submitText}</button>
                         </div>
-
-                        <div className="flex justify-between items-center">
-                            <button className="btn text-white bg-black" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
-                            <span className="px-7 text-2xl btn btn-warning btn-circle outline outline-2">{count}</span>
-                            <button className="btn text-white bg-black" onClick={increaseCount}><i className="fa fa-plus"></i></button>
+                        :
+                        <div className='movieDetailFooter_goToCart flex flex-col gap-3'>
+                            <button className='btn btn-ghost btn-sm hover:btn-primary bg-white/50' onClick={leaveMeHere}>Volver</button>
+                            <Link to='/tickets' className='btn btn-ghost btn-sm hover:btn-warning bg-white/50'>Ir a mis entradas</Link>
                         </div>
-
-                        <button className="btn btn-warning outline outline-2" onClick={submitTickets}>{submitText}</button>
-                    </div>
-                    :
-                    <div className='movieDetailFooter_goToCart flex flex-col gap-3'>
-                        <button className='btn btn-warning outline outline-2' onClick={leaveMeHere}>Volver</button>
-                        <Link to='/tickets' className='btn text-warning bg-black'>Ir a mis entradas</Link>
-                    </div>
-                }
+                    }
+                </div>
             </div>
 
             {imInCart &&
-                <div className='text-center uppercase font-semibold text-warning p-2 rounded-3xl bg-black/60'>
-                    <div className='flex flex-col text-lg mb-3'>
-                        <span className='underline'>Precio unitario</span>
-                        <span> {precio ? `$ ${precio}` : '...'} </span>
-                    </div>
-
-                    <div className='flex flex-col text-3xl'>
-                        <span className='underline'>Precio total</span>
-                        <span> {precioTotal ? `$ ${precioTotal}` : '...'} </span>
-                    </div>
+                <div className='movieDetailFooter_price text-2xl font-bowlby'>
+                    <span className='uppercase'>Total</span>
+                    <span> {precioTotal ? `: $ ${precioTotal}` : '...'} </span>
                 </div>
             }
         </div>

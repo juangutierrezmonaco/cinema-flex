@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { RemoveDuplicates } from '../Utils/functions'
 
 const SearchDropdown = ({ searchTerm, close }) => {
     const [loading, setLoading] = useState(true);
@@ -25,13 +26,6 @@ const SearchDropdown = ({ searchTerm, close }) => {
                 .then(data => resolve(data))
                 .catch(err => reject(err));
         });
-    }
-
-    const RemoveDuplicates = (array, key) => {
-        return array.reduce((arr, item) => {
-            const removed = arr.filter(i => i[key] !== item[key]);
-            return [...removed, item];
-        }, []);
     }
 
     useEffect(() => {

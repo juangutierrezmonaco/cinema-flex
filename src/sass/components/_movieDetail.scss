@@ -1,7 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700);
-
 .movieDetailCard {
-    font: 14px/22px "Lato", Arial, sans-serif;
+    @extend .font-albert;
     position: relative;
     background-color: white;
     color: black;
@@ -136,22 +134,55 @@
             }
 
             &_cast {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
                 &_actors {
                     display: flex;
                     gap: 20px;
-                    overflow-x: scroll;
-                    padding: 10px;
-
-                    @extend .myCustomScrollBar;
-                    height: 100%;
                     width: 100%;
 
-                    li {
+                    li:nth-child(-n+4) {
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         min-width: 15%;
-                        max-width: 20%;
+                        max-width: 15%;
+                    }
+
+                    li:nth-child(5) {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    &-seeMore {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        transition: all .3s;
+                        background-color: rgba($color: black, $alpha: .8);
+                        color: white;
+                        padding: 10px;
+                        height: fit-content;
+
+                        span:nth-child(1) {
+                            max-width: 0;
+                            opacity: 0;
+                            transition: all 1s;
+                            white-space: nowrap;
+                        }
+
+                        &:hover {
+                            gap: 10px;
+
+                            span:nth-child(1) {
+                                max-width: 90px;
+                                opacity: 1;
+                            }
+                        }
                     }
                 }
             }
@@ -163,7 +194,7 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
-        } 
+        }
     }
 }
 
@@ -195,18 +226,6 @@
     }
 }
 
-.movieDetailFooter {
-    display: flex;
-    gap: 30px;
-
-    &_select {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 10px;
-    }
-}
-
 @media screen and (min-width: 768px) {
     .movieDetailCard {
         &-header {
@@ -214,15 +233,15 @@
         }
 
         &-body {
-            margin-top: 20%; 
-    
+            margin-top: 20%;
+
             &_left {
                 width: 30%;
             }
 
             &_right {
                 width: 60%;
-                
+
                 &_titles {
                     width: 100%;
                     margin-bottom: 20px;
@@ -247,15 +266,15 @@
         }
 
         &-body {
-            margin-top: 20%; 
-    
+            margin-top: 20%;
+
             &_left {
                 width: 25%;
             }
 
             &_right {
                 width: 60%;
-                
+
                 &_titles {
                     width: 100%;
                     margin-bottom: 20px;
@@ -280,8 +299,8 @@
         }
 
         &-body {
-            margin-top: 15%; 
-    
+            margin-top: 15%;
+
             &_left {
                 width: 25%;
             }
@@ -310,7 +329,7 @@
                 &_cast {
                     margin-top: 40px;
                 }
-                
+
             }
         }
     }
@@ -323,8 +342,8 @@
         }
 
         &-body {
-            margin-top: 10%; 
-    
+            margin-top: 10%;
+
             &_left {
                 width: 25%;
             }
@@ -353,7 +372,7 @@
                 &_cast {
                     margin-top: 40px;
                 }
-                
+
             }
         }
     }

@@ -1,73 +1,105 @@
 .movieCardContainer {
-    h1 {
-        font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .movieCard {
     background-color: $bg-secondary;
-    width: 100%;
     overflow: hidden;
-    font-family: 'Montserrat', sans-serif;
+    @extend .font-albert;
 
     border-radius: 10px;
     box-shadow: 0px 20px 30px 3px rgba(0, 0, 0, 0.55);
 
+    display: flex;
+    gap: 20px;   
+    background-color: rgba($color: #8d99ae, $alpha: .5);
+
     &_img {
-        background-color: whitesmoke;
-        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 20px 0 20px 20px;
 
         img {
-            width:100%;
             height: 100%;
-            object-fit: fill;
+            aspect-ratio: 2/3;
+            object-fit: cover;
         }
 
         &_notFound {
+            padding: 10px;
             object-fit: fill;
             aspect-ratio: 2/3;
             width: 100%;
-            height: 100%;
+            background-color: whitesmoke;
             border: solid 1px grey;
         }
     }
 
     &_info {
-
-        background: $bg-primary;
-        border-radius: 0 10px 10px 0;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px 0;
+        position: relative;
 
         &__title {
-            color: $text-primary;            
-            font-weight:400;
-        }
-
-        &__details {
-            ul {
-                color: rgba($color: $text-primary, $alpha: .7);
-                display: flex;
-                gap: 20px;
-
-                li {                    
-                    font-weight:400;
-                }
-            }
+            color: $text-primary;
+            font-weight: 900;
         }
 
         &__review {
-            p {
-                color:$text-primary;
-            }
+            color:$text-primary;
+            @extend .font-quicksand;
+        }
+
+        &__details {
+            display: flex;
+            gap: 20px;
+            font-size: .9rem;
+            color: rgba($color: $text-primary, $alpha: .7);
+            font-weight: 600;
         }
 
         &__premiere {
+            display: flex;
+            gap: 4px;
+            width: fit-content;
             background-color: #F6AA1C;
             color: $text-secondary;
+            padding: 4px;
+            position: absolute;
+            right: 0;
         }
     }
 
     &_extraInfo {
+        width: 30%;
         color: $text-primary;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 20px;
+        background-color: rgba($color: #8d99ae, $alpha: .3);
+        padding: 20px;
+
+        &_item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            ul {
+                display: flex;
+                gap: 10px;
+            }
+            margin-bottom: 5px;
+        }
     }
 }
