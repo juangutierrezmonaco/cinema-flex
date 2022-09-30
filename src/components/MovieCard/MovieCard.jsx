@@ -109,10 +109,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end 
 
                 <Link to={`/movie/${id}`}>
                     <li className="hidden xxs:block xxs:w-2/5 md:w-full">
-                        <ul className="btn min-w-fit xxs:flex xxs:flex-nowrap xxs:p-5 gap-2">
-                            <li>Ver ficha completa</li>
-                            <li><i className="fa-solid fa-plus"></i></li>
-                        </ul>
+                        <button className="btn min-w-fit xxs:flex xxs:flex-nowrap xxs:p-5 gap-2">Ver ficha completa</button>
                     </li>
                 </Link>
 

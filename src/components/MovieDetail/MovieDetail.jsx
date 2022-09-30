@@ -103,7 +103,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     }
 
     return (
-        <div className='my-20 container'>
+        <div>
             <article className="movieDetailCard" ref={movieCardRef} >
                 <div className='movieDetailCard-header'>
                     <div className='movieDetailCard-header_background' style={backgroundStyle}></div>

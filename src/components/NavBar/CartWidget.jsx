@@ -16,7 +16,7 @@ const CartWidget = ({ btnStyles }) => {
     }
 
     const cantidad = total > 0 ? `${total} Entrada${total > 1 ? 's' : ''}` : 'No agregó ninguna entrada aún';
-    
+
     return (
         <div>
             <div className="dropdown dropdown-end cartWidget" ref={cartWidgetRef} >
@@ -27,14 +27,11 @@ const CartWidget = ({ btnStyles }) => {
                     </button>
                 </label>
 
-                <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow text-black">
-                    <div className="card-body">
-                        <span className="font-bold text-lg text-center">{cantidad}</span>
-                        <Link to={'./tickets'} className="card-actions">
-                            <button className="btn btn-primary btn-block" onClick={removeFocus}>Ver mis entradas</button>
-                        </Link>
-                    </div>
-                </div>
+                {<div tabIndex={0} className="mt-3 card card-compact dropdown-content text-black font-albert">
+                    <Link to={'./tickets'} className="card-actions">
+                        <button className="btn btn-primary text-xs  w-52" onClick={removeFocus}>Ver mis entradas</button>
+                    </Link>
+                </div>}
             </div>
         </div>
     )

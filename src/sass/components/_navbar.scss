@@ -1,28 +1,29 @@
 .myNavbar {
+    font-family: 'Bowlby One', cursive;
     background-color: black;
     color: white;
     z-index: 100;
     position: sticky;
-    width: 100%;
     top: 0;
     height: max-content;
 
     .nav-logo {
-        @include drop-text-shadow(2rem, white, 2rem, white);
-
+        filter: drop-shadow(0 0 .5rem white);
         &:hover {
             @include drop-text-shadow(.5rem, white, 10px, white);
         }
     }
 
     .nav-active {
-        @include drop-text-shadow(.5rem, white, 10px, white);
         border-bottom: solid 2px white;
     }
 
     .nav-icon {
+        background-color: white;
+        color: black;
         &:hover {
-            @include drop-text-shadow(.5rem, white, 10px, white);
+            background-color: black;
+            color: white;
         }
     }
 
@@ -119,7 +120,21 @@
         flex-grow: 1;
         color: #9e9e9e;
         background-color: black;
-        font-family: "Staatliches", cursive;
         letter-spacing: 0.025em;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        font-family: 'Albert Sans', sans-serif;
     }
+}
+
+.search-dropdown {
+    background-color: rgba($color: white, $alpha: .9);
+    color: black;
+    max-height: 50vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 9px;
+    padding: 0;
+
+    @extend .myCustomScrollBar;
 }

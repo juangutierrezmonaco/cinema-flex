@@ -8,7 +8,6 @@ import { scrollTo } from '../Utils/functions'
 import Swal from 'sweetalert2';
 import { usePurchase } from '../../context/PurchaseContext';
 import { useUser } from '../../context/UserContext';
-import { Link, useLocation, useNavigate } from "react-router-dom";
 const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modifyTicket, toMyTickets }) => {
 
     const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : movieNotFound;

@@ -15,9 +15,9 @@ const MovieCarouselContainer = () => {
 
     return (
         <div>
-            {slides && slides.length > 0 && <div className="movieCarousel-container lg:px-40">
-                <MovieCarousel slides={slides} controls header titulo={'Películas'}/>
-            </div>}            
+            {slides && slides.length > 0 &&
+                <MovieCarousel slides={slides} controls indicators/>
+            }            
         </div>
     )
 }

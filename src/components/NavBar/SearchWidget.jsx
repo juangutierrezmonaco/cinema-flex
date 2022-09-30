@@ -36,22 +36,16 @@ const SearchWidget = ({ btnStyles }) => {
     }, [open])
 
     const openedRef = useRef();
-    const submitBusqueda = (e) => {
-        e.preventDefault();
-
-        const { value } = inputRef.current;
-
-        if (value.length > 0) {
-            setSearchTerm(value);
-        }
+    const submitBusqueda = ({ target }) => {
+        setSearchTerm(target.value);
     }    
 
     return (
-        <div>
-            <div className="searchContainerOverlay py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl hidden" ref={openedRef}>
-                <form className="searchContainer text-black" onSubmit={submitBusqueda}>
+        <div className="uppercase">
+            <div className="searchContainerOverlay py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-xl hidden" ref={openedRef}>
+                <form className="searchContainer text-black">
 
-                    <input type="search" placeholder="INGRESA TU BÚSQUEDA..." className="searchContainer_input" ref={inputRef} />
+                    <input type="search" placeholder="INGRESA TU BÚSQUEDA" className="searchContainer_input" ref={inputRef} onChange={submitBusqueda}/>
 
                     <div className={btnStyles} onClick={openSearcher}>
                         <button type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>

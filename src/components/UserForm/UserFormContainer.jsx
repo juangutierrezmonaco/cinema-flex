@@ -7,7 +7,7 @@ const UserFormContainer = ({ closeForm, open, wichForm }) => {
     const { createUser, login } = useUser();
     
     return (
-        <div className='w-full flex justify-center px-32 absolute top-0'>
+        <div className='w-full flex justify-center px-32 absolute top-0 font-albert'>
             <input type="checkbox" id="userFormModal" className="modal-toggle" checked={open} onChange={() => { }} />
             <div className="modal">
 

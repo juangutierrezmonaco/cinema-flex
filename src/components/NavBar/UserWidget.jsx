@@ -30,14 +30,14 @@ const UserWidget = ({ btnStyles }) => {
                 </label>
 
                 {isLogged ?
-                    <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 text-black">
-                        <li onClick={closeDropDown}> <Link to={'/user/tickets'}> Mis tickets </Link> </li>
-                        <li onClick={closeDropDown}> <button onClick={logout}> Salir </button> </li>
+                    <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 text-black font-albert font-semibold">
+                        <li onClick={closeDropDown}> <Link to={'/user/tickets'} className='text-lg'> Mis tickets </Link> </li>
+                        <li onClick={closeDropDown}> <button onClick={logout} className='text-lg'> Salir </button> </li>
                     </ul>
                     :
-                    <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 text-black">
-                        <li onClick={closeDropDown}> <button onClick={seeForm}> Registrarse </button> </li>
-                        <li onClick={closeDropDown}> <button onClick={seeForm}> Ingresar </button> </li>
+                    <ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 text-black font-albert font-semibold">
+                        <li onClick={closeDropDown}> <button onClick={seeForm} className='text-lg'> Registrarse </button> </li>
+                        <li onClick={closeDropDown}> <button onClick={seeForm} className='text-lg'> Ingresar </button> </li>
                     </ul>
 
                 }

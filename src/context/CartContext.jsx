@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
+import { useUser } from './UserContext'
 
 const CartContext = React.createContext([]);
 
@@ -7,8 +8,10 @@ const useCart = () => {
 }
 
 const CartProvider = ({ defaultValue = [], children }) => {
+    const { user } = useUser();
+    console.log(user);
 
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);    
 
     const updateLocalStorage = (newState) => {
         localStorage.removeItem('cart');

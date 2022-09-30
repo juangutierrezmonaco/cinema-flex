@@ -2,11 +2,14 @@ import CountDown from './CountDown'
 import CreditCard from './CreditCard'
 
 const CreditCardContainer = ({ onSubmit, onCancel, open }) => {    
+    const closeOnClickOutside = (e) => {
+        e.target.classList.contains('modal') && onCancel();            
+    }
+
     return (
         <div className='w-full flex justify-center px-32'>
             <input type="checkbox" id="creditCardModal" className="modal-toggle" checked={open} onChange={() => { }} />
-            <div className="modal">
-
+            <div className="modal" onClick={closeOnClickOutside}>
                 <div className="modal-box creditCardContainer rounded">
                     <CreditCard onSubmit={onSubmit} >
                         <label htmlFor="creditCardModal" className="btn btn-circle btn-outline" onClick={onCancel}>

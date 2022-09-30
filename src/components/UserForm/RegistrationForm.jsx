@@ -99,7 +99,7 @@ const RegistrationForm = ({ onSubmit, close, children }) => {
 
                     <div className="form-control w-full max-w-xs">
                         <label htmlFor="registrarionPassword" className="label block text-sm font-medium text-gray-700 undefined">
-                            Password
+                            Contraseña
                         </label>
 
                         <input type="password" name="registrarionPassword" className="input input-sm input-bordered w-full max-w-xs" required onChange={handleInputChange} />
@@ -107,7 +107,7 @@ const RegistrationForm = ({ onSubmit, close, children }) => {
 
                     <div className="form-control w-full max-w-xs">
                         <label htmlFor="registrarionPasswordConfirm" className="label block text-sm font-medium text-gray-700 undefined">
-                            Confirm Password
+                            Confirmar contraseña
                         </label>
 
                         <input type="password" name="registrarionPasswordConfirm" className="input input-sm input-bordered w-full max-w-xs" required onChange={handleInputChange} />

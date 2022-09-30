@@ -38,7 +38,6 @@ const UserTickets = () => {
         getUserTickets()
             .then(res => {
                 setUserTickets(res);
-                console.log(res);
                 setLoading(false);
             })
             .catch(err => console.log(err));
@@ -50,10 +49,10 @@ const UserTickets = () => {
     return (
         <div>
             {isLogged ?
-                <div className='bg-white text-black px-36 py-10 flex flex-col items-center border w-full'>
+                <div className='px-36 py-10 flex flex-col items-center border w-full'>
                     {!loading ?
                         <div>
-                            <h1 className="text-5xl uppercase mb-10 text-center"> Mis entradas </h1>
+                            <h1 className="text-5xl uppercase mb-10 text-center font-bowlby"> Mis entradas </h1>
                             <ul className='userTickets'>
                                 {userTickets.map(ticket => (
                                     <li key={ticket.id}>
@@ -61,6 +60,8 @@ const UserTickets = () => {
                                     </li>
                                 ))}
                             </ul>
+
+                            {userTickets.length == 0 && <div className='text-center font-albert text-xl'>Aún no ha comprado ninguna entrada</div>}
                         </div>
                         :
                         <Loader />

@@ -1,27 +1,45 @@
 import MovieCard from './MovieCard';
-
+import { useState } from 'react'
 const MovieCardList = ({ movies, listTitle }) => {
     /* Esto es para saber las fechas limite de estreno */
     let start = new Date();
-    while ( start.getDay() !== 4 ) start.setDate(start.getDate() - 1);
+    while (start.getDay() !== 4) start.setDate(start.getDate() - 1);
     start.setHours(0, 0, 0, 0);
 
     let end = new Date();
-    end.setDate(start.getDate() + 7);    
+    end.setDate(start.getDate() + 7);
+
+    const [itemsToShow, setItemsToShow] = useState(2);
+    const showMore = ({ target }) => {
+
+        target.classList.add('loading');
+        setTimeout(() => {
+            if (itemsToShow < movies.length) {
+                target.classList.remove('loading');
+                setItemsToShow(prevState => movies.length >= prevState ? (prevState + 2) : movies.length);
+            } else {
+                target.innerText = 'No hay más películas para mostrar';
+                target.classList.remove('loading');
+                target.classList.add('pointer-events-none', 'btn-outline');
+            }
+        }, 1000);
+
+    };    
 
     return (
-        <ul className='flex flex-col items-center'>
-            <h2 className='text-center text-3xl p-5 underline'>{listTitle}</h2>
-            {movies.length > 0 ? (
-                movies.map( m => 
+        <div className='flex flex-col items-center font-bowlby mb-7'>
+            <h2 className="text text-4xl uppercase mb-5 underline ">{listTitle}</h2>
+            <ul>
+                {movies.slice(0, itemsToShow).map(m => (
                     <li key={m.id} className="mb-10">
-                        <MovieCard {...m} start={start} end={end}/>
+                        <MovieCard {...m} start={start} end={end} />
                     </li>
-                )
-            ) : (
-                <span>No se encontraron películas</span>
-            )}
-        </ul>  
+                ))}
+            </ul>
+            {movies.length != 0 && <button className='btn btn-warning' onClick={showMore}>Mostrar más</button>}
+
+            {movies.length == 0 && <span>No se encontraron películas</span>}
+        </div>
     )
 }
 

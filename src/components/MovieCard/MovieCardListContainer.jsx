@@ -4,15 +4,24 @@ import Loader from "../Loader/Loader";
 import MovieCardList from './MovieCardList';
 import { scrollTo } from '../Utils/functions';
 
-const MovieCardListContainer = ( {greeting} ) => {
+const MovieCardListContainer = () => {
     const categoryId = useParams().categoryId || 'inicio';
     const [loading, setLoading] = useState(false);
     const [movieLists, setMovieLists] = useState([]);
     const [listTitles, setListTitles] = useState([]);
-    
+
     /* Me traigo los géneros para encontrar a este id qué nombre le pertenece por si estoy en algún género*/
     const [genre, setGenre] = useState('');
     useEffect(() => {
+        categoryId != 'inicio' ? scrollTo('main') : scrollTo('body');
+        setLoading(true);
+        getMovies()
+            .then(res => {
+                setMovieLists(res);
+                setLoading(false);
+            })
+            .catch((err) => console.log(err));
+
         // Si estoy en alguna categoría de géneros, le setteo el nombre
         if (!isNaN(parseInt(categoryId))) {
             fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=es-ES`)
@@ -22,15 +31,15 @@ const MovieCardListContainer = ( {greeting} ) => {
                 })
                 .catch(error => console.log(error));
         }
-    }, [])
-    
+    }, [categoryId]);
+
     useEffect(() => {   // Nota: Esto es porque a veces la API tarda y si lo setteo acá sin el efecto nunca se actualiza cuando está la rta.
-        setListTitles([`Cartelera - ${genre}`, `Próximos estrenos - ${genre}`]);
+        genre && setListTitles([`Cartelera - ${genre}`, `Próximos estrenos - ${genre}`]);
     }, [genre])
-    
+
     const getMovies = () => {
         let URLS = [];
-        
+
         switch (categoryId) {
             case 'inicio':
                 setListTitles(['Cartelera', 'Próximos estrenos']);
@@ -53,38 +62,26 @@ const MovieCardListContainer = ( {greeting} ) => {
         }
 
         /* Nota: Como a veces tengo que realizar múltiples consultas a la API en esta función resuelvo las promesas dinámicamente acorde a la cantidad de consultas que tenga que hacer, por lo cual, también acumulo todas las respuestas en una sola para devolverlas. */
-        return new Promise( (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             Promise.all(
                 URLS.map((url) => fetch(url)
                     .then(res => res.json())
                     .then(res => res.results))
             )
-            .then(data => resolve(data))
-            .catch(err => reject(err));
+                .then(data => resolve(data))
+                .catch(err => reject(err));
         });
     }
-
-    useEffect(() => {
-        categoryId != 'inicio' ? scrollTo('main') : scrollTo('body');
-        setLoading(true);
-        getMovies()
-            .then(res => {
-                setMovieLists(res);
-                setLoading(false);
-            })
-            .catch((err) => console.log(err));
-    }, [categoryId]);
 
     /* Explicación: Como podemos tener varias peticiones, hice que haya varias listas de películas y está todo preparado para agregar más peticiones y que se sigan agregando más películas separas por listas. */
     return (
         <div className="movieCardContainer flex flex-col items-center lg:pt-4">
-            <h1 className="text text-5xl uppercase"> {greeting} </h1>
-            {   !loading ? (
-                    movieLists.map( (movieList, index) => (
-                        <MovieCardList movies={movieList} listTitle={listTitles[index]} key={categoryId + index}/>)
-                    )
-                ) : 
-                <Loader/>         
+            {!loading ? (
+                movieLists.map((movieList, index) => (
+                    <MovieCardList movies={movieList} listTitle={listTitles[index]} key={categoryId + index} />)
+                )
+            ) :
+                <Loader />
             }
         </div>
     )

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, updateDoc, where } from 'firebase/firestore';
 import Swal from "sweetalert2";
 import { useRef } from "react";
-import { useCart } from "./CartContext";
 
 const UserContext = React.createContext([]);
 
@@ -69,12 +68,8 @@ const UserProvider = ({ children }) => {
         });
     }
 
-    const { cart } = useCart();
-
-    const addCartToUser = () => {
-        console.log(cart);
-    }
-
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];    // No uso el context de cart porque estoy afuera del provider
+    
     const createUser = (newUser, callback) => {
         const { email } = newUser;
         findUser(email)
@@ -85,14 +80,16 @@ const UserProvider = ({ children }) => {
                         title: 'Ese mail ya está registrado.'
                     })
                 } else {
-                    setUser(newUser);
-                    updateLocalStorage(res)
+                    const userPlusCart = {...newUser, cart};
+                    
+                    setUser(userPlusCart);
                     const db = getFirestore();
                     const userCollection = collection(db, 'users');
-                    addDoc(userCollection, newUser)
+
+                    addDoc(userCollection, userPlusCart)
                         .then(({ id }) => {
                             setUserId(id);
-                            addCartToUser();
+                            updateLocalStorage({...userPlusCart, id});
                         })
                         .catch(error => console.log(error));
 

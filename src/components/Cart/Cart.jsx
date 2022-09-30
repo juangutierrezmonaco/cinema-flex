@@ -33,7 +33,7 @@ const Cart = () => {
     return (
         <PurchaseProvider>
             <div className="flex flex-col items-center px-10 xl:px-36">
-                <h1 className="text text-5xl uppercase">Entradas</h1>
+                <h1 className="text text-5xl uppercase font-bowlby">Entradas</h1>
 
                 {!isEmpty() &&
                     <ul className="text-2xl my-20 flex flex-col gap-4 w-full">

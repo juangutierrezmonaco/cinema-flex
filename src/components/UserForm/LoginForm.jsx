@@ -61,10 +61,10 @@ const RegistrationForm = ({ onSubmit, close, children }) => {
 
                     <div className="form-control w-full max-w-xs">
                         <label htmlFor="loginPassword" className="label block text-sm font-medium text-gray-700 undefined">
-                            Password
+                            Contraseña
                         </label>
 
-                        <input type="password" name="loginPassword" className="input input-sm input-bordered w-full max-w-xs" required onChange={handleInputChange} />
+                        <input type="password" name="loginPassword" className="input input-sm input-bordered w-full max-w-xs" autoComplete="current-password"  required onChange={handleInputChange} />
                     </div>
 
                     <button type="submit" className="btn btn-wide font-semibold tracking-widest text-white uppercase mt-6">Ingresar</button>

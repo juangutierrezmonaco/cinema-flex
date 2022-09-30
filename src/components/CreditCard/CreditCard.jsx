@@ -240,11 +240,11 @@ const CreditCard = ({ onSubmit, children }) => {
                         </div>
                     </div>
 
-                    <button className="btn btn-primary btn-lg btn-block" type='submit'> Submit </button>
+                    <button className="btn btn-primary btn-lg btn-block" type='submit'> Comprar </button>
                 </form>
             </div>
 
-            <button className="badge badge-lg p-5" onClick={autoComplete}> Autocompletar </button>
+            <button className="btn btn-outline btn-info" onClick={autoComplete}> Autocompletar </button>
         </div>
     )
 }

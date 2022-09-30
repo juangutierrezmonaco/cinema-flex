@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 import MovieCarouselItem from "./MovieCarouselItem"
 import MovieCarouselControls from "./MovieCarouselControls";
-import MovieCarouselHeader from "./MovieCarouselHeader";
+import MovieCarouselIndicators from "./MovieCarouselIndicators";
 
-const MovieCarousel = ({ slides, interval = 3000, controls = false, header = false, autoPlay = true, width = '100%', height = '400px', titulo = ''}) => {
+const MovieCarousel = ({ slides, interval = 3000, controls = false, indicators = false, autoPlay = true, width = '100%', height = '400px' }) => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -42,25 +42,25 @@ const MovieCarousel = ({ slides, interval = 3000, controls = false, header = fal
     }
 
     useEffect(() => {
-        startSlideTimer();    
+        startSlideTimer();
         return () => stopSlideTimer();
     }, []);
-    
-    return (
-        <div>
-            {header && <MovieCarouselHeader slides={slides} currentSlide={currentSlide} switchIndex={switchIndex} titulo={titulo}/>}
 
-            <div className="movieCarousel md:flex md:justify-center" style={{ 'maxWidth' : width, 'maxHeight' : height}}>
-                <div 
+    return (
+        <div className="movieCarousel-container">
+            {indicators && <MovieCarouselIndicators  slides={slides} currentIndex={currentSlide} switchIndex={switchIndex} />}
+
+            <div className="movieCarousel md:flex md:justify-center" style={{ 'maxWidth': width, 'maxHeight': height }}>
+                <div
                     className="movieCarousel-inner h-44 sm:h-64 md:h-auto"
                     style={{ transform: `translateX(${-currentSlide * 100}%)` }}
                 >
                     {slides.map((slide, index) => (
-                        <MovieCarouselItem slide={slide} key={index} stopSlide={stopSlideTimer} startSlide={startSlideTimer}/>
+                        <MovieCarouselItem slide={slide} key={index} stopSlide={stopSlideTimer} startSlide={startSlideTimer} />
                     ))}
                 </div>
 
-                {controls && <MovieCarouselControls prev={handlePrev} next={handleNext}/>}
+                {controls && <MovieCarouselControls prev={handlePrev} next={handleNext} />}
             </div>
         </div>
     )

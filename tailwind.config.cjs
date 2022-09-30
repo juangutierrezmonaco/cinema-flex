@@ -8,12 +8,12 @@ module.exports = {
         container: {
             center: true,
             padding: {
-                DEFAULT: '1rem',
-                sm: '2rem',
-                lg: '4rem',
-                xl: '5rem',
-                '2xl': '6rem',
-            },
+                DEFAULT: '0',
+                sm: '4rem',
+                lg: '8rem',
+                xl: '9rem',
+                '2xl': '11rem'
+            }
         },
         screens: {
             'xxs': '475px',
@@ -41,7 +41,20 @@ module.exports = {
             screens: {
                 '3xl': '1600px',
             },
+            fontFamily: {
+                sans: ['Albert Sans', 'sans-serif'],
+            }
         },
+    },
+    daisyui: {
+        themes: [
+            {
+                light: {
+                    ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+                    primary: "#9D0208",
+                },
+            },
+        ],
     },
     plugins: [
         require("daisyui"),

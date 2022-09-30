@@ -10,7 +10,7 @@ const UserTicket = ({ movie, funcion, precio, paymentId, codigoParaRetirar, id }
     const hora = horarioDate.getHours() + ':' + horarioDate.getMinutes();
 
     return (
-        <div className="userTicket">
+        <div className="userTicket bg-white ">
             <div className="userTicket_left text-2xl">
                 <span className='userTicket_left-order'>{`ORDEN N°: #${id}`}</span>
                 <div className='userTicket_left-items'>
@@ -29,6 +29,7 @@ const UserTicket = ({ movie, funcion, precio, paymentId, codigoParaRetirar, id }
             <div className="userTicket_right">
                 <span className='text-lg'>Código para retirar en el cine</span>
                 <div className='userTicket_right-qrCode'>
+                    {codigoParaRetirar}
                     <QRCode
                         size={256}
                         style={{ height: "auto", maxWidth: "100%", width: "100%" }}

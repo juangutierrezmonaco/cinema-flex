@@ -23,9 +23,9 @@ function App() {
                     <MovieCarouselContainer />
 
                     <Routes>
-                        <Route path='/' element={<main className='lg:px-24'><MovieCardListContainer greeting="Inicio" /></main>}></Route>
+                        <Route path='/' element={<main className='lg:px-24'><MovieCardListContainer /></main>}></Route>
 
-                        <Route path='/category/:categoryId' element={<main className='lg:px-24'><MovieCardListContainer greeting="Películas" /></main>}></Route>
+                        <Route path='/category/:categoryId' element={<main className='lg:px-24'><MovieCardListContainer /></main>}></Route>
 
                         <Route path='/movie/:movieId' element={<main className=''><MovieDetailContainer /></main>}></Route>
 

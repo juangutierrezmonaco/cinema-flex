@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import CartWidget from './CartWidget'
+import GenresDropdown from './GenresDropdown';
 import SearchWidget from './SearchWidget';
 import UserWidget from './UserWidget';
 
@@ -54,7 +55,7 @@ const NavBar = () => {
     const genreNavItemClass = imInGenres ? 'nav-active hover:drop-shadow-mine cursor-pointer' : 'underline-hover hover:drop-shadow-mine cursor-pointer';
 
     return (
-        <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-2xl">
+        <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-xl">
             <div className='flex items-center gap-3'> 
 
                 <label className={`swap swap-rotate lg:hidden ${btnStyles}`} onChange={toggleButton}>
@@ -72,28 +73,18 @@ const NavBar = () => {
             {/* Nav versión desktop  */}
             <nav>
                 <ul className="uppercase hidden lg:flex gap-5 whitespace-nowrap" >
-                    <li><NavLink to={'/category/cartelera'} className={navLinkClass}>Películas en cartel</NavLink></li>
+                    <li><NavLink to={'/category/cartelera'} className={navLinkClass}>Películas en cartelera</NavLink></li>
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass}>Próximos estrenos</NavLink></li>
 
                     <li>
                         <label htmlFor="my-modal-3" className={genreNavItemClass}>Géneros</label>
 
                         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-                        <label htmlFor="my-modal-3" className="modal cursor-pointer">
-                            <div className="modal-box relative bg-white text-black cursor-pointer">
+                        <label htmlFor="my-modal-3" className="modal">
+                            <div className="modal-box relative bg-white text-black font-albert">
                                 <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                                 <h3 className="text-lg font-bold">Géneros</h3>
-                                <ul className="menu dropdown-content p-2 bg-white text-black ">
-                                        {genres.length > 0 ? (
-                                            genres.map( g => 
-                                                <li key={g.id} onClick={closeModal}>
-                                                    <NavLink to={`./category/${g.id}`} className={`text-black`}>{g.name}</NavLink>
-                                                </li> 
-                                            )
-                                        ) : (
-                                            <li>Cargando...</li>
-                                        )}
-                                </ul>
+                                <GenresDropdown genres={genres} close={closeModal}/>
                             </div>
                         </label>
                     </li>
@@ -104,7 +95,7 @@ const NavBar = () => {
             <nav className={openNav ? 'nav-overlay flex justify-center items-center lg:hidden slide-in-left' : `nav-overlay flex justify-center items-center lg:hidden slide-out-left invisible`}>
                 <ul className="uppercase flex flex-col items-center lg:flex-row gap-5 whitespace-nowrap" >
                     <li><NavLink to={'/'} className={navLinkClass} onClick={closeNav}>Inicio</NavLink></li>
-                    <li><NavLink to={'/category/cartelera'} className={navLinkClass} onClick={closeNav}>Películas en cartel</NavLink></li>
+                    <li><NavLink to={'/category/cartelera'} className={navLinkClass} onClick={closeNav}>Películas en cartelera</NavLink></li>
                     <li><NavLink to={'/category/estrenos'} className={navLinkClass} onClick={closeNav}>Próximos estrenos</NavLink></li>
                     
                     <li >
@@ -112,20 +103,10 @@ const NavBar = () => {
 
                         <input type="checkbox" id="my-modal-3-mobile" className="modal-toggle" />
                         <div className="modal">
-                            <div className="modal-box relative bg-white text-black ">
+                            <div className="modal-box relative bg-white text-black font-albert">
                                 <label htmlFor="my-modal-3-mobile" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                                <h3 className="text-lg font-bold">Géneros</h3>
-                                <ul className="menu dropdown-content p-2 bg-white text-black ">
-                                        {genres.length > 0 ? (
-                                            genres.map( g => 
-                                                <li key={g.id}>
-                                                    <NavLink to={`./category/${g.id}`} className={`text-black`} onClick={() => { closeModal(); closeNav();}}>{g.name}</NavLink>
-                                                </li> 
-                                            )
-                                        ) : (
-                                            <li>Cargando...</li>
-                                        )}
-                                </ul>
+                                <h3 className="text-lg font-bold">Géneros</h3>                                
+                                <GenresDropdown genres={genres} close={closeModal}/>
                             </div>
                         </div>
                     </li>
