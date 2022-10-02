@@ -15,7 +15,7 @@
     box-shadow: 0px 20px 30px 3px rgba(0, 0, 0, 0.55);
 
     display: flex;
-    gap: 20px;   
+    gap: 20px;
     background-color: rgba($color: #8d99ae, $alpha: .5);
 
     &_img {
@@ -47,18 +47,22 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 20px;
+        gap: 10px;
         padding: 20px 0;
         position: relative;
 
         &__title {
             color: $text-primary;
             font-weight: 900;
+            font-size: 1.25rem;
+            line-height: 1.75rem;
         }
 
         &__review {
-            color:$text-primary;
+            color: $text-primary;
             @extend .font-quicksand;
+            font-size: .875rem;
+            line-height: 1.25rem;
         }
 
         &__details {
@@ -78,6 +82,8 @@
             padding: 4px;
             position: absolute;
             right: 0;
+            font-size: .75rem;
+            line-height: 1rem;
         }
     }
 
@@ -95,11 +101,193 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+
             ul {
                 display: flex;
                 gap: 10px;
             }
+
             margin-bottom: 5px;
+        }
+
+        &_verFicha {
+            margin-top: 10px;
+            font-size: .75rem !important;
+            line-height: 1rem;
+            width: 75%;
+        }
+    }
+}
+
+// Media queries 
+@media screen and (max-width: 960px) {
+    .movieCard {    
+        &_img {
+            width: 15%;
+        }
+    
+        &_info {
+            width: 60%;
+        }
+    
+        &_extraInfo {
+            width: 30%;
+    
+            &_item {
+                font-size: 0.7rem;
+                line-height: 1.25rem;
+            }
+    
+            &_verFicha {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .movieCard {    
+        &_img {
+            width: 35%;
+        }
+    
+        &_info {
+            width: 40%;
+    
+            &__review {
+                font-size: .84rem;
+                line-height: 1.25rem;
+            }
+    
+            &__details {
+                font-size: .7rem;
+                font-weight: 600;
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
+    
+            &__premiere {
+                font-size: .75rem !important;
+                line-height: 1rem;
+                position: relative;
+            }
+        }
+    
+        &_extraInfo {
+            width: 25%;
+            padding: 15px;
+    
+            &_item {
+                font-size: .7rem;
+                line-height: 1rem;
+            }
+    
+            &_verFicha {
+                font-size: .7rem !important;
+                line-height: 1rem;
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .movieCard {
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        gap: 0;
+
+        &_img {
+            width: 50%;
+            display: flex;
+            order: 0;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0;
+
+            img {
+                height: 100%;
+                aspect-ratio: 2/3;
+                object-fit: cover;
+            }
+
+            &_notFound {
+                padding: 10px;
+                object-fit: fill;
+                aspect-ratio: 2/3;
+                width: 100%;
+            }
+        }
+
+        &_extraInfo {
+            width: 50%;
+            order: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: space-between;
+            font-size: .7rem;
+            padding: 15px;
+
+            &_item {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                ul {
+                    display: flex;
+                    gap: 10px;
+                }
+
+                margin-bottom: 15px;
+            }
+
+            &_verFicha {
+                font-size: .7rem;
+                width: 100%;
+            }
+        }
+
+        &_info {
+            width: 100%;
+            order: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 20px;
+            position: relative;
+            font-size: .7rem;
+
+            &__title {
+                font-weight: 900;
+                font-size: .9rem;
+            }
+
+            &__review {
+                color: $text-primary;
+                @extend .font-quicksand;
+            }
+
+            &__details {
+                display: flex;
+                justify-content: space-between;
+                font-size: .7rem;
+                font-weight: 600;
+            }
+
+            &__premiere {
+                position: relative;
+                display: flex;
+                gap: 4px;
+                width: fit-content;
+                background-color: #F6AA1C;
+                color: $text-secondary;
+                font-size: .6rem;
+            }
         }
     }
 }

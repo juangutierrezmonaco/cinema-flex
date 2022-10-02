@@ -2,9 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 .userTickets {
-	font-family: "Staatliches", cursive;
-	color: black;
-	letter-spacing: 0.1em;
+    color: black;
+    letter-spacing: 0.1em;
     display: flex;
     flex-direction: column;
     gap: 60px;
@@ -15,6 +14,7 @@
     flex-wrap: wrap;
     border: solid 1px black;
     width: fit-content;
+    background-color: white;
 
     &_left {
         display: flex;
@@ -23,37 +23,78 @@
         flex-grow: 1;
         border-right: solid 1px black;
         width: 60%;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 1;
+
+        &-background {
+            height: 100%;
+            width: 100%;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &::after {
+                position: absolute;
+                content: '';
+                display: block;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba($color: white, $alpha: .43);
+            }
+
+            >div {
+                position: relative;
+                width: 100%;
+                height: 100%;
+
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
+        }
 
         &-order {
             width: fit-content;
             padding: 10px 20px;
             border: solid 1px black;
             border-width: 0 1px 1px 0;
+            background-color: rgba($color: white, $alpha: .7);
         }
 
         &-items {
             height: fit-content;
             width: fit-content;
-            background-color: white;
             display: flex;
             flex-direction: column;
             padding-left: 20px;
             padding-bottom: 30px;
         }
-        
+
     }
 
     &_right {
-        width: 40%;
+        width: 20%;
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         align-items: center;
-        gap: 20px;
-        padding: 30px;
+        justify-content: center;
+        padding: 10px;
         text-align: center;
+        background-color: black;
+        color: white;
 
         &-qrCode {
             width: 70%;
+            background-color: white;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
     }
 
@@ -73,10 +114,10 @@
 
         &-barcode {
             background-color: white;
-            height: 100%;
             display: flex;
             flex-grow: 1;
             justify-content: center;
+            align-items: center;
         }
     }
 }

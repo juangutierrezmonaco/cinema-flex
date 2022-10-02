@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { scrollTo } from '../Utils/functions'
-import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
+import { collection, getDocs, getFirestore, orderBy, query, where } from 'firebase/firestore'
 import { useUser } from '../../context/UserContext';
 import UserTicket from './UserTicket';
 import Loader from '../Loader/Loader'
@@ -15,6 +15,7 @@ const UserTickets = () => {
             const db = getFirestore();
             const q = query(
                 collection(db, "orders"),
+                orderBy("fechaDeEmision", "desc"),
                 where('userId', '==', user.id)
             );
 
@@ -33,14 +34,16 @@ const UserTickets = () => {
     }
 
     useEffect(() => {
-        scrollTo('main');
+        if (user.id) {
+            scrollTo('main');
 
-        getUserTickets()
-            .then(res => {
-                setUserTickets(res);
-                setLoading(false);
-            })
-            .catch(err => console.log(err));
+            getUserTickets()
+                .then(res => {
+                    setUserTickets(res);
+                    setLoading(false);
+                })
+                .catch(err => console.log(err));
+        }
     }, [user])
 
     // En caso de que se ponga la ruta en el navegador, no se rompe la página
@@ -49,10 +52,10 @@ const UserTickets = () => {
     return (
         <div>
             {isLogged ?
-                <div className='px-36 py-10 flex flex-col items-center border w-full'>
+                <div className='flex flex-col items-center mb-7 pb-10'>
                     {!loading ?
                         <div>
-                            <h1 className="text-5xl uppercase mb-10 text-center font-bowlby"> Mis entradas </h1>
+                            <h1 className="text-4xl uppercase mb-14 underline font-bowlby text-center"> Mis tickets </h1>
                             <ul className='userTickets'>
                                 {userTickets.map(ticket => (
                                     <li key={ticket.id}>

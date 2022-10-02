@@ -9,7 +9,8 @@ const useCart = () => {
 
 const CartProvider = ({ defaultValue = [], children }) => {
 
-    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);    
+    const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || defaultValue);       
+    const { user, isLogged, modifyUserCart } = useUser();
 
     const updateLocalStorageAndDB = (newState) => {
         // Cart in usersDB
@@ -19,12 +20,10 @@ const CartProvider = ({ defaultValue = [], children }) => {
         localStorage.removeItem('cart');
         localStorage.setItem('cart', JSON.stringify(newState));
     }
-     
-    const { user, isLogged, modifyUserCart } = useUser();
+
     useEffect(() => {
         // Si se loggea le tengo que agregar el cart que ya estaba
-        
-        if (isLogged) {
+        if (isLogged && user.id) {
             const userCart = user.cart;
             cart.map(( ticket ) => {
                 // Busco en el usuario si tiene en su cart el ticket
@@ -40,7 +39,8 @@ const CartProvider = ({ defaultValue = [], children }) => {
             setCart(userCart);
             updateLocalStorageAndDB(userCart);
         }
-    }, [user])
+    }, [isLogged])
+    
 
     const addTicket = (movie, screeningId, quantity) => {
         const ticketId = movie.id + screeningId;

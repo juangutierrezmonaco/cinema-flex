@@ -58,10 +58,12 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end,
                     </ul>
                 }
 
-                <h2 className="movieCard_info__title uppercase text-2xl">{title}</h2>
+                <h2 className="movieCard_info__title uppercase">{title}</h2>
 
-                <div className="movieCard_info__review text-sm">
-                    <p>{overview ? (overview.length <= 372 ? overview : overview.slice(0, 372) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p>
+                <div className="movieCard_info__review">
+                    {/* <p className="hidden md:flex">{overview ? (overview.length <= 372 ? overview : overview.slice(0, 372) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p>
+                    <p className="flex md:hidden">{overview ? (overview.length <= 150 ? overview : overview.slice(0, 150) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p> */}
+                    <p className="">{overview ? (overview.length <= 200 ? overview : overview.slice(0, 200) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p>
                 </div>
 
                 <div>
@@ -76,7 +78,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end,
             </div>
 
 
-            <ul className="movieCard_extraInfo uppercase text-sm">
+            <ul className="movieCard_extraInfo uppercase">
 
                 <li className="movieCard_extraInfo_item">
 
@@ -97,7 +99,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end,
                 </li>
 
                 <Link to={`/movie/${id}`}>
-                    <button className="btn btn-sm btn-primary rounded uppercase text-xs font-semibold w-3/4">Ver ficha completa</button>
+                    <button className="btn btn-sm btn-primary rounded uppercase movieCard_extraInfo_verFicha">Ver ficha completa</button>
                 </Link>
 
 

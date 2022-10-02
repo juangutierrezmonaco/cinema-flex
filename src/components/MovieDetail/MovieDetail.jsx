@@ -118,26 +118,26 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                             <MovieDetailTrailer trailerPath={trailerPath} />
                         </button>
 
-                        <ul className='movieDetailCard-body_left_details tracking-wider text-base '>
+                        <ul className='movieDetailCard-body_left_details tracking-wider font-quicksand'>
                             <li>
-                                <span className='underline'>Fecha de estreno</span>
-                                <span> {releaseDate}</span>
+                                <span className='underline  font-semibold'>Fecha de estreno</span>
+                                <span className='font-[500]'> {releaseDate}</span>
                             </li>
                             <li>
-                                <span className='underline'>Director</span>
-                                <span> {director}</span>
+                                <span className='underline  font-semibold'>Director</span>
+                                <span className='font-[500]'> {director}</span>
                             </li>
                             <li>
-                                <span className='underline'>Nacionalidad</span>
-                                <span> {nacionality}</span>
+                                <span className='underline  font-semibold'>Nacionalidad</span>
+                                <span className='font-[500]'> {nacionality}</span>
                             </li>
                             <li>
-                                <span className='underline'>Calificación</span>
-                                <span> {rate}</span>
+                                <span className='underline  font-semibold'>Calificación</span>
+                                <span className='font-[500]'> {rate}</span>
                             </li>
                             <li>
-                                <span className='underline'>Duración</span>
-                                <span>{runtime ? `${runtime} Minutos` : 'SIN DATOS'}</span>
+                                <span className='underline font-semibold'>Duración</span>
+                                <span className='font-[500]'>{runtime ? `${runtime} Minutos` : 'SIN DATOS'}</span>
                             </li>
                         </ul>
                     </div>

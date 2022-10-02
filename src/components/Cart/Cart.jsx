@@ -33,7 +33,7 @@ const Cart = () => {
     return (
         <PurchaseProvider>
             <div className="flex flex-col items-center mb-7 pb-10">
-                <h1 className="text text-4xl uppercase mb-14 underline font-bowlby ">Entradas</h1>
+                <h1 className="text-4xl uppercase mb-14 underline font-bowlby">Entradas</h1>
 
                 {!isEmpty() &&
                     <ul className="cartCards">
@@ -49,9 +49,9 @@ const Cart = () => {
                 {clear ?
                     <button className="btn btn-warning mt-10" onClick={clearCart}>Limpiar entradas</button>
                     :
-                    <div className="flex flex-col gap-5">
-                        <span className="mt-10">Aún no ha seleccionado entradas</span>
-                        <Link to={'/'} className="btn">Volver a la página principal</Link>
+                    <div className="flex flex-col gap-5 text-xl">
+                        <span>Aún no ha seleccionado entradas</span>
+                        <Link to={'/'} className="btn btn-warning">Volver a la página principal</Link>
                     </div>
                 }
 

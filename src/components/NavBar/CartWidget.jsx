@@ -29,7 +29,7 @@ const CartWidget = ({ btnStyles }) => {
 
                 {<div tabIndex={0} className="mt-3 card card-compact dropdown-content text-black font-albert">
                     <Link to={'./tickets'} className="card-actions">
-                        <button className="btn btn-primary text-xs  w-52" onClick={removeFocus}>Ver mis entradas</button>
+                        <button className="btn btn-primary text-xs w-52" onClick={removeFocus}>Ver mis entradas</button>
                     </Link>
                 </div>}
             </div>

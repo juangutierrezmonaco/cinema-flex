@@ -43,7 +43,7 @@ const NavBar = () => {
 
     /* Mostrar qué sección está seleccionada */
     const navLinkClass = (navData) => (navData.isActive ? 'nav-active hover:drop-shadow-mine ' : 'underline-hover hover:drop-shadow-mine'); 
-    const btnStyles = 'btn btn-circle min-h-0 h-8 w-8 text-sm sm:text-xl sm:h-10 sm:w-10 xl:text-2xl xl:h-12 xl:w-12 nav-icon';
+    const btnStyles = 'btn btn-circle min-h-0 text-xs h-8 w-8 sm:h-10 sm:w-10 sm:text-lg lg:text-base 2xl:h-12 2xl:w-12 2xl:text-xl nav-icon';
 
     /* Cerrar modal géneros */
     const closeModal = (e) => { 
@@ -55,7 +55,7 @@ const NavBar = () => {
     const genreNavItemClass = imInGenres ? 'nav-active hover:drop-shadow-mine cursor-pointer' : 'underline-hover hover:drop-shadow-mine cursor-pointer';
 
     return (
-        <header className="myNavbar flex justify-between items-center py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-xl">
+        <header className="myNavbar flex justify-between items-center py-5 px-4 text-xs sm:text-lg md:py-2 lg:text-sm xl:text-base	2xl:text-xl">
             <div className='flex items-center gap-3'> 
 
                 <label className={`swap swap-rotate lg:hidden ${btnStyles}`} onChange={toggleButton}>
@@ -64,7 +64,7 @@ const NavBar = () => {
                     <i className='swap-on fill-current fa-solid fa-xmark'></i>
                 </label>
 
-                <Link to={'/'} className="p-3 flex items-center gap-3 nav-logo" onClick={closeNav}>
+                <Link to={'/'} className="xs:p-3 flex items-center gap-3 nav-logo" onClick={closeNav}>
                     <i className="fa-solid fa-film "></i>
                     <span>CINEMAFLEX</span>
                 </Link>

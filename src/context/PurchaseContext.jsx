@@ -1,6 +1,5 @@
 import { addDoc, collection, doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { useEffect } from "react";
 import { useStateWithCallbackLazy } from 'use-state-with-callback';
 import { useUser } from "./UserContext";
 
@@ -67,6 +66,8 @@ const PurchaseProvider = ({ children }) => {
 
     }
 
+    const { addOrder } = useUser()
+
     const uploadOrder = (newOrder) => {
         const db = getFirestore();
         const orderCollection = collection(db, 'orders');
@@ -79,14 +80,11 @@ const PurchaseProvider = ({ children }) => {
             .catch(error => console.log(error));
     }
 
-    const { addOrder } = useUser()
-
     const submitOrder = (currentOrder) => {
         const { movie, screening, seatsNumbers, precio, paymentId, userId } = currentOrder;
         const { sala, tipo, lenguaje, horario, id: funcionId } = screening;
-        const { title, id: movieId } = movie;
+        const { title, id: movieId, poster_path, backdrop_path } = movie;
 
-        console.log(currentOrder);
         // Código que se genera para retirar las entradas
         /**
          * FORMATO: 
@@ -100,11 +98,12 @@ const PurchaseProvider = ({ children }) => {
 
         const orderToSend = {
             funcion: { sala, tipo, lenguaje, horario, seatsNumbers, funcionId },
-            movie: { title, movieId },
+            movie: { title, movieId, poster_path, backdrop_path },
             precio: precio,
             paymentId: paymentId,
             userId: userId,
-            codigoParaRetirar
+            codigoParaRetirar,
+            fechaDeEmision: new Date()
         }
 
         // mandar order a db

@@ -102,14 +102,20 @@ const CreditCard = ({ onSubmit, children }) => {
 
     return (
         <div className='flex flex-col items-center gap-5 creditCard'>
-            <div className="flex justify-between w-full">
-                <h3 className="text-2xl font-semibold text-slate-900  ">
-                    Información de pago
-                </h3>
-                {children}
+
+            <div className="flex flex-col w-full">
+
+                <div className='flex justify-between items-center w-full'>
+                    <h3 className="text-2xl font-semibold text-slate-900  ">
+                        Información de pago
+                    </h3>
+                    {children[0]}
+                </div>
+
+                {children[1]}
             </div>
 
-            <div>
+            <div className='text-center'>
                 <Card
                     locale={{ valid: "Expira" }}
                     placeholders={{ name: "NOMBRE COMPLETO" }}
@@ -120,6 +126,8 @@ const CreditCard = ({ onSubmit, children }) => {
                     number={number}
                     callback={handleCallback}
                 />
+
+                <button className="link link-neutral mt-1" onClick={autoComplete}> Autocompletar </button>
             </div>
 
             <div className=' text-black w-full flex justify-center'>
@@ -240,11 +248,9 @@ const CreditCard = ({ onSubmit, children }) => {
                         </div>
                     </div>
 
-                    <button className="btn btn-primary btn-lg btn-block" type='submit'> Comprar </button>
+                    <button className="btn btn-primary btn-lg btn-block mt-2" type='submit'> Comprar </button>
                 </form>
             </div>
-
-            <button className="btn btn-outline btn-info" onClick={autoComplete}> Autocompletar </button>
         </div>
     )
 }

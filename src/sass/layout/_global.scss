@@ -33,23 +33,6 @@ main {
     background: linear-gradient(to bottom, #000000, $bg-sec-lighter);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-/* 
-@media screen and (min-width: 768px) {
-}
-
-@media screen and (min-width: 960px) {    
-    body {
-        padding: 0 100px;
-    }
-}
-
-@media screen and (min-width: 1279px) {
-    body {
-        padding: 0 160px;
-    }
-}
-
-@media screen and (min-width: 1536px) {} */
 
 .modal-box {
     @extend .myCustomScrollBar;

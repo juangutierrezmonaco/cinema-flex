@@ -14,6 +14,7 @@ import { CartProvider } from './context/CartContext'
 import { UserProvider } from './context/UserContext'
 
 function App() {
+    const mainLayout = 'overflow-hidden px-5 lg:px-20'
 
     return (
         <UserProvider>
@@ -23,9 +24,9 @@ function App() {
                     <MovieCarouselContainer />
 
                     <Routes>
-                        <Route path='/' element={<main className='lg:px-24'><MovieCardListContainer /></main>}></Route>
+                        <Route path='/' element={<main className={mainLayout}><MovieCardListContainer /></main>}></Route>
 
-                        <Route path='/category/:categoryId' element={<main className='lg:px-24'><MovieCardListContainer /></main>}></Route>
+                        <Route path='/category/:categoryId' element={<main className={mainLayout}><MovieCardListContainer /></main>}></Route>
 
                         <Route path='/movie/:movieId' element={<main className=''><MovieDetailContainer /></main>}></Route>
 

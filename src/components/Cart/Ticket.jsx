@@ -52,11 +52,6 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
         scrollTo('', ticketRef);
     }
 
-    const clearTicket = () => {
-        scrollTo('', ticketRef);
-        removeTicket(movie.id + initialScreeningId);
-    }
-
     const { order, setScreeningData, setSeats, setPaymentId, setUserId, isActive, setIsActive, submitOrder } = usePurchase();
 
     const submitScreening = (screening, cantidad, precio) => {
@@ -72,7 +67,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                 icon: 'error',
                 title: 'Ya estás en proceso de compra de una película'
             })
-        }
+        }        
     }
 
     const submitSeats = (seats) => {
@@ -81,6 +76,13 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
     };
 
     const { user } = useUser();
+
+    const clearTicket = () => {
+        scrollTo('', ticketRef);
+
+        // Limpio carrito
+        removeTicket(movie.id + initialScreeningId);
+    }
 
     const finishPurchase = (paymentInfo) => {
         const { paymentStatus } = paymentInfo;
@@ -102,7 +104,12 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                     text: "Puede ir a ver sus tickets!",
                     showCancelButton: true,
                     confirmButtonText: 'Ir a mis tickets!',
-                    cancelButtonText: "Quedarme aquí"
+                    cancelButtonText: "Quedarme aquí",
+                    buttonsStyling: false,
+                    customClass: {
+                        confirmButton: 'btn btn-primary mr-3',
+                        cancelButton: 'btn btn-warning'
+                    }
                 }).then(({ isConfirmed }) => {
                     isConfirmed && toMyTickets();
                 })
@@ -114,6 +121,10 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
             Swal.fire({
                 icon: 'error',
                 text: errorDetail,
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                }
             })
         }
     }
