@@ -1,5 +1,5 @@
 const MovieCarouselIndicators = ({ slides, currentIndex, switchIndex }) => {
-    const indicatorsClass = `movieCarousel-indicator-item btn-circle h-4 w-4 `;
+    const indicatorsClass = `movieCarousel-indicator-item btn-circle h-2 w-2 xs:h-3 xs:w-3 md:h-4 md:w-4`;
 
     return (
         <div className="movieCarousel-indicators">

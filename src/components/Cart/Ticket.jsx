@@ -142,7 +142,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                     </div>
 
                     <div className='cartCard-right'>
-                        <div className='cartCard-right-details uppercase text-md font-bold '>
+                        <div className='cartCard-right-details uppercase font-bold '>
                             <span className='flex gap-1 justify-start items-center'>
                                 <i className="fa-solid fa-film"></i>
                                 {movie.title}
@@ -152,6 +152,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                                 {`${movie.runtime} minutos`}
                             </span>
                         </div>
+                        
                         <MovieFooter initial={initialQuantity} submitText='¡Comprar entradas!' onAdd={submitScreening} movieId={movie.id} selectedScreeningId={initialScreeningId} />
                     </div>
 

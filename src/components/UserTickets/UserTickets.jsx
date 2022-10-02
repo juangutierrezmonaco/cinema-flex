@@ -52,10 +52,10 @@ const UserTickets = () => {
     return (
         <div>
             {isLogged ?
-                <div className='flex flex-col items-center mb-7 pb-10'>
+                <div className='flex flex-col items-centermb-7 pb-10'>
                     {!loading ?
-                        <div>
-                            <h1 className="text-4xl uppercase mb-14 underline font-bowlby text-center"> Mis tickets </h1>
+                        <div className='flex flex-col items-center'>
+                            <h1 className="text text-4xl uppercase mb-14 underline font-bowlby "> Mis tickets </h1>
                             <ul className='userTickets'>
                                 {userTickets.map(ticket => (
                                     <li key={ticket.id}>

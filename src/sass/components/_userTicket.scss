@@ -1,20 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
-
 .userTickets {
     color: black;
     letter-spacing: 0.1em;
     display: flex;
     flex-direction: column;
     gap: 60px;
+    max-width: 100%;
 }
 
 .userTicket {
     display: flex;
     flex-wrap: wrap;
-    border: solid 1px black;
     width: fit-content;
     background-color: white;
+    border: solid white 1px;
 
     &_left {
         display: flex;
@@ -120,4 +118,43 @@
             align-items: center;
         }
     }
+}
+
+@media screen and (max-width: 575px) {
+    .userTicket {
+        width: 100%;
+    
+        &_left {
+            font-size: .6rem;
+            width: 60%;
+
+            &-order {
+                width: 100%;
+                padding: 5px;
+                font-size: .5rem;
+                border-right: none;
+            }
+    
+        }
+    
+        &_right {
+            width: 30%;
+            font-size: .4rem;
+    
+            &-qrCode {
+                width: 70%;
+                background-color: white;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    
+        &_bottom {
+            width: 100%;
+            
+            font-size: .4rem;
+        }
+    } 
 }

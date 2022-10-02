@@ -86,8 +86,6 @@
         }
     }
 
-
-
     &-control {
         background-color: rgba(0, 0, 0, .5);
         border: none;
@@ -115,4 +113,16 @@
     .right {
         right: 20px;
     }
+}
+
+@media screen and (max-width: 768px) {
+    .movieCarousel {
+        &-control {
+            font-size: .5rem;
+            height: 30px;
+            width: 30px;
+            top: calc(50% - 15px);
+        }
+    }
+
 }

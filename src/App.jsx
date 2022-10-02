@@ -14,7 +14,7 @@ import { CartProvider } from './context/CartContext'
 import { UserProvider } from './context/UserContext'
 
 function App() {
-    const mainLayout = 'overflow-hidden px-5 lg:px-20'
+    const mainLayout = 'overflow-hidden px-5 lg:px-20 '
 
     return (
         <UserProvider>
@@ -30,11 +30,11 @@ function App() {
 
                         <Route path='/movie/:movieId' element={<main className=''><MovieDetailContainer /></main>}></Route>
 
-                        <Route path='/movie/:movieId/credits' element={<main className='mt-9 lg:px-12'><MovieCredits /></main>}></Route>
+                        <Route path='/movie/:movieId/credits' element={<main className={mainLayout}><MovieCredits /></main>}></Route>
 
-                        <Route path='/tickets' element={<main className='px-24'><Cart /></main>}></Route>
+                        <Route path='/tickets' element={<main className={mainLayout}><Cart /></main>}></Route>
 
-                        <Route path='/user/tickets' element={<main className='mt-9 lg:px-12'><UserTickets /></main>}></Route>
+                        <Route path='/user/tickets' element={<main className={mainLayout}><UserTickets /></main>}></Route>
 
                     </Routes>
 

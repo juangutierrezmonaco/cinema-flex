@@ -172,17 +172,17 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
 
             <div className='movieDetailFooter_selectContainer'>
                 <div className='movieDetailFooter_select'>
-                    <span className='uppercase font-extrabold text-lg tracking-wider bg-primary/70 p-1'>Seleccione la función</span>
+                    <span className='uppercase font-extrabold tracking-wider bg-primary/70 p-1 movieDetailFooter_select_title'>Seleccione la función</span>
                     <MovieScreeningSelect screenings={screenings} setScreeningId={setScreeningId} defaultScreening={defaultValue} />
                 </div>
 
                 <div className={screeningId ? `movieDetailFooter_select visible` : 'movieDetailFooter_select invisible'}>
-                    <span className='uppercase font-extrabold text-lg tracking-wider bg-primary/70 p-1'>Seleccione entradas</span>
+                    <span className='uppercase font-extrabold tracking-wider bg-primary/70 p-1 movieDetailFooter_select_title'>Seleccione entradas</span>
                     {!toggleSubmitButtton ?
                         <div className="flex flex-col gap-3">
                             <div className="flex justify-between items-center">
                                 <button className="btn btn-ghost btn-sm bg-white/50" onClick={decreaseCount}><i className="fa fa-minus"></i></button>
-                                <span className="px-7 text-2xl font-bold">{count}</span>
+                                <span className="px-7 font-bold movieDetailFooter_select_count">{count}</span>
                                 <button className="btn btn-ghost btn-sm bg-white/50" onClick={increaseCount}><i className="fa fa-plus"></i></button>
                             </div>
 
@@ -198,7 +198,7 @@ const MovieFooter = ({ initial = 1, onAdd, submitText, movieId, selectedScreenin
             </div>
 
             {imInCart &&
-                <div className='movieDetailFooter_price text-2xl font-bowlby'>
+                <div className='movieDetailFooter_price font-bowlby text-lg md:text-2xl'>
                     <span className='uppercase'>Total</span>
                     <span> {precioTotal ? `: $ ${precioTotal}` : '...'} </span>
                 </div>

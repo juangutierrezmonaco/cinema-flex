@@ -43,11 +43,12 @@ const MovieCredits = () => {
     
 
     return (
-        <div className="bg-white text-black px-36 py-10">
+        <div className="movieCredits flex flex-col items-center mb-7 pb-10">
+            <h2 className="text text-4xl uppercase mb-14 underline font-bowlby">Créditos</h2>
             {!loading ?
-                <div className="flex">
+                <div className="flex justify-center bg-white/80 text-black p-5">
                     <ul className=" w-1/2 ">
-                        <div className="mb-10 flex items-center text-2xl gap-2">
+                        <div className="mb-10 flex items-center text-xs sm:text-2xl gap-2">
                             <span className="font-bold">Reparto</span>
                             <span className="text-slate-600">{cast && cast.length}</span>
                         </div>
@@ -60,7 +61,7 @@ const MovieCredits = () => {
                     </ul>
 
                     <ul className=" w-1/2 ">
-                        <div className="mb-10 flex items-center text-2xl gap-2">
+                        <div className="mb-10 flex items-center text-xs sm:text-2xl gap-2">
                             <span className="font-bold">Equipo</span>
                             <span className="text-slate-600">{crew && crew.length}</span>
                         </div>

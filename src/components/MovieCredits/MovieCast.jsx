@@ -6,12 +6,12 @@ const MovieCast = ({ name, profile_path, character }) => {
     return (
         <div className="flex gap-5 items-center mb-5">
             <div className='avatar'>
-                <div className='w-20 rounded'>
+                <div className='w-10 sm:w-20 rounded'>
                     <img src={profilePath} alt={`Foto de ${name}`} />
                 </div>
             </div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col text-xs sm:text-lg '>
                 <span className='font-bold'>{name}</span>
                 <span className='font-normal'>{character}</span>
             </div>
