@@ -25,6 +25,7 @@ Página de venta de entradas de cine responsive realizada para el curso de "Reac
 - Crear una cuenta donde se almacenan todos los tickets de las compras realizadas.
 
 En este video se recorre un poco la página:
+
 https://user-images.githubusercontent.com/104147035/193689795-be4e69a8-dc78-49f4-b73f-4cd1b8ff0f36.mp4
 
 ## Consideraciones para ejecutar el proyecto
@@ -32,3 +33,12 @@ https://user-images.githubusercontent.com/104147035/193689795-be4e69a8-dc78-49f4
 - Para inicializar el proyecto, se utiliza el comando `npm i --legacy-peer-deps`. Luego cada vez que quiera ejecutar: `npm run dev`.
 - Al usar SASS, cada vez que se quiera hacer un cambio los archivos scss y verlo reflejado, se deberá utilizar el comando `npm run sass`.
 - Para poder hacer uso de la base de datos, se necesita crear un archivo ".env" con las claves para acceder a la DB, por lo cual si alguien las requiere puedo mandarlas por mail, mi mail es juan.monaco.gutierrez@gmail.com
+
+## Screenshots
+![1](https://user-images.githubusercontent.com/104147035/193694608-a4c2b28f-0fdf-412e-a377-5067552a7197.png)
+![2](https://user-images.githubusercontent.com/104147035/193694617-0de7cdc4-cfd7-4706-96b6-5c1c616df372.png)
+![3](https://user-images.githubusercontent.com/104147035/193694619-9254422e-4b85-487a-8d5d-a131b33fcb46.png)
+![4](https://user-images.githubusercontent.com/104147035/193694620-fe18e782-41c5-434f-93b4-2de6db027ab4.png)
+![5](https://user-images.githubusercontent.com/104147035/193694621-8009fc92-6668-4c79-b7b8-a734aa85ae22.png)
+![6](https://user-images.githubusercontent.com/104147035/193694623-63ced44d-e638-414b-9b9e-21a10692f7fd.png)
+![7](https://user-images.githubusercontent.com/104147035/193694628-b5f01163-0861-4136-a70a-fe444cc6180f.png)
