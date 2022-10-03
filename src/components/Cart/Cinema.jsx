@@ -82,7 +82,7 @@ const Cinema = ({ leftInitial, leftColumns, middleInitial, middleColumns, rightI
                 <div className="cartCinema-container_screen"></div>
 
                 {[...Array(totalRows)].map((_, i) => (
-                    <div className="flex gap-5" key={i}>
+                    <div className="flex gap-2 xxs:gap-5" key={i}>
 
                         {/* Left side */}
                         <div className="cartCinema-container_seatsRow">

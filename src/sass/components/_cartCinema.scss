@@ -1,9 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-
-
 .cartCinemaContainer {
     width: 100%;
-    font-family: "Montserrat", sans-serif;
+    @extend .font-montserrat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -88,6 +85,58 @@
             cursor: pointer;
             background-color: #0081cb;
             transform: scale(1.2);
+        }
+    }
+}
+
+// Media queries
+@media screen and (max-width: 575px) {
+    .cartCinema {        
+        .seat {
+            height: 9px;
+            width: 10px;
+            margin: 2.5px;
+        }
+        
+        &-container {
+            margin: 20px 0;
+            
+            &_screen {
+                height: 120px;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .cartCinemaContainer {
+        font-size: .8rem;
+    }
+
+    .cartCinema {        
+        .seat {
+            height: 7.5px;
+            width: 8.5px;
+            margin: 2px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+    
+        &-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+    
+        &-container {
+            margin: 20px 0;
+            
+            &_screen {
+                height: 100px;
+                margin-bottom: 20px;
+            }
         }
     }
 }

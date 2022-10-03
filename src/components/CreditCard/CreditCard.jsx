@@ -106,7 +106,7 @@ const CreditCard = ({ onSubmit, children }) => {
             <div className="flex flex-col w-full">
 
                 <div className='flex justify-between items-center w-full'>
-                    <h3 className="text-2xl font-semibold text-slate-900  ">
+                    <h3 className="xxs:text-2xl font-semibold text-slate-900  ">
                         Información de pago
                     </h3>
                     {children[0]}
@@ -115,7 +115,7 @@ const CreditCard = ({ onSubmit, children }) => {
                 {children[1]}
             </div>
 
-            <div className='text-center'>
+            <div className='text-center flex flex-col items-center'>
                 <Card
                     locale={{ valid: "Expira" }}
                     placeholders={{ name: "NOMBRE COMPLETO" }}
@@ -170,8 +170,8 @@ const CreditCard = ({ onSubmit, children }) => {
                         />
                     </div>
 
-                    <div className="flex justify-between">
-                        <div className="form-control w-1/2">
+                    <div className="flex flex-col xxs:flex-row xxs:justify-between xxs:items-end">
+                        <div className="form-control xxs:w-1/2">
                             <label className="label">
                                 <span className="label-text">Fecha de expiración</span>
                             </label>
@@ -230,7 +230,7 @@ const CreditCard = ({ onSubmit, children }) => {
                             </div>
                         </div>
 
-                        <div className="form-control w-2/5">
+                        <div className="form-control xxs:w-2/5">
                             <label className="label">
                                 <span className="label-text">CVC</span>
                             </label>

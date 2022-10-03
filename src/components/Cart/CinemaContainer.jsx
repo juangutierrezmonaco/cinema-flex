@@ -76,7 +76,7 @@ const CinemaContainer = ({  continuar, cancelar }) => {
     return (
         <div className="cartCinemaContainer py-16">
 
-            <div className="flex flex-col items-center mb-5">
+            <div className="flex flex-col items-center mb-5 text-center">
                 <span>Película: {movie && movie.title}</span>
                 <span>Función: {screening && screening.horario.toLocaleString()}</span>
                 <span>Cantidad: {cantidad}</span>
@@ -85,8 +85,8 @@ const CinemaContainer = ({  continuar, cancelar }) => {
             <Cinema {...cinemaSeatsParams} maxSeats={cantidad} selectedRef={selectedRef} ocupados={screening.asientosOcupados}/>
 
             <div className="absolute right-5 bottom-5 flex gap-5">
-                <button className="btn btn-success" onClick={submitSeats}>Continuar</button>
-                <button className="btn btn-error" onClick={cancelar}>Cancelar</button>
+                <button className="btn btn-success btn-sm xs:btn-md" onClick={submitSeats}>Continuar</button>
+                <button className="btn btn-error btn-sm xs:btn-md" onClick={cancelar}>Cancelar</button>
             </div>
         </div>
 

@@ -12,4 +12,12 @@
 // CreditCardContainer
 .creditCardContainer {
     @extend .myCustomScrollBar;
+    overflow-x: hidden;
+}
+
+//Media queries
+@media screen and (max-width: 375px) {
+    .rccs__card {
+        width: 90% !important;
+    }
 }
