@@ -1,6 +1,5 @@
 // Efectos base para la tarjeta de crédito 
 .rccs__card--unknown>div {
-    box-shadow: 0 30px 60px 0 rgba(90, 116, 148, 0.4) !important;
     background-image: url('/assets/img/empty-credit-card-bg.jpeg') !important;
 }
 
@@ -13,6 +12,11 @@
 .creditCardContainer {
     @extend .myCustomScrollBar;
     overflow-x: hidden;
+}
+
+.creditCard {
+    overflow: hidden;
+    padding: 10px;
 }
 
 //Media queries

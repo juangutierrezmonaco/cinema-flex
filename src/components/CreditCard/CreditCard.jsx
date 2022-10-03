@@ -101,12 +101,12 @@ const CreditCard = ({ onSubmit, children }) => {
     const { number, name, expiry, expiryyear, cvc, focused } = state;
 
     return (
-        <div className='flex flex-col items-center gap-5 creditCard'>
+        <div className='flex flex-col items-center'>
 
             <div className="flex flex-col w-full">
 
                 <div className='flex justify-between items-center w-full'>
-                    <h3 className="xxs:text-2xl font-semibold text-slate-900  ">
+                    <h3 className="xxs:text-2xl font-semibold text-slate-900">
                         Información de pago
                     </h3>
                     {children[0]}
@@ -115,7 +115,7 @@ const CreditCard = ({ onSubmit, children }) => {
                 {children[1]}
             </div>
 
-            <div className='text-center flex flex-col items-center'>
+            <div className='text-center flex flex-col items-center creditCard'>
                 <Card
                     locale={{ valid: "Expira" }}
                     placeholders={{ name: "NOMBRE COMPLETO" }}
@@ -126,9 +126,9 @@ const CreditCard = ({ onSubmit, children }) => {
                     number={number}
                     callback={handleCallback}
                 />
-
-                <button className="link link-neutral mt-1" onClick={autoComplete}> Autocompletar </button>
             </div>
+
+<button className="link link-neutral mt-3" onClick={autoComplete}> Autocompletar </button>
 
             <div className=' text-black w-full flex justify-center'>
                 <form className='flex flex-col gap-3 w-full' ref={formRef} onSubmit={handleSubmit} >
