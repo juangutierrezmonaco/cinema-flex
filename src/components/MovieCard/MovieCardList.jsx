@@ -1,5 +1,6 @@
 import MovieCard from './MovieCard';
-import { useState } from 'react'
+import { useState } from 'react';
+
 const MovieCardList = ({ movies, listTitle }) => {
     /* Esto es para saber las fechas limite de estreno */
     let start = new Date();

@@ -6,12 +6,8 @@ const MovieDetailActorList = ({ cast, length = 13 }) => {
     const castList = cast.slice(0, length);
     const ref = useRef();
 
-    const scrollHorizontal = (e) => {
-        // Lógica para mantener apretado shift en el hover
-    }
-
     return (
-        <ul className='movieDetailCard-body_right_cast_actors' onMouseOver={scrollHorizontal} ref={ref}>
+        <ul className='movieDetailCard-body_right_cast_actors' ref={ref}>
             {castList && castList.slice(0, 5).map(actor => (
                 <li key={actor.id}><MovieDetailActor {...actor} /></li>
             ))}

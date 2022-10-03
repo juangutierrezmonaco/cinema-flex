@@ -61,8 +61,7 @@ const MovieCard = ({ title, overview, poster_path, id, release_date, start, end,
                 <h2 className="movieCard_info__title uppercase">{title}</h2>
 
                 <div className="movieCard_info__review">
-                    {/* <p className="hidden md:flex">{overview ? (overview.length <= 372 ? overview : overview.slice(0, 372) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p>
-                    <p className="flex md:hidden">{overview ? (overview.length <= 150 ? overview : overview.slice(0, 150) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p> */}
+                    
                     <p className="">{overview ? (overview.length <= 200 ? overview : overview.slice(0, 200) + '...') : 'No hay información sobre la sinopsis de esta película.'}</p>
                 </div>
 

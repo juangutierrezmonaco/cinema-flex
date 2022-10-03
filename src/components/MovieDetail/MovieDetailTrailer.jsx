@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 const MovieDetailTrailer = ({ trailerPath }) => {
     const videoUrl = `https://www.youtube-nocookie.com/embed/${trailerPath}`;

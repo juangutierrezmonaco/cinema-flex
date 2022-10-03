@@ -107,8 +107,8 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                     cancelButtonText: "Quedarme aquí",
                     buttonsStyling: false,
                     customClass: {
-                        confirmButton: 'btn btn-primary mr-3',
-                        cancelButton: 'btn btn-warning'
+                        confirmButton: 'btn btn-primary mx-3 mt-3',
+                        cancelButton: 'btn btn-warning mx-3 mt-3'
                     }
                 }).then(({ isConfirmed }) => {
                     isConfirmed && toMyTickets();
@@ -142,7 +142,7 @@ const Ticket = ({ movie, initialScreeningId, initialQuantity, removeTicket, modi
                     </div>
 
                     <div className='cartCard-right'>
-                        <div className='cartCard-right-details uppercase font-bold '>
+                        <div className='cartCard-right-details uppercase font-bold'>
                             <span className='flex gap-1 justify-start items-center'>
                                 <i className="fa-solid fa-film"></i>
                                 {movie.title}

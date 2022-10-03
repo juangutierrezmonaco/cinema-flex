@@ -46,7 +46,7 @@ const UserTickets = () => {
         }
     }, [user])
 
-    // En caso de que se ponga la ruta en el navegador, no se rompe la página
+    // En caso de que se harcodee la ruta de usuario en el navegador, no se rompe la página
     const { isLogged } = useUser();
 
     return (

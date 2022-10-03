@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 
-const RegistrationForm = ({ onSubmit, close, children }) => {
+const LoginForm = ({ onSubmit, close, children }) => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -75,4 +75,4 @@ const RegistrationForm = ({ onSubmit, close, children }) => {
     );
 }
 
-export default RegistrationForm;
+export default LoginForm;

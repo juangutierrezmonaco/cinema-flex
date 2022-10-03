@@ -16,7 +16,8 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     }
 
     // Si no lo hago con hooks para usar el useEffect surgen errores.
-    // NOTA: No uso el release_date que viene de la api porque viene por defecto la fecha de estados unidos, así tengo más control.
+    // NOTA: No uso el release_date que viene de la api porque viene por defecto la fecha de estados unidos, así tengo más control sobre qué fecha
+    //       muestro.
     const [rate, setRate] = useState('SIN DATOS');
     const [releaseDate, setReleaseDate] = useState('SIN DATOS');
     const [director, setDirector] = useState('SIN DATOS');

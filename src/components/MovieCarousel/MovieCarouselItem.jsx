@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const MovieCarouselItem = ({ slide, stopSlide, startSlide }) => {/* 
-    const imgUrl = ; */
+const MovieCarouselItem = ({ slide, stopSlide, startSlide }) => {
     const [imgURL, setImgURL] = useState('');
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/movie/${slide.id}/images?api_key=${import.meta.env.VITE_TMDB_API_KEY}`)
