@@ -35,3 +35,8 @@ main {
 .modal-box {
     @extend .myCustomScrollBar;
 }
+
+img {
+    color: black;
+    background-color: white;
+}
