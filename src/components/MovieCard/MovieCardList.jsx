@@ -28,7 +28,7 @@ const MovieCardList = ({ movies, listTitle }) => {
 
     return (
         <div className='flex flex-col items-center font-bowlby mb-7 pb-10'>
-            <h2 className="text text-4xl uppercase mb-14 underline ">{listTitle}</h2>
+            <h2 className="text text-4xl uppercase mb-14 underline text-center">{listTitle}</h2>
             <ul className='moviesCards'>
                 {movies.slice(0, itemsToShow).map(m => (
                     <li key={m.id} className="mb-10 movieCardContainer">

@@ -45,7 +45,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
 
         // Para el trailer traigo primero el de Mexico y sino el de España. Si no trajo ninguno, pongo el trailer en inglés.
         const trailerPath = videos && (videos.results.filter(v => v.iso_3166_1 == 'MX')[0] ||
-                            videos.results.filter(v => v.iso_3166_1 == 'ES')[0] || videos && videos.results.filter(v => v.type == 'Trailer')[0]);
+            videos.results.filter(v => v.iso_3166_1 == 'ES')[0] || videos && videos.results.filter(v => v.type == 'Trailer')[0]);
 
         trailerPath && setTrailerPath(trailerPath.key);
     }, []);
@@ -53,9 +53,9 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
     // Manejo de carrito
     const { addTicket } = useCart();
 
-    const addToCart = ( screening, cantidad ) => {
+    const addToCart = (screening, cantidad) => {
         flyToCart();
-        
+
         setTimeout(() => {
             const movie = { id, title, runtime, poster_path, backdrop_path };
             addTicket(movie, screening.id, cantidad);
@@ -118,7 +118,7 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                             <MovieDetailTrailer trailerPath={trailerPath} />
                         </button>
 
-                        <ul className='movieDetailCard-body_left_details tracking-wider font-quicksand'>
+                        <ul className='movieDetailCard-body_left_details rounded-xl tracking-wider font-quicksand text-xs sm:text-sm md:text-base'>
                             <li>
                                 <span className='underline  font-semibold'>Fecha de estreno</span>
                                 <span className='font-[500]'> {releaseDate}</span>
@@ -143,25 +143,27 @@ const MovieDetail = ({ id, title, tagline, poster_path, backdrop_path, overview,
                     </div>
 
                     <div className='movieDetailCard-body_right'>
-                        <div className='movieDetailCard-body_right_titles rounded-lg'>
-                            <h1 className=''>{title}</h1>
-                            <h2 className='italic font-thin'>{tagline}</h2>
+                        <div className="movieDetailCard-body_right_top">
+                            <div className='movieDetailCard-body_right_top_titles rounded-lg'>
+                                <h1 className='text-lg xs:text-base sm:text-xl md:text-2xl lg:text-4xl font-[400]'>{title}</h1>
+                                <h2 className='text-sm xs:text-sm sm:text-base md:text-lg lg:text-xl font-[300] italic'>{tagline}</h2>
+                            </div>
+
+                            <ul className='movieDetailCard-body_right_top_genres'>
+                                {genres && genres.map((g) => (
+                                    <li className='badge badge-lg badge-primary text-[0.7rem] sm:text-xs md:text-sm lg:text-lg' key={g.id}>{g.name}</li>
+                                ))}
+                            </ul>
                         </div>
 
-                        <ul className='movieDetailCard-body_right_genres'>
-                            {genres && genres.map((g) => (
-                                <li className='badge badge-lg' key={g.id}>{g.name}</li>
-                            ))}
-                        </ul>
 
-
-                        <p className='tracking-wider text-base flex flex-col gap-2 min-h-[200px]'>
-                            <span className='text-2xl lg:text-4xl'>Sinopsis</span>
-                            <span className='text-lg lg:text-xl'>{overview || 'Sin datos sobre la sinopsis de esta película'}</span>
+                        <p className='tracking-wider flex flex-col gap-2 min-h-[200px]'>
+                            <span className='text-2xl xs:text-lg sm:text-2xl md:text-3xl lg:text-4xl'>Sinopsis</span>
+                            <span className='text-base xs:text-xs sm:text-sm md:text-base lg:text-lg'>{overview || 'Sin datos sobre la sinopsis de esta película'}</span>
                         </p>
 
                         <div className='movieDetailCard-body_right_cast'>
-                            <h3 className='text-3xl font-semibold  tracking-wider'>Reparto principal</h3>
+                            <h3 className='text-2xl xs:text-lg sm:text-2xl md:text-3xl lg:text-3xl tracking-wider'>Reparto principal</h3>
 
                             <MovieDetailActorList cast={cast} />
                         </div>

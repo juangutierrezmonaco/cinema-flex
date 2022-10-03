@@ -12,7 +12,7 @@ const SearchWidget = ({ btnStyles }) => {
     }
 
     const closeSearcher = () => {
-        openedRef.current.classList.remove('slide-in-right');
+        openedRef.current.classList.remove('slide-in-left');
         openedRef.current.classList.add('slide-out-right');
         setTimeout(() => {
             openedRef.current.classList.add('hidden');
@@ -24,11 +24,11 @@ const SearchWidget = ({ btnStyles }) => {
 
     const inputRef = useRef();
     useEffect(() => {
-        if (open) { // Si está abuerto
+        if (open) { // Si está abierto
             // Hago visible el div
             openedRef.current.classList.remove('slide-out-right');
-            openedRef.current.classList.add('slide-in-right');
             openedRef.current.classList.remove('hidden');
+            openedRef.current.classList.add('slide-in-left');
 
             // Hago focus en el input
             inputRef.current.focus();
@@ -42,20 +42,20 @@ const SearchWidget = ({ btnStyles }) => {
 
     return (
         <div className="uppercase">
-            <div className="searchContainerOverlay py-5 px-4 text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-xl hidden" ref={openedRef}>
-                <form className="searchContainer text-black">
+            <div className="searchContainerOverlay py-5 px-4 text-xs xs:text-sm sm:text-xl sm:px-10 md:text-xl md:py-2 xl:text-xl hidden" ref={openedRef}>
+                <div className="searchContainer text-black">
 
                     <input type="search" placeholder="INGRESA TU BÚSQUEDA" className="searchContainer_input" ref={inputRef} onChange={submitBusqueda}/>
 
-                    <div className={btnStyles} onClick={openSearcher}>
-                        <button type="submit"><i className="fa-solid fa-magnifying-glass"></i></button>
+                    <div className={btnStyles}>
+                        <button><i className="fa-solid fa-magnifying-glass"></i></button>
                     </div>
 
                     <div className={btnStyles} onClick={closeSearcher}>
-                        <button type="button"><i className="fa-solid fa-xmark"></i></button>
+                        <button><i className="fa-solid fa-xmark"></i></button>
                     </div>
 
-                </form>
+                </div>
 
                 {searchTerm &&
                     <SearchDropdown searchTerm={searchTerm} close={closeSearcher}/>

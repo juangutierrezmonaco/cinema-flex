@@ -48,6 +48,7 @@ const NavBar = () => {
     /* Cerrar modal géneros */
     const closeModal = (e) => { 
         e.target.parentElement.parentElement.parentElement.querySelector("label").click();
+        closeNav();
     }
     
     /* Para que quede seleccionado Géneros cuando estoy en un género */
@@ -101,7 +102,7 @@ const NavBar = () => {
                     <li >
                         <label htmlFor="my-modal-3-mobile" className={genreNavItemClass}>Géneros</label>
 
-                        <input type="checkbox" id="my-modal-3-mobile" className="modal-toggle" />
+                        <input type="checkbox" id="my-modal-3-mobile" className="modal-toggle"/>
                         <div className="modal">
                             <div className="modal-box relative bg-white text-black font-albert">
                                 <label htmlFor="my-modal-3-mobile" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>

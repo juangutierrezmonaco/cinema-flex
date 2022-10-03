@@ -8,8 +8,8 @@ const MovieDetailActor = ({ name, profile_path }) => {
         <div className="movieDetailActor rounded-lg shadow-2xl">
             <figure className="movieDetailActor-img"><img src={image} alt={`Foto del actor ${name}`} /></figure>
 
-            <div className="movieDetailActor-body text-center rounded-t-2xl">
-                <span className="font-semibold ">{name}</span>
+            <div className="movieDetailActor-body text-center">
+                <span className="font-semibold text-xs xxs:text-sm md:text-base">{name}</span>
             </div>
         </div>
     )
