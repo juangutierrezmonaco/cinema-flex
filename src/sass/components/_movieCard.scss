@@ -17,6 +17,7 @@
     display: flex;
     gap: 20px;
     background-color: rgba($color: #8d99ae, $alpha: .5);
+    min-width: 100%;
 
     &_img {
         width: 15%;
@@ -56,6 +57,7 @@
             font-weight: 900;
             font-size: 1.25rem;
             line-height: 1.75rem;
+            max-width: 50%;
         }
 
         &__review {
@@ -155,6 +157,10 @@
     
         &_info {
             width: 40%;
+
+            &__title {
+                max-width: fit-content;
+            }
     
             &__review {
                 font-size: .84rem;
