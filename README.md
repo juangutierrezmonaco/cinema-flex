@@ -10,6 +10,7 @@ Página de venta de entradas de cine responsive realizada para el curso de "Reac
   - Librerías complementarias: react-credit-cards, react-barcode y react-qr-code.
 - Vite JS.
 - Vercel.
+- Firebase.
 - Librerías complementarias: UUID/SweetAlert2.
 
 ## Deploy
